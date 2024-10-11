@@ -7,16 +7,50 @@ function Update(){
 
     const {userId} = useParams();
     const [user,setUser] = useState({});
+    const [status,setStatus] = useState("");
+
+    const [dropdown,setDropdown] = useState("Select Status")
 
     const API_URL = "http://localhost:3000";
 
     useEffect(() => {
         axios.get(`${API_URL}/api/user/userDetails?filter=${userId}`)
             .then(response => {
-                // console.log(response.data)
+                // console.log(response.data.desiredUser)
+                if(response.data.desiredUser.attendanceFlag ===true 
+                    && response.data.desiredUser.feedbackFlag === false
+                    && response.data.desiredUser.certificateFlag === false){
+                        setStatus("Attendance")
+                        setDropdown("Attendance")
+                        // console.log("ATtendance")
+                    } else if(response.data.desiredUser.attendanceFlag === true
+                        && response.data.desiredUser.feedbackFlag === true
+                        && response.data.desiredUser.certificateFlag === false
+                    ){
+                        setStatus("Feedback")
+                        setDropdown("Feedback")
+                    } else if(response.data.desiredUser.attendanceFlag 
+                        && response.data.desiredUser.feedbackFlag
+                    && response.data.desiredUser.certificateFlag ){
+                        setStatus("Certificate")
+                        setDropdown("Certificate")
+                        }
+
                 setUser(response.data)               
             }).catch(err => console.log(err))
-    }, [userId])
+    }, [userId,status])
+
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        const submit =  confirm("Are you sure you want to submit the answer ?")
+
+        if(submit){
+            console.log("Submitted")
+        }else{
+            console.log("Not Submitted")
+        }
+
+    }
 
     return (
         <div>
@@ -26,18 +60,26 @@ function Update(){
 
             <div className="border shadow-lg mt-5 mx-5 p-10">
             <div>
-                <div className="pb-10">
+                <div className="pb-10 grid grid-cols-2 gap-4">
+                    <div>
                     Training Program: {user.trainingName}
+                    </div>
+                    <div>
+                    Current Status: {status} 
+                    </div>
                 </div>
                 <form>
                     <div className="grid grid-cols-3 gap-4">
                         <div className="flex gap-5">
-                            <label>Name : {user.desiredUser?.title}  {user.desiredUser?.firstName} {user.desiredUser?.lastName}</label>
+                            <label>Name : {user.desiredUser?.title.slice(0,1)}{user.desiredUser?.title.slice(1).toLowerCase()}  {user.desiredUser?.firstName} {user.desiredUser?.lastName}</label>
                             
                         </div>
                         <div className="flex gap-5">
                             <label>Status : </label>
-                            <select className="w-[200px] px-5 focus:outline-none border">
+                            <select className="w-[200px] px-5 focus:outline-none border"
+                            value={dropdown}
+                            onChange={(e) => setDropdown(e.target.value)}
+                            >
                                 <option value="Select Status">Select Status</option>
                                 <option value="Attendance">Attendance</option>
                                 <option value="Test Paper">Test Paper</option>
@@ -46,7 +88,7 @@ function Update(){
                             </select>
                         </div>
                         <div className="">
-                            <button className="border px-3 py-1 rounded-full bg-red-500 text-white">Submit</button>
+                            <button onClick={handleSubmit} className="border px-3 py-1 rounded-full bg-red-500 text-white">Submit</button>
                         </div>
                     </div>
                     
