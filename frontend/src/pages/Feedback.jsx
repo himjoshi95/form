@@ -10,6 +10,7 @@ function Feedback() {
     const [firstName, setFirstName] = useState('');
 
     const [feedback,setFeedback] = useState('');
+    
 
     const API_URL = "http://localhost:3000";
 
@@ -19,7 +20,7 @@ function Feedback() {
                 // console.log(response.data)
                 setFirstName(response.data.desiredUser.firstName)
             }).catch(err => console.log(err))
-    }, [])
+    }, []);
 
     async function SubmitFeedback(){
         

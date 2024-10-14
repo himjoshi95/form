@@ -2,15 +2,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Loader } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
 
 
-function Update(){
 
-    const {userId} = useParams();
-    const [user,setUser] = useState({});
-    const [status,setStatus] = useState("");
+function Update() {
+    const { userId } = useParams();
+    const [user, setUser] = useState({});
+    const [status, setStatus] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [dropdown,setDropdown] = useState("Select Status")
+    const [dropdown, setDropdown] = useState("Select Status");
 
     const API_URL = "http://localhost:3000";
 
@@ -18,39 +21,41 @@ function Update(){
         axios.get(`${API_URL}/api/user/userDetails?filter=${userId}`)
             .then(response => {
                 // console.log(response.data.desiredUser)
-                if(response.data.desiredUser.attendanceFlag ===true 
+                if (response.data.desiredUser.attendanceFlag === true
                     && response.data.desiredUser.feedbackFlag === false
-                    && response.data.desiredUser.certificateFlag === false){
-                        setStatus("Attendance")
-                        setDropdown("Attendance")
-                        // console.log("ATtendance")
-                    } else if(response.data.desiredUser.attendanceFlag === true
-                        && response.data.desiredUser.feedbackFlag === true
-                        && response.data.desiredUser.certificateFlag === false
-                    ){
-                        setStatus("Feedback")
-                        setDropdown("Feedback")
-                    } else if(response.data.desiredUser.attendanceFlag 
-                        && response.data.desiredUser.feedbackFlag
-                    && response.data.desiredUser.certificateFlag ){
-                        setStatus("Certificate")
-                        setDropdown("Certificate")
-                        }
-
-                setUser(response.data)               
+                    && response.data.desiredUser.certificateFlag === false) {
+                    setStatus("Attendance")
+                    setDropdown("Attendance")
+                    // console.log("ATtendance")
+                } else if (response.data.desiredUser.attendanceFlag === true
+                    && response.data.desiredUser.feedbackFlag === true
+                    && response.data.desiredUser.certificateFlag === false
+                ) {
+                    setStatus("Feedback")
+                    setDropdown("Feedback")
+                } else if (response.data.desiredUser.attendanceFlag
+                    && response.data.desiredUser.feedbackFlag
+                    && response.data.desiredUser.certificateFlag) {
+                    setStatus("Certificate")
+                    setDropdown("Certificate")
+                }
+                setUser(response.data)
             }).catch(err => console.log(err))
-    }, [userId,status])
+    }, [userId, status])
 
-    const handleSubmit = async(e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const submit =  confirm("Are you sure you want to update?")
+        const submit = confirm("Are you sure you want to update?")
 
-        if(submit){
-            const response = await axios.patch(`${API_URL}/api/admin/update-status`,{userId, dropdown});
+        if (submit) {
+            setIsLoading(prev => !prev);
+            const response = await axios.patch(`${API_URL}/api/admin/update-status`, { userId, dropdown });
             console.log(response.data);
             setStatus(response.data.dropdown);
+            await new Promise(r => setTimeout(r, 1000))
+            setIsLoading(prev => !prev);
             toast.success("Status Updated Successfully");
-        }else{
+        } else {
             console.log("Not Submitted");
         }
 
@@ -58,46 +63,53 @@ function Update(){
 
     return (
         <div>
-            <div className="flex flex-col items-center border py-2 mt-2 shadow-lg">            
-                    <h1 className="text-md font-medium">Update Status</h1>                  
+            <div className="flex flex-col items-center border py-2 mt-2 shadow-lg">
+                <h1 className="text-md font-medium">Update Status</h1>
             </div>
 
             <div className="border shadow-lg mt-5 mx-5 p-10">
-            <div>
-                <div className="pb-10 grid grid-cols-2 gap-4">
+                {isLoading ?
+                    <div className="pb-12 grid place-items-center">
+                       {/* <Loader className="animate-spin"/> */}
+                       <LoaderCircle className="animate-spin text-xl"/>
+                    </div>
+                    :
                     <div>
-                    Training Program: {user.trainingName}
-                    </div>
-                    <div>
-                    Current Status: {status} 
-                    </div>
-                </div>
-                <form>
-                    <div className="grid grid-cols-3 gap-4">
-                        <div className="flex gap-5">
-                            <label>Name : {user.desiredUser?.title.slice(0,1)}{user.desiredUser?.title.slice(1).toLowerCase()}  {user.desiredUser?.firstName} {user.desiredUser?.lastName}</label>
-                            
+                        <div className="pb-10 grid grid-cols-2 gap-4">
+                            <div>
+                                Training Program: {user.trainingName}
+                            </div>
+                            <div>
+                                Current Status: {status}
+                            </div>
                         </div>
-                        <div className="flex gap-5">
-                            <label>Status : </label>
-                            <select className="w-[200px] px-5 focus:outline-none border"
-                            value={dropdown}
-                            onChange={(e) => setDropdown(e.target.value)}
-                            >
-                                <option disabled value="Select Status">Select Status</option>
-                                <option value="Attendance">Attendance</option>
-                                <option value="Test Paper">Test Paper</option>
-                                <option value="Feedback">Feedback</option>
-                                <option value="Certificate">Certificate</option>
-                            </select>
-                        </div>
-                        <div className="">
-                            <button onClick={handleSubmit} className="border px-3 py-1 rounded-full bg-red-500 text-white">Submit</button>
-                        </div>
+                        <form>
+                            <div className="grid grid-cols-3 gap-4">
+                                <div className="flex gap-5">
+                                    <label>Name : {user.desiredUser?.title.slice(0, 1)}{user.desiredUser?.title.slice(1).toLowerCase()}  {user.desiredUser?.firstName} {user.desiredUser?.lastName}</label>
+
+                                </div>
+                                <div className="flex gap-5">
+                                    <label>Status : </label>
+                                    <select className="w-[200px] px-5 focus:outline-none border"
+                                        value={dropdown}
+                                        onChange={(e) => setDropdown(e.target.value)}
+                                    >
+                                        <option disabled value="Select Status">Select Status</option>
+                                        <option value="Attendance">Attendance</option>
+                                        <option value="Test Paper">Test Paper</option>
+                                        <option value="Feedback">Feedback</option>
+                                        <option value="Certificate">Certificate</option>
+                                    </select>
+                                </div>
+                                <div className="">
+                                    <button onClick={handleSubmit} className="border px-3 py-1 rounded-full bg-red-500 text-white">Submit</button>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
-                    
-                </form>
-            </div>
+                }
             </div>
         </div>
     )
