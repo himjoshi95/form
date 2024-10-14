@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 function Update(){
@@ -40,14 +41,17 @@ function Update(){
             }).catch(err => console.log(err))
     }, [userId,status])
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) =>{
         e.preventDefault();
-        const submit =  confirm("Are you sure you want to submit the answer ?")
+        const submit =  confirm("Are you sure you want to update?")
 
         if(submit){
-            console.log("Submitted")
+            const response = await axios.patch(`${API_URL}/api/admin/update-status`,{userId, dropdown});
+            console.log(response.data);
+            setStatus(response.data.dropdown);
+            toast.success("Status Updated Successfully");
         }else{
-            console.log("Not Submitted")
+            console.log("Not Submitted");
         }
 
     }
@@ -80,7 +84,7 @@ function Update(){
                             value={dropdown}
                             onChange={(e) => setDropdown(e.target.value)}
                             >
-                                <option value="Select Status">Select Status</option>
+                                <option disabled value="Select Status">Select Status</option>
                                 <option value="Attendance">Attendance</option>
                                 <option value="Test Paper">Test Paper</option>
                                 <option value="Feedback">Feedback</option>
