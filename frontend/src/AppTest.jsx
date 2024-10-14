@@ -12,6 +12,7 @@ import Training from "./pages/Training";
 import Update from "./pages/Update";
 import Login from "./pages/Login";
 import LoadingSpinner from "./components/LoadingSpinner";
+import UpdateTrainings from "./pages/UpdateTrainings";
 
 
 const ProtectedRoute = ({children}) => {
@@ -63,6 +64,8 @@ function AppTest(){
                 }/>
 
             <Route path='/training/:name/:type' element={<Training/>}/>
+            <Route path='/training-update/:name/:type' element={<UpdateTrainings/>}/>
+
             <Route path='/attendance/:userId' element={<Attendance/>}/>
             <Route path='/test-paper/:userId' element={<TestPaper/>}/>
             <Route path='/feedback/:userId' element={<Feedback/>}/>            

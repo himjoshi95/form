@@ -92,11 +92,40 @@ function HomePage() {
 
             }
 
-            {
+            <table className="w-[1100px] border">
+                <thead>
+                    <tr>
+                        <th className="border text-center">Sno.</th>
+                        <th className="border text-center">Training Links</th>
+                        <th className="border text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {trainings.length > 0 ? (
+                        trainings.map((item,index) => (
+                            <tr key={index} className="border">
+                                <td className="p-2 border">{index+1}</td>
+                                <td className="p-2 border"><Link className="flex flex-row" to={`/training/${item.name}/${item._id}`}> <span className="basis-1/4">Training - {item.name}</span> <span className="basis-3/4 underline text-blue-500"> {`http://localhost:5173/training/${item.name}/${item._id}`}</span></Link></td>
+                                <td className="p-2 "><Link to={`/training-update/${item.name}/${item._id}`} className="text-blue-500 underline" >view/edit</Link></td>
+                            </tr>
+                        )
+                        )
+                    )
+                    :
+                    <tr>
+                        <td className="border"></td>
+                        <td className="text-center py-5">No Trainings</td>
+                        <td className="border"></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+            {/* {
                 trainings.map((item, index) => <div className="py-2" key={index}>
                     <Link className="flex flex-row" to={`/training/${item.name}/${item._id}`}> <span className="basis-1/4">Training - {item.name}</span> <span className="basis-3/4 underline text-blue-500">{`http://localhost:5173/training/${item.name}/${item._id}`}</span></Link>
                 </div>)
-            }
+            } */}
 
         </div>
 
