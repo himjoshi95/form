@@ -3,19 +3,18 @@ import {User, Lock , Loader} from "lucide-react";
 import LoginInput from "../components/LoginInput";
 import { useState } from "react";
 
+import { useAuthStore } from "../store/authStore";
+
 function Login(){
 
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
 
-    const [isLoading,setIsLoading] = useState(false)
+    const { login, isLoading, error } = useAuthStore();
 
     const handleLogin = async (e) =>{
         e.preventDefault();
-        setIsLoading(prev => !prev);
-        alert("Login button clicked");        
-        await new Promise(r => setTimeout(r,1000));
-        setIsLoading(prev => !prev);
+        await login(username,password);
     }
 
     return (
@@ -30,6 +29,7 @@ function Login(){
                     
                     <LoginInput icon={Lock} type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
 
+                    {error && <p className='text-red-500 font-semibold mb-2'>{error}</p>}
                     <div className="px-2">
                         <button type="submit" className="bg-orange-500 w-full text-white text-xl py-2 rounded">
                             {isLoading ? <Loader className="w-6 h-7 animate-spin  mx-auto"/> : "LOGIN"}

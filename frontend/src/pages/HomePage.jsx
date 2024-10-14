@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import { useAuthStore } from "../store/authStore";
+
 
 
 function HomePage() {
@@ -10,6 +12,8 @@ function HomePage() {
     const [isLoading, setIsLoading] = useState(false);
 
     const [users,setUsers] = useState([]);
+
+    const { admin, logout} = useAuthStore();
 
 
     const API_URL = "http://localhost:3000";
@@ -43,9 +47,16 @@ function HomePage() {
             console.log(error.message)
         }
     },[])
+
+    const handleLogout = () =>{
+        logout();
+    }
     return <div>
-        <nav className="border-b h-10 flex justify-center">
-            <h1 className="text-xl">Trainings</h1>
+        <nav className="border-b h-12 flex justify-between items-center px-5">
+            <h1 className="text-2xl text-center">Trainings</h1>
+            <div>
+                <button onClick={handleLogout} className="border px-2 rounded-full bg-black text-white hover:bg-slate-700 py-1">logout</button>
+            </div>
         </nav>
         <div className=" border mt-10 mx-5 p-10">
 
