@@ -22,18 +22,27 @@ function Update() {
             .then(response => {
                 // console.log(response.data.desiredUser)
                 if (response.data.desiredUser.attendanceFlag === true
+                    && response.data.desiredUser.testPaperFlag === false
                     && response.data.desiredUser.feedbackFlag === false
                     && response.data.desiredUser.certificateFlag === false) {
                     setStatus("Attendance")
                     setDropdown("Attendance")
                     // console.log("ATtendance")
-                } else if (response.data.desiredUser.attendanceFlag === true
+                }else if(response.data.desiredUser.attendanceFlag === true
+                    && response.data.desiredUser.testPaperFlag === true
+                    && response.data.desiredUser.feedbackFlag === false
+                    && response.data.desiredUser.certificateFlag === false){
+                        setStatus("Test Paper")
+                        setDropdown("Test Paper")
+                }else if (response.data.desiredUser.attendanceFlag === true
+                    && response.data.desiredUser.testPaperFlag === true
                     && response.data.desiredUser.feedbackFlag === true
                     && response.data.desiredUser.certificateFlag === false
                 ) {
                     setStatus("Feedback")
                     setDropdown("Feedback")
                 } else if (response.data.desiredUser.attendanceFlag
+                    && response.data.desiredUser.testPaperFlag 
                     && response.data.desiredUser.feedbackFlag
                     && response.data.desiredUser.certificateFlag) {
                     setStatus("Certificate")

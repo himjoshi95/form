@@ -7,16 +7,16 @@ import { Test, User } from "../model/user.model.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 
 
-export const checkAuth = async(req,res) =>{
+export const checkAuth = async (req, res) => {
     try {
         const admin = await Admin.findById(req.adminId).select("-password");
-        if(!admin){
+        if (!admin) {
             return res.status(400).json({ success: false, message: "Admin not found" });
         }
-        res.status(200).json({ success: true, admin });        
+        res.status(200).json({ success: true, admin });
     } catch (error) {
         console.log("Error in checkAuth controller ", error);
-        res.status(400).json({ success: false, message: error.message });        
+        res.status(400).json({ success: false, message: error.message });
     }
 }
 
@@ -71,33 +71,33 @@ export const login = async (req, res) => {
     try {
         const admin = await Admin.findOne({ username });
 
-        if(!admin){
+        if (!admin) {
             return res.status(400).json({
-                success:false,
+                success: false,
                 message: "Invalid Credentials"
             })
         }
-        
-        const isPasswordValid = await bcryptjs.compare(password,admin.password);
+
+        const isPasswordValid = await bcryptjs.compare(password, admin.password);
         if (!isPasswordValid) {
-			return res.status(400).json({ success: false, message: "Invalid credentials" });
-		}
+            return res.status(400).json({ success: false, message: "Invalid credentials" });
+        }
 
         //jwt
         generateTokenAndSetCookie(res, admin._id)
-        
+
         res.status(200).json({
-            success:true,
-            message:"Logged in successfully",
-            admin:{
+            success: true,
+            message: "Logged in successfully",
+            admin: {
                 ...admin._doc,
                 password: undefined
             }
-        });        
+        });
     } catch (error) {
-        console.log("Error in login controller",error.message);
-        res.status(400).json({success: false, message:error.message})        
-    }    
+        console.log("Error in login controller", error.message);
+        res.status(400).json({ success: false, message: error.message })
+    }
 };
 
 export const logout = async (req, res) => {
@@ -105,7 +105,7 @@ export const logout = async (req, res) => {
         res.clearCookie("token");
         res.status(200).json({ success: true, message: "Logged out successfully" });
     } catch (error) {
-        console.log("Error in logout controller",error.message);
+        console.log("Error in logout controller", error.message);
         res.status(400).json({
             success: false,
             error: error.message
@@ -148,6 +148,7 @@ export const updateStatus = async (req, res) => {
         try {
             const updateUser = await User.findByIdAndUpdate(userId, {
                 attendanceFlag: true,
+                testPaperFlag:false,
                 feedbackFlag: false,
                 certificateFlag: false
             })
@@ -156,10 +157,24 @@ export const updateStatus = async (req, res) => {
             console.log("Error in updating Attendance Status", error.message);
             return res.json({ message: error.message });
         }
+    } else if( dropdown === 'Test Paper'){
+        try {
+            const updateUser = await User.findByIdAndUpdate(userId, {
+                attendanceFlag: true,
+                testPaperFlag:true,
+                feedbackFlag: false,
+                certificateFlag: false
+            })
+            console.log("updated status: Test Paper");
+        } catch (error) {
+            console.log("Error in updating Test Paper Status", error.message);   
+            return res.json({ message: error.message });         
+        }
     } else if (dropdown === 'Feedback') {
         try {
             const updateUser = await User.findByIdAndUpdate(userId, {
                 attendanceFlag: true,
+                testPaperFlag:true,
                 feedbackFlag: true,
                 certificateFlag: false
             })
@@ -172,6 +187,7 @@ export const updateStatus = async (req, res) => {
         try {
             const updateUser = await User.findByIdAndUpdate(userId, {
                 attendanceFlag: true,
+                testPaperFlag:true,
                 feedbackFlag: true,
                 certificateFlag: true
             })
@@ -198,3 +214,93 @@ export const updateStatus = async (req, res) => {
         dropdown
     })
 }
+
+export const updateTraining = async (req, res) => {
+    const { type, dropdown } = req.body;
+    try {      
+        const trainingStatusUpdate = await Master.findByIdAndUpdate(type,{status:dropdown});
+
+        if (dropdown === 'Attendance') {
+            try {
+                const updateAttendance = {
+                    attendanceFlag: true,                    
+                    testPaperFlag:false,
+                    feedbackFlag: false,
+                    certificateFlag: false
+                }
+                const attendanceUpdate = await User.updateMany({trainingId: type},updateAttendance);
+
+                res.json({
+                    message: "Updated Status to Attendance"
+                })
+            } catch (error) {
+                console.log("Error in updateTraining controller Attendance",error.message);
+                res.json({
+                    message: error.message
+                })
+            }
+        }else if(dropdown === 'Test Paper'){
+            try {
+                const updateTestPaper = {
+                    attendanceFlag:true,
+                    testPaperFlag:true,
+                    feedbackFlag:false,
+                    certificateFlag:false
+                }
+                const testPaperUpdate = await User.updateMany({trainingId: type}, updateTestPaper);
+
+                res.json({
+                    message: "Updated Status to Test Paper"
+                })
+                
+            } catch (error) {
+                console.log("Error in UpdateTraining controller Test Paper",error.message);
+            }
+
+        }else if(dropdown === 'Feedback'){
+            try {
+                const updateFeedback = {
+                    attendanceFlag: true,
+                    testPaperFlag:true,
+                    feedbackFlag: true,
+                    certificateFlag: false                    
+                }
+                const feedbackUpdate = await User.updateMany({trainingId: type},updateFeedback);
+
+                res.json({
+                    message: "Updated Status to Feedback"
+                })
+                
+            } catch (error) {
+                console.log("Error in updateTraining controller Feedback",error.message);
+                res.json({
+                    message:error.message
+                })
+                
+            }
+        }
+        
+    } catch (error) {
+        console.log("Error in updateTraining @Whole", error.message);
+        return res.json({
+            message: error.message
+        });
+    }
+};
+
+export const trainingDetails = async (req,res) =>{
+    const {type} = req.query;
+
+    try {
+        const training = await Master.findById(type).select("-_id").select("-createdAt").select("-updatedAt");
+        res.json({
+            training
+        })
+        
+    } catch (error) {
+        console.log("Error in training Details controller",error.message);
+        res.json({
+            message: error.message
+        })
+    }
+};

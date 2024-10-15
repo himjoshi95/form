@@ -47,6 +47,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default:true
     },
+    testPaperFlag:{
+        type: Boolean,
+        default:false
+    },
     feedbackFlag:{
         type: Boolean,
         default:false

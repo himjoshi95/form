@@ -1,16 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { LoaderCircle } from 'lucide-react';
 
 
 function UpdateTrainings() {
 
     const [isLoading,setIsLoading] = useState(false);
+    const [status,setStatus] = useState("");
     const [dropdown, setDropdown] = useState("Select Status");
     const {name,type} = useParams();
 
-    const handleSubmit = async(e) =>{
+    const API_URL = 'http://localhost:3000'
 
-        alert("Are you sure you want to handle Submit");
+    //get training details
+    useEffect(()=>{
+        axios.get(`${API_URL}/api/admin/trainingDetails?type=${type}`)
+        .then(response => {
+            console.log(response.data.training)
+            setStatus(response.data.training.status)
+            setDropdown(response.data.training.status)
+        })
+        .catch(error => console.log(error))
+    },[type,isLoading])
+
+    
+    const handleSubmit = async(e) =>{
+        e.preventDefault();        
+        const submit = confirm("Are you sure you want to submit ?")
+        if(submit){
+            setIsLoading(prev => !prev);
+            const response  = await axios.patch(`${API_URL}/api/admin/update-training`,{type,dropdown})
+            // console.log(response.data)
+            await new Promise(r => setTimeout(r, 1000))
+            setIsLoading(prev => !prev);
+            toast.success("Status Updated Successfully");
+        }
     }
     return (
         <div>
@@ -31,7 +57,7 @@ function UpdateTrainings() {
                                 Training Program:   {name}
                             </div>
                             <div>
-                                Current Status: {type}
+                                Current Status: {status === 'Select Status' ? '-' : status}
                             </div>
                         </div>
                         <form>
@@ -46,7 +72,7 @@ function UpdateTrainings() {
                                          value={dropdown}
                                          onChange={(e) => setDropdown(e.target.value)}
                                     >
-                                        <option  value="Select Status">Select Status</option>
+                                        <option disabled  value="Select Status">Select Status</option>
                                         <option value="Attendance">Attendance</option>
                                         <option value="Test Paper">Test Paper</option>
                                         <option value="Feedback">Feedback</option>

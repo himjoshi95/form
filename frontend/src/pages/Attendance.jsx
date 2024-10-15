@@ -29,9 +29,12 @@ function Attendance(){
                 // console.log(response.data);
                 setUser(response.data);                
                 // ------ CONDITIONS FOR ROUTING USER ACCORDING TO THE FLAGS ----------------
-                if(response.data.desiredUser?.feedbackFlag === true && response.data.desiredUser?.certificateFlag === false){
+                if(response.data.desiredUser?.testPaperFlag === true && response.data.desiredUser?.feedbackFlag === false && response.data.desiredUser?.certificateFlag === false ){
+                    navigate(`/test-paper/${response.data.desiredUser?._id}`);
+                }
+                else if(response.data.desiredUser?.testPaperFlag === true && response.data.desiredUser?.feedbackFlag === true && response.data.desiredUser?.certificateFlag === false){
                     navigate(`/feedback/${response.data.desiredUser?._id}`);
-                }else if(response.data.desiredUser?.feedbackFlag === true && response.data.desiredUser?.certificateFlag === true){
+                }else if(response.data.desiredUser?.testPaperFlag === true && response.data.desiredUser?.feedbackFlag === true && response.data.desiredUser?.certificateFlag === true){
                     navigate(`/certificate/${response.data.desiredUser?._id}`);
                 }
             }).catch(err => console.log(err))
