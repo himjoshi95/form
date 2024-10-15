@@ -58,7 +58,7 @@ function HomePage() {
                 <button onClick={handleLogout} className="border px-2 rounded-full bg-black text-white hover:bg-slate-700 py-1">logout</button>
             </div>
         </nav>
-        <div className=" border mt-10 mx-5 p-10">
+        <div className=" border mt-10 mx-5 p-10 shadow-lg">
 
             <h1 className="text-xl pb-5">Trainings Available</h1>
 
@@ -130,7 +130,7 @@ function HomePage() {
 
         </div>
 
-        <div className=" border mt-10 mx-5 p-10">
+        <div className=" border mt-10 mx-5 p-10 shadow-lg">
             {/* {JSON.stringify(users)} */}
             <h1 className="text-xl">Participants</h1>
             <div className="pt-10">
