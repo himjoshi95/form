@@ -1,4 +1,4 @@
-import { Navigate, Route,Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 
 import { useAuthStore } from "./store/authStore";
@@ -15,62 +15,106 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import UpdateTrainings from "./pages/UpdateTrainings";
 
 
-const ProtectedRoute = ({children}) => {
-    const { isAuthenticated, admin} = useAuthStore();
+const ProtectedRoute = ({ children }) => {
+    const { isAuthenticated, admin } = useAuthStore();
 
-    if(!isAuthenticated){
-        return <Navigate to='/' replace/>;
+    if (!isAuthenticated) {
+        return <Navigate to='/' replace />;
     }
     return children;
 }
 
-const RedirectAuthenticatedUser = ({children}) =>{
-    const { isAuthenticated,admin } = useAuthStore();
+const RedirectAuthenticatedUser = ({ children }) => {
+    const { isAuthenticated, admin } = useAuthStore();
 
-    if(isAuthenticated){
-        return <Navigate to='/dashboard' replace/>
+    if (isAuthenticated) {
+        return <Navigate to='/dashboard' replace />
     }
     return children;
-} 
+}
 
 
 
-function AppTest(){
+function AppTest() {
     const { isCheckingAuth, checkAuth } = useAuthStore();
 
     useEffect(() => {
-		checkAuth();
-	}, [checkAuth]);
+        checkAuth();
+    }, [checkAuth]);
 
-    if(isCheckingAuth) return <LoadingSpinner/>;
+    if (isCheckingAuth) return <LoadingSpinner />;
 
     return <>
         <Routes>
-
-            <Route 
-                path='/' 
+            <Route
+                path='/'
                 element={
                     <RedirectAuthenticatedUser>
-                        <Login/>
+                        <Login />
                     </RedirectAuthenticatedUser>
-                }/>
+                }
+            />
 
-            <Route 
-                path='/dashboard' 
+            <Route
+                path='/dashboard'
                 element={
                     <ProtectedRoute>
-                        <HomePage/>
+                        <HomePage />
                     </ProtectedRoute>
-                }/>
+                }
+            />
 
-            <Route path='/training/:name/:type' element={<Training/>}/>
-            <Route path='/training-update/:name/:type' element={<UpdateTrainings/>}/>
+            <Route
+                path='/training/:name/:type'
+                element={                    
+                        <Training />                    
+                }
+            />
 
-            <Route path='/attendance/:userId' element={<Attendance/>}/>
-            <Route path='/test-paper/:userId' element={<TestPaper/>}/>
-            <Route path='/feedback/:userId' element={<Feedback/>}/>            
-            <Route path='/certificate/:userId' element={<Certificate/>}/>  
-            <Route path='/update-status/:userId' element={<Update/>}></Route>           
+            <Route
+                path='/training-update/:name/:type'
+                element={
+                    <ProtectedRoute>
+                        <UpdateTrainings />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path='/attendance/:userId'
+                element={                    
+                        <Attendance />                    
+                }
+            />
+
+            <Route path='/test-paper/:userId'
+                element={                    
+                        <TestPaper />                    
+                }
+            />
+
+            <Route
+                path='/feedback/:userId'
+                element={                    
+                        <Feedback />                    
+                }
+            />
+
+            <Route
+                path='/certificate/:userId'
+                element={                    
+                        <Certificate />                    
+                }
+            />
+
+            <Route
+                path='/update-status/:userId'
+                element={
+                    <ProtectedRoute>
+                        <Update />
+                    </ProtectedRoute>
+                }
+            />
         </Routes>
     </>
 }
