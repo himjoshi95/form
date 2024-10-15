@@ -11,15 +11,11 @@ function Attendance(){
     const [user,setUser] = useState({})
     const [isLoading,setIsLoading] = useState(false);
 
-    const API_URL = "http://localhost:3000";
-
-    const delay = async() =>{
-        return await new Promise(resolve => setTimeout(resolve,2000))
-    }
+    const API_URL = "http://localhost:3000";    
 
     useEffect(() => {
         // console.log('User ID:', userId); // Ensure userId is correct
-        setIsLoading(true)
+        setIsLoading(true);
         if (!userId) {
         console.error('User ID is invalid');
         return;
@@ -75,8 +71,8 @@ function Attendance(){
                         {/* <p>P</p> */}
                         <p>{user.desiredUser?.company}</p>
                         <p>Industry</p>
-                        <p>Tech</p>
-                        {/* <p>{user.desiredUser.industry}</p> */}
+                        {/* <p>Tech</p> */}
+                        <p>{user.desiredUser?.industry}</p>
                         <p>City</p>
                         {/* <p>DElhi</p> */}
                         <p>{user.desiredUser?.city}</p>

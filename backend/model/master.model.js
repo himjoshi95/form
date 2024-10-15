@@ -9,6 +9,10 @@ const masterSchema = new mongoose.Schema({
         type:String,
         required:true,
         default: 'Select Status'
+    },
+    link:{
+        type:Boolean,
+        default:true
     }
 },{ timestamps: true})
 

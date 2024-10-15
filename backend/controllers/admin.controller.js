@@ -18,7 +18,7 @@ export const checkAuth = async (req, res) => {
         console.log("Error in checkAuth controller ", error);
         res.status(400).json({ success: false, message: error.message });
     }
-}
+};
 
 export const signup = async (req, res) => {
     const { username, password } = req.body;
@@ -64,7 +64,7 @@ export const signup = async (req, res) => {
             error: error.message
         })
     }
-}
+};
 
 export const login = async (req, res) => {
     const { username, password } = req.body;
@@ -111,7 +111,7 @@ export const logout = async (req, res) => {
             error: error.message
         })
     }
-}
+};
 
 export const addMaster = async (req, res) => {
     const { name } = req.body;
@@ -124,7 +124,7 @@ export const addMaster = async (req, res) => {
         id: newMaster._id,
         name: newMaster.name
     });
-}
+};
 
 export const allTrainings = async (req, res) => {
 
@@ -139,7 +139,7 @@ export const allTrainings = async (req, res) => {
             message: error.message
         })
     }
-}
+};
 
 export const updateStatus = async (req, res) => {
     const { userId, dropdown } = req.body;
@@ -213,12 +213,16 @@ export const updateStatus = async (req, res) => {
         message: "Updated Successfully",
         dropdown
     })
-}
+};
 
 export const updateTraining = async (req, res) => {
-    const { type, dropdown } = req.body;
-    try {      
-        const trainingStatusUpdate = await Master.findByIdAndUpdate(type,{status:dropdown});
+    const { type, dropdown , link} = req.body;
+    try {    
+        
+        const trainingStatusUpdate = await Master.findByIdAndUpdate(type,{
+            status:dropdown,
+            link: link === 'Yes' ? true : false
+        });
 
         if (dropdown === 'Attendance') {
             try {
@@ -275,9 +279,30 @@ export const updateTraining = async (req, res) => {
                 console.log("Error in updateTraining controller Feedback",error.message);
                 res.json({
                     message:error.message
+                })                
+            }
+        }else if(dropdown === 'Certificate'){
+            try {
+                const updateCertificate = {
+                    attendanceFlag: true,
+                    testPaperFlag:true,
+                    feedbackFlag:true,
+                    certificateFlag:true
+                }
+
+                const certificateUpdate = await User.updateMany({trainingId: type},updateCertificate);
+
+                res.json({
+                    message: "Updated Status to Certificate"
                 })
                 
+            } catch (error) {
+                console.log("Error in updateTraining controller Certificate",error.message);
+                res.json({
+                    message:error.message
+                })
             }
+
         }
         
     } catch (error) {

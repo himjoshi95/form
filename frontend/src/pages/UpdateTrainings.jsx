@@ -1,37 +1,40 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { LoaderCircle } from 'lucide-react';
+import { LoaderCircle, ArrowLeftToLine } from 'lucide-react';
+
 
 
 function UpdateTrainings() {
 
-    const [isLoading,setIsLoading] = useState(false);
-    const [status,setStatus] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState("");
     const [dropdown, setDropdown] = useState("Select Status");
-    const {name,type} = useParams();
+    const [link,setLink] = useState("Select Here");
+    const { name, type } = useParams();
 
     const API_URL = 'http://localhost:3000'
 
     //get training details
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`${API_URL}/api/admin/trainingDetails?type=${type}`)
-        .then(response => {
-            console.log(response.data.training)
-            setStatus(response.data.training.status)
-            setDropdown(response.data.training.status)
-        })
-        .catch(error => console.log(error))
-    },[type,isLoading])
+            .then(response => {
+                // console.log(response.data.training)  
+                setStatus(response.data.training.status);
+                setDropdown(response.data.training.status);
+                setLink(response.data.training.link ? 'Yes': 'No');
+            })
+            .catch(error => console.log(error))
+    }, [type, isLoading])
 
-    
-    const handleSubmit = async(e) =>{
-        e.preventDefault();        
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         const submit = confirm("Are you sure you want to submit ?")
-        if(submit){
+        if (submit) {
             setIsLoading(prev => !prev);
-            const response  = await axios.patch(`${API_URL}/api/admin/update-training`,{type,dropdown})
+            const response = await axios.patch(`${API_URL}/api/admin/update-training`, { type, dropdown, link })
             // console.log(response.data)
             await new Promise(r => setTimeout(r, 1000))
             setIsLoading(prev => !prev);
@@ -45,10 +48,13 @@ function UpdateTrainings() {
             </div>
 
             <div className="border shadow-lg mt-5 mx-5 p-10">
+                <div className=" pb-5">
+                    <Link to={`/dashboard`} className="text-blue-500 flex items-center"><ArrowLeftToLine /><span className="text-lg">DASHBOARD</span></Link>
+                </div>
                 {isLoading ?
                     <div className="pb-12 grid place-items-center">
-                       {/* <Loader className="animate-spin"/> */}
-                       <LoaderCircle className="animate-spin text-xl"/>
+                        {/* <Loader className="animate-spin"/> */}
+                        <LoaderCircle className="animate-spin text-xl" />
                     </div>
                     :
                     <div>
@@ -62,17 +68,25 @@ function UpdateTrainings() {
                         </div>
                         <form>
                             <div className="grid grid-cols-3 gap-4">
-                                <div className="flex gap-5">
-                                    <label></label>
+                                <div className="flex items-center gap-2">
+                                    <label>Link</label>
+                                    <select className="w-[120px] px-5 focus:outline-none border border-blue-500 rounded-full cursor-pointer"
+                                        value={link}
+                                        onChange={(e) => setLink(e.target.value)}
+                                    >
+                                        <option disabled value="Select Here">Select Here</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
 
                                 </div>
-                                <div className="flex gap-5">
-                                    <label>Status : </label>
-                                    <select className="w-[200px] px-5 focus:outline-none border"                       
-                                         value={dropdown}
-                                         onChange={(e) => setDropdown(e.target.value)}
+                                <div className="flex items-center gap-2">
+                                    <label>Status</label>
+                                    <select className="w-[200px] px-5 focus:outline-none border border-blue-500 rounded-full cursor-pointer"
+                                        value={dropdown}
+                                        onChange={(e) => setDropdown(e.target.value)}
                                     >
-                                        <option disabled  value="Select Status">Select Status</option>
+                                        <option disabled value="Select Status">Select Status</option>
                                         <option value="Attendance">Attendance</option>
                                         <option value="Test Paper">Test Paper</option>
                                         <option value="Feedback">Feedback</option>

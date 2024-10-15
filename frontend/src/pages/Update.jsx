@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { Loader } from 'lucide-react';
-import { LoaderCircle } from 'lucide-react';
+import { LoaderCircle,ArrowLeftToLine } from 'lucide-react';
 
 
 
@@ -28,13 +27,13 @@ function Update() {
                     setStatus("Attendance")
                     setDropdown("Attendance")
                     // console.log("ATtendance")
-                }else if(response.data.desiredUser.attendanceFlag === true
+                } else if (response.data.desiredUser.attendanceFlag === true
                     && response.data.desiredUser.testPaperFlag === true
                     && response.data.desiredUser.feedbackFlag === false
-                    && response.data.desiredUser.certificateFlag === false){
-                        setStatus("Test Paper")
-                        setDropdown("Test Paper")
-                }else if (response.data.desiredUser.attendanceFlag === true
+                    && response.data.desiredUser.certificateFlag === false) {
+                    setStatus("Test Paper")
+                    setDropdown("Test Paper")
+                } else if (response.data.desiredUser.attendanceFlag === true
                     && response.data.desiredUser.testPaperFlag === true
                     && response.data.desiredUser.feedbackFlag === true
                     && response.data.desiredUser.certificateFlag === false
@@ -42,7 +41,7 @@ function Update() {
                     setStatus("Feedback")
                     setDropdown("Feedback")
                 } else if (response.data.desiredUser.attendanceFlag
-                    && response.data.desiredUser.testPaperFlag 
+                    && response.data.desiredUser.testPaperFlag
                     && response.data.desiredUser.feedbackFlag
                     && response.data.desiredUser.certificateFlag) {
                     setStatus("Certificate")
@@ -77,10 +76,13 @@ function Update() {
             </div>
 
             <div className="border shadow-lg mt-5 mx-5 p-10">
+                <div className=" pb-5">
+                    <Link to={`/dashboard`} className="text-blue-500 flex items-center"><ArrowLeftToLine /><span className="text-lg">DASHBOARD</span></Link>
+                </div>
                 {isLoading ?
                     <div className="pb-12 grid place-items-center">
-                       {/* <Loader className="animate-spin"/> */}
-                       <LoaderCircle className="animate-spin text-xl"/>
+                        {/* <Loader className="animate-spin"/> */}
+                        <LoaderCircle className="animate-spin text-xl" />
                     </div>
                     :
                     <div>

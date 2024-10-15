@@ -166,7 +166,8 @@ export const testDetails = async (req, res) => {
     const CorrectAnswers = Math.floor(Math.random() * 5) + 1;
     try {
 
-        const updateUser = await User.findByIdAndUpdate(userId, { feedbackFlag: true }, { new: true, runValidators: true })
+        const updateUser = await User.findByIdAndUpdate(userId, { feedbackFlag: true, 
+            testPaperFlag:true }, { new: true, runValidators: true })
 
         if (!updateUser) {
             console.log("User not found");
@@ -228,7 +229,7 @@ export const getCertificate = async (req, res) => {
     const trainingDetails = await Master.findById(userDetails.trainingId);
     const testDetails = await Test.find({ userId });
 
-    const percentile = (testDetails[0].CorrectAnswers / testDetails[0].totalQuestion) * 100
+    const percentile = ((testDetails[0]?.CorrectAnswers || 5) / (testDetails[0]?.totalQuestion || 5)) * 100
 
     return res.json({
         userId,
