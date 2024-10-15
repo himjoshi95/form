@@ -80,7 +80,7 @@ function Update() {
                     <Link to={`/dashboard`} className="text-blue-500 flex items-center"><ArrowLeftToLine /><span className="text-lg">DASHBOARD</span></Link>
                 </div>
                 {isLoading ?
-                    <div className="pb-12 grid place-items-center">
+                    <div className="h-24 pb-8 grid place-items-center">
                         {/* <Loader className="animate-spin"/> */}
                         <LoaderCircle className="animate-spin text-xl" />
                     </div>
@@ -88,21 +88,21 @@ function Update() {
                     <div>
                         <div className="pb-10 grid grid-cols-2 gap-4">
                             <div>
-                                Training Program: {user.trainingName}
+                                <span className="font-bold">Training Program:</span> {user.trainingName}
                             </div>
                             <div>
-                                Current Status: {status}
+                                <span className="font-bold">Current Status:</span> {status}
                             </div>
                         </div>
                         <form>
                             <div className="grid grid-cols-3 gap-4">
                                 <div className="flex gap-5">
-                                    <label>Name : {user.desiredUser?.title.slice(0, 1)}{user.desiredUser?.title.slice(1).toLowerCase()}  {user.desiredUser?.firstName} {user.desiredUser?.lastName}</label>
+                                    <label><span className="font-bold">Name:</span> {user.desiredUser?.title.slice(0, 1)}{user.desiredUser?.title.slice(1).toLowerCase()}  {user.desiredUser?.firstName} {user.desiredUser?.lastName}</label>
 
                                 </div>
-                                <div className="flex gap-5">
-                                    <label>Status : </label>
-                                    <select className="w-[200px] px-5 focus:outline-none border"
+                                <div className="flex gap-2 items-center">
+                                    <label className="font-bold">Status : </label>
+                                    <select className="w-[200px] px-5 py-0.5 focus:outline-none border border-blue-500 rounded-full"
                                         value={dropdown}
                                         onChange={(e) => setDropdown(e.target.value)}
                                     >

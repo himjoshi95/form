@@ -52,7 +52,7 @@ function UpdateTrainings() {
                     <Link to={`/dashboard`} className="text-blue-500 flex items-center"><ArrowLeftToLine /><span className="text-lg">DASHBOARD</span></Link>
                 </div>
                 {isLoading ?
-                    <div className="pb-12 grid place-items-center">
+                    <div className="h-24 pb-10 grid place-items-center">
                         {/* <Loader className="animate-spin"/> */}
                         <LoaderCircle className="animate-spin text-xl" />
                     </div>
@@ -60,16 +60,16 @@ function UpdateTrainings() {
                     <div>
                         <div className="pb-10 grid grid-cols-2 gap-4">
                             <div>
-                                Training Program:   {name}
+                                <span className="font-bold">Training Program:</span>   {name}
                             </div>
                             <div>
-                                Current Status: {status === 'Select Status' ? '-' : status}
+                                <span className="font-bold">Current Status:</span> {status === 'Select Status' ? '-' : status}
                             </div>
                         </div>
                         <form>
                             <div className="grid grid-cols-3 gap-4">
                                 <div className="flex items-center gap-2">
-                                    <label>Link</label>
+                                    <label className="font-bold">Link</label>
                                     <select className="w-[120px] px-5 focus:outline-none border border-blue-500 rounded-full cursor-pointer"
                                         value={link}
                                         onChange={(e) => setLink(e.target.value)}
@@ -81,7 +81,7 @@ function UpdateTrainings() {
 
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <label>Status</label>
+                                    <label className="font-bold">Status</label>
                                     <select className="w-[200px] px-5 focus:outline-none border border-blue-500 rounded-full cursor-pointer"
                                         value={dropdown}
                                         onChange={(e) => setDropdown(e.target.value)}
