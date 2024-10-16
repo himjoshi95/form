@@ -13,6 +13,7 @@ import Update from "./pages/Update";
 import Login from "./pages/Login";
 import LoadingSpinner from "./components/LoadingSpinner";
 import UpdateTrainings from "./pages/UpdateTrainings";
+import AddTestPaper from "./pages/AddTestPaper";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -77,6 +78,15 @@ function AppTest() {
                     <ProtectedRoute>
                         <UpdateTrainings />
                     </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path='/add-testpaper/:name/:type'
+                element={
+                    <ProtectedRoute>
+                        <AddTestPaper/>
+                    </ProtectedRoute>    
                 }
             />
 

@@ -33,7 +33,7 @@ const SectionSchema = new mongoose.Schema({
 
 // Define schema for the test paper, which can have multiple sections
 const TestPaperSchema = new mongoose.Schema({
-  title: { type: String, required: true }, // Title of the test paper
+//   title: { type: String, required: true }, // Title of the test paper
   training: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Master', // Reference to the Master schema (training)
