@@ -224,7 +224,20 @@ export const updateTraining = async (req, res) => {
             link: link === 'Yes' ? true : false
         });
 
-        if (dropdown === 'Attendance') {
+        if(dropdown === 'Select Status'){
+            try {
+                return res.json({
+                    message: "Select Status - No Change"
+                })
+                
+            } catch (error) {
+                console.log("Error when dropdown in select Status",error.message)
+                res.json({
+                    message: error.message
+                })
+            }
+
+        }else if (dropdown === 'Attendance') {
             try {
                 const updateAttendance = {
                     attendanceFlag: true,                    

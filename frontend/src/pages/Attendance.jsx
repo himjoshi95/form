@@ -54,29 +54,29 @@ function Attendance(){
                 <div className="flex justify-center">                                    
                     { !isLoading ? (
                         <div className="grid grid-cols-2 gap-4">
-                        <p>Name </p>  
+                        <p className="font-semibold">Name </p>  
                         
-                        <p>{user.desiredUser?.firstName} {user.desiredUser?.lastName}</p>
+                        <p>{user.desiredUser?.title.slice(0,1)}{user.desiredUser?.title.slice(1).toLowerCase()} {user.desiredUser?.firstName} {user.desiredUser?.lastName}</p>
                         {/* <p>{user.desiredUser.title} {user.desiredUser.firstName} {user.desiredUser.lastName}</p> */}
-                        <p>Mobile</p>
+                        <p className="font-semibold">Mobile</p>
                         {/* <p>987</p> */}
                         <p>{user.desiredUser?.mobile}</p>  
-                        <p>Email</p>
+                        <p className="font-semibold">Email</p>
                         {/* <p>h@gmail.com</p> */}
                         <p>{user.desiredUser?.email}</p>
-                        <p>Designation</p>
+                        <p className="font-semibold">Designation</p>
                         {/* <p>Web dev</p> */}
                         <p>{user.desiredUser?.designation}</p>
-                        <p>Company</p>
+                        <p className="font-semibold">Company</p>
                         {/* <p>P</p> */}
                         <p>{user.desiredUser?.company}</p>
-                        <p>Industry</p>
+                        <p className="font-semibold">Industry</p>
                         {/* <p>Tech</p> */}
                         <p>{user.desiredUser?.industry}</p>
-                        <p>City</p>
+                        <p className="font-semibold">City</p>
                         {/* <p>DElhi</p> */}
                         <p>{user.desiredUser?.city}</p>
-                        <p>Training</p>
+                        <p className="font-semibold">Training</p>
                         {/* <p>JS</p> */}
                         <p>{user?.trainingName}</p>
                         {/* <p>{user.desiredUser?.feedbackFlag ?  "True" : "undefined"}</p> */}
