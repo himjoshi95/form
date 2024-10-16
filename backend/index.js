@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./db/connectDB.js";
 import userRoutes from "./routes/user.route.js";
 import adminRoutes from "./routes/admin.route.js";
+import testPaperRoutes from "./routes/testPaper.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/user",userRoutes);
 app.use("/api/admin",adminRoutes);
+app.use("/api/testPaper",testPaperRoutes);
 
 
 app.listen(PORT,()=>{

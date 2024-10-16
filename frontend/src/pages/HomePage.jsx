@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+
 import { useAuthStore } from "../store/authStore";
 
-
-
 function HomePage() {
-
     const [trainings, setTrainings] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -52,14 +50,24 @@ function HomePage() {
         logout();
     }
     return <div>
-        <nav className="border-b h-12 flex justify-between items-center px-5">
+        <nav className="border-b flex justify-between items-center px-5 py-2">
             <h1 className="text-2xl text-center">Trainings</h1>
-            <div>
-                <button onClick={handleLogout} className="border px-2 rounded-full bg-black text-white hover:bg-slate-700 py-1">logout</button>
+            <div className="flex gap-2 items-center">
+                <div className="group relative">                   
+                    <div className="w-10 h-10 border rounded-full flex justify-center items-center bg-slate-400">
+                        <p className="text-white">{admin.username.slice(0,2).toUpperCase()}</p>
+                        <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
+                            <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-5 p-4'>
+                            <button onClick={handleLogout} className="border px-2 rounded-full bg-black text-white hover:bg-slate-700 py-1">logout</button>    
+                            </div>                           
+                        </div>
+                    </div>                    
+                </div>
+                {/* <button onClick={handleLogout} className="border px-2 rounded-full bg-black text-white hover:bg-slate-700 py-1">logout</button> */}
             </div>
         </nav>
         <div className=" border mt-10 mx-5 p-10 shadow-lg">
-
+        {/* {JSON.stringify(admin)} */}
             <h1 className="text-xl pb-5">Trainings Available</h1>
 
 
