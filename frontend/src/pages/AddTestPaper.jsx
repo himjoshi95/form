@@ -244,7 +244,7 @@ function AddTestPaper() {
                                                     type="number"
                                                     value={question.maxMarks}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "mcqMaxMarks", e.target.value)}
-                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
+                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                                     placeholder="Enter maximum marks"
                                                 />
                                             </div>
@@ -276,7 +276,7 @@ function AddTestPaper() {
                                                     type="number"
                                                     value={question.maxMarks}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "shortAnswerMaxMarks", e.target.value)}
-                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
+                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                                     placeholder="Enter maximum marks"
                                                 />
                                             </div>
