@@ -33,9 +33,25 @@ export const addTestPaper = async (req,res) =>{
 
 export const getTestPaper = async (req,res) =>{
     const {type:trainingId} = req.query;
+    
+    try {
 
-    return res.json({
-        trainingId,
-        message: "Get request Success"
-    })
+        const allTestPapers = await TestPaper.find({
+            training: trainingId
+        })
+
+        res.json(allTestPapers)        
+    } catch (error) {
+        console.log("Error in getTestPaper Controller",error.message);
+        res.json({
+            message: error.message
+        })
+    }
+    
+}
+
+export const getSingleTestPaper = async(req,res) =>{    
+    const {id:testId} = req.params;    
+    const desiredTestPaper = await TestPaper.findById(testId);
+    return res.json(desiredTestPaper)
 }

@@ -165,7 +165,7 @@ function AddTestPaper() {
                                         <select
                                             value={question.type}
                                             onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "type", e.target.value)}
-                                            className="border px-2 py-1 w-full"
+                                            className="border-2 px-2 py-1 w-full focus:outline-none focus:border-blue-500 rounded"
                                         >
                                             <option value="MCQ">MCQ</option>
                                             <option value="ShortAnswer">Short Answer</option>
@@ -185,13 +185,13 @@ function AddTestPaper() {
                                 {question.type === "MCQ" && (
                                     <div className="mt-5">
                                         <div className="flex flex-row">
-                                            <label className="font-bold basis-1/4">Question:</label>
+                                            <label className="font-bold basis-1/4">Question {questionIndex+1}:</label>
                                             <div className="basis-3/4">
                                                 <input
                                                     type="text"
                                                     value={question.mcq.question}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "mcqQuestion", e.target.value)}
-                                                    className="border px-2 py-1 w-full"
+                                                    className="border-2 px-2 py-1 w-full focus:outline-none rounded focus:border-blue-500"
                                                     placeholder="Enter MCQ question"
                                                 />
                                             </div>
@@ -206,7 +206,7 @@ function AddTestPaper() {
                                                         type="text"
                                                         value={question.mcq.options[i]}
                                                         onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, option, e.target.value)}
-                                                        className="border px-2 py-1 w-full"
+                                                        className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
                                                     />
                                                 </div>
                                             ))}
@@ -220,7 +220,7 @@ function AddTestPaper() {
                                                     type="text"
                                                     value={question.mcq.correctAnswer}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "correctAnswer", e.target.value)}
-                                                    className="border px-2 py-1 w-full"
+                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
                                                     placeholder="Enter correct answer"
                                                 />
                                             </div>
@@ -232,13 +232,13 @@ function AddTestPaper() {
                                 {question.type === "ShortAnswer" && (
                                     <div className="mt-5">
                                         <div className="flex flex-row">
-                                            <label className="font-bold basis-1/4">Question:</label>
+                                            <label className="font-bold basis-1/4">Question {questionIndex+1}:</label>
                                             <div className="basis-3/4">
                                                 <input
                                                     type="text"
                                                     value={question.shortAnswer.question}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "shortAnswerQuestion", e.target.value)}
-                                                    className="border px-2 py-1 w-full"
+                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
                                                     placeholder="Enter short answer question"
                                                 />
                                             </div>
