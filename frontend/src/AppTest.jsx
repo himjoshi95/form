@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import LoadingSpinner from "./components/LoadingSpinner";
 import UpdateTrainings from "./pages/UpdateTrainings";
 import AddTestPaper from "./pages/AddTestPaper";
+import AddTestPaper2 from "./pages/AddTestPaper2";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -86,6 +87,15 @@ function AppTest() {
                 element={
                     <ProtectedRoute>
                         <AddTestPaper/>
+                    </ProtectedRoute>    
+                }
+            />
+
+            <Route
+                path='/add-testpaper2/:name/:type'
+                element={
+                    <ProtectedRoute>
+                        <AddTestPaper2/>
                     </ProtectedRoute>    
                 }
             />
