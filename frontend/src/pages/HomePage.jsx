@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { CirclePlus } from 'lucide-react';
+import { CirclePlus, View } from 'lucide-react';
 import axios from "axios";
 
 
@@ -108,6 +108,7 @@ function HomePage() {
                         <th className="border text-center">Training Links</th>
                         <th className="border text-center">Status</th>
                         <th className="border text-center">Add Test Paper</th>                        
+                        <th className="border text-center">View Test Paper</th>                        
                     </tr>
                 </thead>
                 <tbody>
@@ -117,8 +118,8 @@ function HomePage() {
                                 <td className="p-2 border">{index+1}</td>
                                 <td className="p-2 border"><Link className="flex flex-row" to={`/training/${item.name}/${item._id}`}> <span className="basis-1/4">Training - {item.name}</span> <span className="basis-3/4 underline text-blue-500"> {`http://localhost:5173/training/${item.name}/${item._id}`}</span></Link></td>
                                 <td className="p-2 border"><Link to={`/training-update/${item.name}/${item._id}`} className="text-blue-500 underline" >view/edit</Link></td>
-                                <td className="p-2  flex justify-center items-center text-blue-500"><Link to={`/add-testpaper/${item.name}/${item._id}`}><CirclePlus/></Link></td>
-                                
+                                <td className="p-2 border text-blue-500"><Link className="flex justify-center" to={`/add-testpaper/${item.name}/${item._id}`}><CirclePlus className="hover:bg-blue-500 rounded-full hover:text-white"/></Link></td>
+                                <td className="p-2 border"><Link className="flex justify-center" to={`/view-testpaper/${item.name}/${item._id}`}><View className="text-blue-500 cursor-pointer"/></Link></td>    
                             </tr>
                         )
                         )

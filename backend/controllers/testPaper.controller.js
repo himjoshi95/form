@@ -30,3 +30,12 @@ export const addTestPaper = async (req,res) =>{
         })
     }
 }
+
+export const getTestPaper = async (req,res) =>{
+    const {type:trainingId} = req.query;
+
+    return res.json({
+        trainingId,
+        message: "Get request Success"
+    })
+}

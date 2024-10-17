@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeftToLine, BookMarked, Pin, SquarePlus, Trash2 } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 import axios from "axios";
 
@@ -132,7 +133,7 @@ function AddTestPaper() {
 
                 {/* Section Form */}
                 {sectionsArray.map((section, sectionIndex) => (
-                    <div key={sectionIndex} className="border p-5 mt-5 rounded-lg">
+                    <div key={sectionIndex} className="border border-blue-300 p-5 mt-5 rounded-lg">
                         <div className="flex flex-row">
                             <label className="font-bold basis-1/4">Section Title:</label>
                             <div className="basis-1/2">
