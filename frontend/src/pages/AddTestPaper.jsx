@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeftToLine, BookMarked, Pin, SquarePlus, Trash2 } from "lucide-react";
+import { ArrowLeftToLine, BookMarked, SquarePlus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -40,7 +40,9 @@ function AddTestPaper() {
                 question: "",
                 options: ["", "", "", ""],  // 4 empty options
                 correctAnswer: "",
+                maxMarks: "",
             },
+           
         });
         setSectionsArray(newSections);
     };
@@ -77,12 +79,14 @@ function AddTestPaper() {
                     question: "",
                     options: ["", "", "", ""],
                     correctAnswer: "",
+                    maxMarks: "",
                 };
             } else if (value === "ShortAnswer") {
                 delete question.mcq;
                 question.shortAnswer = {
                     question: "",
                     answer: "",
+                    maxMarks: "",
                 };
             }
         } else if (field === "mcqQuestion") {
@@ -96,6 +100,12 @@ function AddTestPaper() {
             question.shortAnswer.question = value;
         } else if (field === "shortAnswer") {
             question.shortAnswer.answer = value;
+        } else if (field === "maxMarks") {
+            question.maxMarks = value;  // Set maxMarks
+        }else if (field === "mcqMaxMarks") {
+            question.mcq.maxMarks = value;
+        } else if (field === "shortAnswerMaxMarks") {
+            question.shortAnswer.maxMarks = value;
         }
 
         setSectionsArray(newSections);
@@ -185,7 +195,7 @@ function AddTestPaper() {
                                 {question.type === "MCQ" && (
                                     <div className="mt-5">
                                         <div className="flex flex-row">
-                                            <label className="font-bold basis-1/4">Question {questionIndex+1}:</label>
+                                            <label className="font-bold basis-1/4">Question {questionIndex + 1}:</label>
                                             <div className="basis-3/4">
                                                 <input
                                                     type="text"
@@ -225,6 +235,20 @@ function AddTestPaper() {
                                                 />
                                             </div>
                                         </div>
+
+                                        {/* Max Marks for MCQ */}
+                                        <div className="mt-5 flex flex-row">
+                                            <label className="font-bold basis-1/4">Max Marks:</label>
+                                            <div className="basis-3/4">
+                                                <input
+                                                    type="number"
+                                                    value={question.maxMarks}
+                                                    onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "mcqMaxMarks", e.target.value)}
+                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
+                                                    placeholder="Enter maximum marks"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
 
@@ -232,7 +256,7 @@ function AddTestPaper() {
                                 {question.type === "ShortAnswer" && (
                                     <div className="mt-5">
                                         <div className="flex flex-row">
-                                            <label className="font-bold basis-1/4">Question {questionIndex+1}:</label>
+                                            <label className="font-bold basis-1/4">Question {questionIndex + 1}:</label>
                                             <div className="basis-3/4">
                                                 <input
                                                     type="text"
@@ -240,6 +264,20 @@ function AddTestPaper() {
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "shortAnswerQuestion", e.target.value)}
                                                     className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
                                                     placeholder="Enter short answer question"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Max Marks for Short Answer */}
+                                        <div className="mt-5 flex flex-row">
+                                            <label className="font-bold basis-1/4">Max Marks:</label>
+                                            <div className="basis-3/4">
+                                                <input
+                                                    type="number"
+                                                    value={question.maxMarks}
+                                                    onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "shortAnswerMaxMarks", e.target.value)}
+                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
+                                                    placeholder="Enter maximum marks"
                                                 />
                                             </div>
                                         </div>

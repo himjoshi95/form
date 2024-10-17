@@ -9,13 +9,15 @@ const MCQSchema = new mongoose.Schema({
     validate: [arrayLimit, '{PATH} must have 4 options'], 
     required: true
   },
-  correctAnswer: { type: String, required: true } 
+  correctAnswer: { type: String, required: true },
+  maxMarks: {type:Number, required:true, min:0}     
 });
 
 
 const ShortAnswerSchema = new mongoose.Schema({
   question: { type: String, required: true },
-  answer: { type: String }
+  answer: { type: String },
+  maxMarks: {type:Number,required:true, min:0}
 });
 
 

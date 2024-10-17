@@ -33,7 +33,7 @@ function SingleTestPaper() {
                                {/* {JSON.stringify(section.questions)} */}
 
                                {section.questions.map((item,index)=>(
-                                <div key={index} className="py-5 border-b">
+                                <div key={index} className="py-5 border-b border-b-blue-200">
                                     {item.type === 'MCQ' ? 
                                     <div>
                                         <div className="text-lg">
@@ -46,12 +46,16 @@ function SingleTestPaper() {
                                         </div>
                                         <div>
                                             <p><span className="font-bold">Correct Answer: {item.mcq.correctAnswer}</span></p>
+                                            <p><span className="font-bold">Maximum Marks: {item?.mcq?.maxMarks || 2}</span></p>
                                         </div>
                                     </div>
                                        :
                                     <div>
                                         <div>
-                                           Q{index+1} {item.shortAnswer.question} - SHORT ANSWER
+                                           Q{index+1} {item.shortAnswer.question} - SHORT ANSWER                                           
+                                        </div>
+                                        <div>
+                                            <p className="font-bold">Maximum Marks: {item?.shortAnswer?.maxMarks || 5}</p>
                                         </div>
                                     </div> 
                                 }
