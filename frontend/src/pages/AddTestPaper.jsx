@@ -444,27 +444,30 @@ function AddTestPaper() {
 
             {/* Rich Text Editor Modal */}
             {isEditorVisible && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 ">
-                    <div className="bg-white p-5 rounded-lg shadow-lg h-96 w-96">
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+                    <div className="bg-white p-5 rounded-lg shadow-lg h-[500px]">
                         {/* <ReactQuill theme="snow" value={editorContent} onChange={setEditorContent} ref={editorRef} /> */}
                         <JoditEditor
                             ref={editorRef}
                             value={editorContent}
                             onChange={setEditorContent}
+                            
                         />
-                        <div className="flex justify-end mt-3 gap-3">
-                            <button
-                                onClick={handleEditorSubmit}
-                                className="bg-blue-500 text-white px-4 py-2 rounded"
-                            >
-                                Submit
-                            </button>
-                            <button
-                                onClick={() => setIsEditorVisible(false)}
-                                className="bg-red-500 text-white px-4 py-2 rounded"
-                            >
-                                Cancel
-                            </button>
+                        <div>
+                            <div className="flex justify-end gap-3 mt-10">
+                                <button
+                                    onClick={handleEditorSubmit}
+                                    className="bg-white text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-lg duration-200"
+                                >
+                                    Submit
+                                </button>
+                                <button
+                                    onClick={() => setIsEditorVisible(false)}
+                                    className="bg-white text-red-500 border border-red-200 hover:bg-red-500 hover:text-white px-4 py-2 rounded-lg duration-200"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

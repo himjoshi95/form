@@ -54,10 +54,10 @@ function ViewTestPaper(){
                                     </div>
                                 </Link>
                            </div>
-                           <div className="flex justify-center mt-1">
+                           <div className="flex justify-center mt-3">
                                 {/* <Link to={`/view/${name}/paper/${index+1}/${test._id}`} className="text-blue-500 underline">view </Link> */}
                                 <button 
-                                    className="flex items-center gap-2 text-red-300 hover:text-red-500"
+                                    className="flex items-center gap-2 border px-2 rounded-full hover:border-red-500 text-red-300 hover:text-red-500 duration-200"
                                     onClick={()=>handleDelete(`${test._id}`)}
                                 > Delete <Trash2 className="size-4"/>
                                 </button>
