@@ -1,6 +1,7 @@
 import axios from "axios";
+import { ArrowLeftToLine } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function SingleTestPaper() {
 
@@ -11,7 +12,7 @@ function SingleTestPaper() {
     useEffect(()=>{
         axios.get(`${API_URL}/api/testPaper/single/${testId}`)
         .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             setTest(response.data)
         })
         .catch(error => console.log(error))
@@ -24,7 +25,9 @@ function SingleTestPaper() {
             </div>
 
             <div className="h-fit border shadow-lg mt-5 mx-5 p-10">
-                {/* { JSON.stringify(test.sections)} */}
+            <div className="pb-5">
+                    <Link to={`/view-testpaper/${name}/${test?.training}`} className="text-blue-500 flex items-center"><ArrowLeftToLine /><span className="text-lg">TEST PAPER DASHBOARD</span></Link>
+                </div>
                 {
                     test.sections?.map((section,sectionIndex)=>(
                         <div key={sectionIndex} className="border mb-5 p-2">
@@ -41,7 +44,7 @@ function SingleTestPaper() {
                                         </div>
                                         <div>
                                             {item.mcq.options.map((option,index)=>(
-                                                <div><span className="font-bold">Option {index+1}:</span> {option}</div>
+                                                <div key={index}><span className="font-bold">Option {index+1}:</span> {option}</div>
                                             ))}
                                         </div>
                                         <div>

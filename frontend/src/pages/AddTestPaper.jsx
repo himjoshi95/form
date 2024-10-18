@@ -222,7 +222,7 @@ function AddTestPaper() {
                                             ))}
                                         </div>
 
-                                        {/* Correct Answer */}
+                                        {/* Correct Answer 1
                                         <div className="mt-5 flex flex-row">
                                             <label className="font-bold basis-1/4">Correct Answer:</label>
                                             <div className="basis-3/4">
@@ -233,6 +233,26 @@ function AddTestPaper() {
                                                     className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
                                                     placeholder="Enter correct answer"
                                                 />
+                                            </div>
+                                        </div> */}
+                                        
+                                        {/* Correct Answer 2 */}
+                                        <div className="mt-5 flex flex-row">
+                                            <label className="font-bold basis-1/4">Correct Answer:</label>
+                                            <div className="basis-3/4">
+                                                <select
+                                                    value={question.mcq.correctAnswer}
+                                                    onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "correctAnswer", e.target.value)}
+                                                    className="border-2 px-2 py-1 w-full focus:outline-none focus:border-blue-500 rounded"
+                                                >   
+                                                    <option>Please select Correct Answer</option>
+                                                    <option value="Option 1">Option 1</option>
+                                                    <option value="Option 2">Option 2</option>
+                                                    <option value="Option 3">Option 3</option>
+                                                    <option value="Option 4">Option 4</option>
+
+                                                </select>
+                                                
                                             </div>
                                         </div>
 
