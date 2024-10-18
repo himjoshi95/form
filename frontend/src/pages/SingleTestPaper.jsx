@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ArrowLeftToLine } from "lucide-react";
+import { ArrowLeftToLine, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -39,8 +39,14 @@ function SingleTestPaper() {
                                 <div key={index} className="py-5 border-b border-b-blue-200">
                                     {item.type === 'MCQ' ? 
                                     <div>
-                                        <div className="text-lg">
-                                           Q.{index+1} {item.mcq.question}
+                                        <div className="text-lg flex justify-between">
+                                            <div>
+                                                Q.{index+1} {item.mcq.question}
+                                            </div>
+                                            <div className="flex gap-5">
+                                                <button className="text-blue-300 hover:text-blue-500" onClick={()=>handleMcqUpdate()}><Pencil className="size-5"/></button>
+                                                <button className="text-red-300 hover:text-red-500" onClick={()=>handleMcqDelete()}><Trash2 className="size-5"/></button>
+                                            </div>
                                         </div>
                                         <div>
                                             {item.mcq.options.map((option,index)=>(
@@ -54,8 +60,14 @@ function SingleTestPaper() {
                                     </div>
                                        :
                                     <div>
-                                        <div>
-                                           Q{index+1} {item.shortAnswer.question} - SHORT ANSWER                                           
+                                        <div className="flex justify-between">
+                                            <div>
+                                                Q{index+1} {item.shortAnswer.question} - SHORT ANSWER                      
+                                            </div>
+                                            <div className="flex gap-5">
+                                                <button className="text-blue-300 hover:text-blue-500" onClick={()=>handleShortAnswerUpdate()}><Pencil className="size-5"/></button>
+                                                <button className="text-red-300 hover:text-red-500" onClick={()=>handleShortAnswerDelete()}><Trash2 className="size-5"/></button>
+                                            </div>
                                         </div>
                                         <div>
                                             <p className="font-bold">Maximum Marks: {item?.shortAnswer?.maxMarks || 5}</p>
