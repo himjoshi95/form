@@ -73,3 +73,18 @@ export const deleteTestPaper = async (req, res) => {
         })
     }
 }
+
+export const deleteQuestion = async (req,res) =>{
+    const {id:QuestionId} = req.params;
+    try {
+        console.log(QuestionId)
+        return res.json({
+            message: "QuestionID"
+        })
+    } catch (error) {
+        console.log("Error in controller",error.message);
+        return res.json({
+            message:error.message
+        })        
+    }
+}

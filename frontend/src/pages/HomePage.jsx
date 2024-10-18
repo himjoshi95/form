@@ -51,11 +51,11 @@ function HomePage() {
         logout();
     }
     return <div>
-        <nav className="border-b flex justify-between items-center px-5 py-2">
-            <h1 className="text-2xl text-center">Trainings</h1>
+        <nav className="border-b flex justify-between items-center px-5 py-2 bg-gradient-to-r from-zinc-100 to-zinc-200">
+            <h1 className="text-2xl font-semibold text-center">Trainings</h1>
             <div className="flex gap-2 items-center">
                 <div className="group relative">                   
-                    <div className="w-10 h-10 border rounded-full flex justify-center items-center bg-slate-400">
+                    <div className="w-10 h-10 border rounded-full flex justify-center items-center bg-slate-600">
                         <p className="text-white">{admin.username.slice(0,2).toUpperCase()}</p>
                         <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
                             <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-5 p-4'>

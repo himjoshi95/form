@@ -18,6 +18,8 @@ function SingleTestPaper() {
         .catch(error => console.log(error))
     },[])
 
+    
+
     return (
         <div>
             <div className="flex justify-center border py-5 mt-2 shadow-lg">
@@ -44,8 +46,8 @@ function SingleTestPaper() {
                                                 Q.{index+1} {item.mcq.question}
                                             </div>
                                             <div className="flex gap-5">
-                                                <button className="text-blue-300 hover:text-blue-500" onClick={()=>handleMcqUpdate()}><Pencil className="size-5"/></button>
-                                                <button className="text-red-300 hover:text-red-500" onClick={()=>handleMcqDelete()}><Trash2 className="size-5"/></button>
+                                                <button className="text-blue-300 hover:text-blue-500" ><Pencil className="size-5"/></button>
+                                                <button className="text-red-300 hover:text-red-500" ><Trash2 className="size-5"/></button>
                                             </div>
                                         </div>
                                         <div>
@@ -65,8 +67,8 @@ function SingleTestPaper() {
                                                 Q{index+1} {item.shortAnswer.question} - SHORT ANSWER                      
                                             </div>
                                             <div className="flex gap-5">
-                                                <button className="text-blue-300 hover:text-blue-500" onClick={()=>handleShortAnswerUpdate()}><Pencil className="size-5"/></button>
-                                                <button className="text-red-300 hover:text-red-500" onClick={()=>handleShortAnswerDelete()}><Trash2 className="size-5"/></button>
+                                                <button className="text-blue-300 hover:text-blue-500" ><Pencil className="size-5"/></button>
+                                                <button className="text-red-300 hover:text-red-500" ><Trash2 className="size-5"/></button>
                                             </div>
                                         </div>
                                         <div>
