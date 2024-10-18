@@ -114,6 +114,49 @@ function AddTestPaper() {
     // Handle submitting the test paper to the backend
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        for (const section of sectionsArray) {
+            if (!section.sectionTitle.trim()) {
+                toast.error("Section title cannot be empty");
+                return;  // Stop submission if any section title is empty
+            }
+    
+            for (const question of section.questions) {
+                if (question.type === "MCQ") {
+                    if (!question.mcq.question.trim()) {
+                        toast.error("MCQ question cannot be empty");
+                        return;
+                    }
+                    if (question.mcq.options.some(option => !option.trim())) {
+                        toast.error("All MCQ options must be filled");
+                        return;
+                    }
+                    if (!question.mcq.correctAnswer.trim()) {
+                        toast.error("Correct answer must be selected");
+                        return;
+                    }
+                    if (!question.mcq.maxMarks) {
+                        toast.error("Max marks for MCQ cannot be empty");
+                        return;
+                    }
+                } else if (question.type === "ShortAnswer") {
+                    if (!question.shortAnswer.question.trim()) {
+                        toast.error("Short answer question cannot be empty");
+                        return;
+                    }
+                    if (!question.shortAnswer.maxMarks) {
+                        toast.error("Max marks for short answer cannot be empty");
+                        return;
+                    }
+                }
+            }
+        }
+
+        if(sectionsArray.length === 0){
+            toast.error("Please Add a Section");
+            return;
+        }
+
         const submit = confirm("Are you sure you want to post the Question Paper?");
         if (submit) {
             try {

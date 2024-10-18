@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ArrowLeftToLine, Eye } from "lucide-react";
+import { ArrowLeftToLine, Eye, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -8,17 +8,30 @@ function ViewTestPaper(){
     const {name,type} = useParams();
 
     const [tests,setTests] = useState([]);
+    const [loading,setLoading] = useState(false);
 
     const API_URL = "http://localhost:3000";
     
     useEffect(()=>{
         axios.get(`${API_URL}/api/testPaper/?type=${type}`)
         .then(response => {
-            // console.log(response.data);
+            console.log(response.data);
             setTests(response.data);
         })
         .catch(err => console.log(err))
-    },[])
+    },[loading])
+
+    const handleDelete = async(testId) =>{
+
+        const submit = confirm("Are you sure you want to delete ?")
+        if(submit){
+            // console.log(submit,testId)
+            setLoading(prev => !prev);
+            const response = await axios.delete(`${API_URL}/api/testPaper/deleteTestPaper/${testId}`)
+            console.log(response.data)
+            setLoading(prev => !prev);
+        }
+    }
 
     return (
         <div>
@@ -31,7 +44,7 @@ function ViewTestPaper(){
                         <Link to={`/dashboard`} className="text-blue-500 flex items-center"><ArrowLeftToLine /><span className="text-lg">DASHBOARD</span></Link>
                 </div>
 
-                <div className="grid grid-cols-5 gap-5">
+                <div className="grid grid-cols-2 gap-10 md:grid-cols-5 md:gap-5">
                     { tests.length > 0 ? tests.map((test,index) =>(
                         <div key={index} className="border h-44 rounded-lg  shadow-lg" >
                            <div className="p-5 h-full"> 
@@ -41,8 +54,13 @@ function ViewTestPaper(){
                                     </div>
                                 </Link>
                            </div>
-                           <div className="flex justify-center">
-                                <Link to={`/view/${name}/paper/${index+1}/${test._id}`} className="text-blue-500 underline">view </Link>
+                           <div className="flex justify-center mt-1">
+                                {/* <Link to={`/view/${name}/paper/${index+1}/${test._id}`} className="text-blue-500 underline">view </Link> */}
+                                <button 
+                                    className="flex items-center gap-2 text-red-300 hover:text-red-500"
+                                    onClick={()=>handleDelete(`${test._id}`)}
+                                > Delete <Trash2 className="size-4"/>
+                                </button>
                            </div>
                         </div>                        
                     ))
