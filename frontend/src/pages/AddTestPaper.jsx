@@ -1,9 +1,13 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeftToLine, BookMarked, SquarePlus, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import toast from "react-hot-toast";
 
 import axios from "axios";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
+
+import JoditEditor from 'jodit-react';
 
 function AddTestPaper() {
     const { name, type } = useParams();
@@ -16,6 +20,13 @@ function AddTestPaper() {
             questions: [],
         },
     ]);
+
+    // Rich Text Editor state
+    const [isEditorVisible, setIsEditorVisible] = useState(false);
+    const [editorContent, setEditorContent] = useState(""); // Editor content
+    const [focusedField, setFocusedField] = useState(null); // Track which field is focused
+
+    const editorRef = useRef(null); // Ref to access editor content
 
     // Function to handle adding a new section
     const addNewSection = () => {
@@ -42,7 +53,7 @@ function AddTestPaper() {
                 correctAnswer: "",
                 maxMarks: "",
             },
-           
+
         });
         setSectionsArray(newSections);
     };
@@ -102,13 +113,45 @@ function AddTestPaper() {
             question.shortAnswer.answer = value;
         } else if (field === "maxMarks") {
             question.maxMarks = value;  // Set maxMarks
-        }else if (field === "mcqMaxMarks") {
+        } else if (field === "mcqMaxMarks") {
             question.mcq.maxMarks = value;
         } else if (field === "shortAnswerMaxMarks") {
             question.shortAnswer.maxMarks = value;
         }
 
         setSectionsArray(newSections);
+    };
+
+    // Open editor in iframe for a specific field and set its current value
+    const handleFocus = (sectionIndex, questionIndex, field) => {
+        const currentQuestion = sectionsArray[sectionIndex].questions[questionIndex];
+
+        let fieldContent = "";
+        if (field === "mcqQuestion") {
+            fieldContent = currentQuestion.mcq.question;
+        } else if (field === "shortAnswerQuestion") {
+            fieldContent = currentQuestion.shortAnswer.question;
+        }
+
+        //Add more here.......
+        setFocusedField({ sectionIndex, questionIndex, field })
+        setIsEditorVisible(true);
+        setEditorContent(fieldContent); // Set the current content of the input to the editor
+    };
+
+    // Submit rich text content to the corresponding field
+    const handleEditorSubmit = () => {
+        const { sectionIndex, questionIndex, field } = focusedField;
+
+        // 
+        const editorInstance = editorRef.current;
+        const htmlContent = editorInstance.value;
+
+        // Get plain text from the editor (strips out HTML)
+        const plainText = htmlContent.replace(/<[^>]*>?/gm, '').trim();
+        handleQuestionChange(sectionIndex, questionIndex, field, plainText);
+
+        setIsEditorVisible(false);
     };
 
     // Handle submitting the test paper to the backend
@@ -120,7 +163,7 @@ function AddTestPaper() {
                 toast.error("Section title cannot be empty");
                 return;  // Stop submission if any section title is empty
             }
-    
+
             for (const question of section.questions) {
                 if (question.type === "MCQ") {
                     if (!question.mcq.question.trim()) {
@@ -152,7 +195,7 @@ function AddTestPaper() {
             }
         }
 
-        if(sectionsArray.length === 0){
+        if (sectionsArray.length === 0) {
             toast.error("Please Add a Section");
             return;
         }
@@ -164,7 +207,7 @@ function AddTestPaper() {
                     type,
                     sections: sectionsArray,  // Send sectionsArray in the correct format
                 });
-                console.log(response.data);
+                // console.log(response.data);
                 toast.success("Succesfully added Test Paper")
             } catch (error) {
                 console.error("Error submitting the test paper:", error);
@@ -234,18 +277,25 @@ function AddTestPaper() {
                                     </div>
                                 </div>
 
+                                
+
                                 {/* MCQ Input Fields */}
                                 {question.type === "MCQ" && (
                                     <div className="mt-5">
                                         <div className="flex flex-row">
                                             <label className="font-bold basis-1/4">Question {questionIndex + 1}:</label>
                                             <div className="basis-3/4">
+                                                {/* <div dangerouslySetInnerHTML={{ __html: editorContent }}></div> */}
                                                 <input
                                                     type="text"
                                                     value={question.mcq.question}
+                                                    // ONFOCUS
+                                                    readOnly
+                                                    onFocus={() => handleFocus(sectionIndex, questionIndex, "mcqQuestion")}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "mcqQuestion", e.target.value)}
                                                     className="border-2 px-2 py-1 w-full focus:outline-none rounded focus:border-blue-500"
                                                     placeholder="Enter MCQ question"
+                                                    
                                                 />
                                             </div>
                                         </div>
@@ -278,7 +328,7 @@ function AddTestPaper() {
                                                 />
                                             </div>
                                         </div> */}
-                                        
+
                                         {/* Correct Answer 2 */}
                                         <div className="mt-5 flex flex-row">
                                             <label className="font-bold basis-1/4">Correct Answer:</label>
@@ -287,7 +337,7 @@ function AddTestPaper() {
                                                     value={question.mcq.correctAnswer}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "correctAnswer", e.target.value)}
                                                     className="border-2 px-2 py-1 w-full focus:outline-none focus:border-blue-500 rounded"
-                                                >   
+                                                >
                                                     <option>Please select Correct Answer</option>
                                                     <option value="Option 1">Option 1</option>
                                                     <option value="Option 2">Option 2</option>
@@ -295,7 +345,7 @@ function AddTestPaper() {
                                                     <option value="Option 4">Option 4</option>
 
                                                 </select>
-                                                
+
                                             </div>
                                         </div>
 
@@ -324,6 +374,9 @@ function AddTestPaper() {
                                                 <input
                                                     type="text"
                                                     value={question.shortAnswer.question}
+                                                    // ONFOCUS
+                                                    readOnly
+                                                    onFocus={() => handleFocus(sectionIndex, questionIndex, "shortAnswerQuestion")}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "shortAnswerQuestion", e.target.value)}
                                                     className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
                                                     placeholder="Enter short answer question"
@@ -389,6 +442,33 @@ function AddTestPaper() {
                 </div>
             </div>
 
+            {/* Rich Text Editor Modal */}
+            {isEditorVisible && (
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 ">
+                    <div className="bg-white p-5 rounded-lg shadow-lg h-96 w-96">
+                        {/* <ReactQuill theme="snow" value={editorContent} onChange={setEditorContent} ref={editorRef} /> */}
+                        <JoditEditor
+                            ref={editorRef}
+                            value={editorContent}
+                            onChange={setEditorContent}
+                        />
+                        <div className="flex justify-end mt-3 gap-3">
+                            <button
+                                onClick={handleEditorSubmit}
+                                className="bg-blue-500 text-white px-4 py-2 rounded"
+                            >
+                                Submit
+                            </button>
+                            <button
+                                onClick={() => setIsEditorVisible(false)}
+                                className="bg-red-500 text-white px-4 py-2 rounded"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </div>
     )

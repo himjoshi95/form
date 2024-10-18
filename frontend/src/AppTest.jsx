@@ -17,6 +17,7 @@ import AddTestPaper from "./pages/AddTestPaper";
 import AddTestPaper2 from "./pages/AddTestPaper2";
 import ViewTestPaper from "./pages/ViewTestPaper";
 import SingleTestPaper from "./pages/SingleTestPaper";
+import RichAddTestPaper from "./pages/RichAddTestPaper";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -83,6 +84,15 @@ function AppTest() {
                     </ProtectedRoute>
                 }
             />
+
+            {/* <Route
+                path='/add-testpaper/:name/:type'
+                element={
+                    <ProtectedRoute>
+                        <AddTestPaper/>
+                    </ProtectedRoute>    
+                }
+            /> */}
 
             <Route
                 path='/add-testpaper/:name/:type'
