@@ -180,7 +180,7 @@ function HomePage() {
                             <tr key={index} className="border">
                                 <td className="p-2 border">{index+1}.</td>
                                 <td className="p-2 border">{item.title.slice(0,1)}{item.title.slice(1).toLowerCase()}  {item.firstName} {item.lastName}</td>
-                                <td className="p-2 border">{item.trainingId.name}</td>
+                                <td className="p-2 border">{item?.trainingId?.name}</td>
                                 <td className="p-2 border"><Link className="text-blue-500 underline" to={`/attendance/${item._id}`}>{`http://localhost:5173/training/${item.trainingId.name}/${item.trainingId._id}`}</Link></td>
                                 <td className="p-2 border"><Link className="text-blue-500 underline" to={`/update-status/${item._id}`}>view/edit</Link></td>
                             </tr>
