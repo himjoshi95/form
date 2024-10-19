@@ -320,7 +320,7 @@ function AddTestPaper() {
 
     return (
         <div>
-            <div className="flex justify-center border py-5 mt-2 shadow-lg">
+            <div className="flex justify-center border py-5 shadow-lg bg-white">
                 <h1 className="text-md font-medium">{name.toUpperCase()} - ADD TEST PAPER</h1>
             </div>
 
@@ -545,7 +545,7 @@ function AddTestPaper() {
             {/* Rich Text Editor Modal */}
             {isEditorVisible && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-                    <div style={{ maxWidth: editorConfig.width, margin: "0 auto" }}>
+                    <div className="rounded" style={{ maxWidth: editorConfig.width, margin: "0 auto",background:"white",padding:"10px", paddingBottom:"10px" }}>
                         {/* <ReactQuill theme="snow" value={editorContent} onChange={setEditorContent} ref={editorRef} /> */}
                         <JoditEditor
                             ref={editorRef}
@@ -558,13 +558,13 @@ function AddTestPaper() {
                             <div className="flex justify-end gap-3 mt-10">
                                 <button
                                     onClick={handleEditorSubmit}
-                                    className="bg-white text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-lg duration-200"
+                                    className="bg-blue-400 text-white border border-blue-500 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-lg duration-200"
                                 >
                                     Submit
                                 </button>
                                 <button
                                     onClick={() => setIsEditorVisible(false)}
-                                    className="bg-white text-red-500 border border-red-200 hover:bg-red-500 hover:text-white px-4 py-2 rounded-lg duration-200"
+                                    className="bg-red-400 text-white border border-red-200 hover:bg-red-600 hover:text-white px-4 py-2 rounded-lg duration-200"
                                 >
                                     Cancel
                                 </button>
