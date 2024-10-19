@@ -16,7 +16,7 @@ function ViewTestPaper(){
         axios.get(`${API_URL}/api/testPaper/?type=${type}`)
         .then(response => {
             console.log(response.data);
-            setTests(response.data);
+            // setTests(response.data);
         })
         .catch(err => console.log(err))
     },[loading])

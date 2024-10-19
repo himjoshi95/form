@@ -33,7 +33,9 @@ function SingleTestPaper() {
                 {
                     test.sections?.map((section,sectionIndex)=>(
                         <div key={sectionIndex} className="border mb-5 p-2">
-                            <p className="font-bold text-lg pb-5">{section.sectionTitle}</p>
+                            <div className="flex justify-center">
+                                <p className="font-bold text-xl pb-5 underline">{section.sectionTitle}</p>
+                            </div>
                             <div>
                                {/* {JSON.stringify(section.questions)} */}
 
@@ -43,7 +45,7 @@ function SingleTestPaper() {
                                     <div>
                                         <div className="text-lg flex justify-between">
                                             <div className="flex gap-2">
-                                                <div>
+                                                <div className="font-bold">
                                                     <span className="text-lg">Q.</span>{index+1}
                                                 </div>
                                                 <div dangerouslySetInnerHTML={{ __html: item.mcq.question }}></div>
@@ -66,9 +68,9 @@ function SingleTestPaper() {
                                        :
                                     <div>
                                         <div className="flex justify-between">
-                                            <div className="flex gap-3">
+                                            <div className="flex gap-3 items-center">
                                                 <div>
-                                                    <span>
+                                                    <span className="font-bold">
                                                             <span className="text-lg">Q.</span>{index+1}
                                                     </span>
                                                 </div>

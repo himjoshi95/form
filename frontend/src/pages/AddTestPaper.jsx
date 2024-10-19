@@ -293,7 +293,7 @@ function AddTestPaper() {
                                                     readOnly
                                                     onFocus={() => handleFocus(sectionIndex, questionIndex, "mcqQuestion")}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "mcqQuestion", e.target.value)}
-                                                    className="border-2 px-2 py-1 w-full focus:outline-none rounded focus:border-blue-500 text-gray-500"
+                                                    className="border-2 px-2 py-1 w-full md:w-[540px] focus:outline-none rounded focus:border-blue-500 text-gray-500"
                                                     placeholder="Enter MCQ question"
                                                     
                                                 />
@@ -379,7 +379,7 @@ function AddTestPaper() {
                                                     readOnly
                                                     onFocus={() => handleFocus(sectionIndex, questionIndex, "shortAnswerQuestion")}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "shortAnswerQuestion", e.target.value)}
-                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500 text-gray-400"
+                                                    className="border-2 px-2 py-1 w-full md:w-[540px] rounded focus:outline-none focus:border-blue-500 text-gray-400"
                                                     placeholder="Enter short answer question"
                                                 />
                                             </div>
@@ -446,13 +446,13 @@ function AddTestPaper() {
             {/* Rich Text Editor Modal */}
             {isEditorVisible && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-                    <div className="bg-white p-5 rounded-lg shadow-lg h-[500px]">
+                    <div className="bg-white p-5 rounded-lg shadow-lg">
                         {/* <ReactQuill theme="snow" value={editorContent} onChange={setEditorContent} ref={editorRef} /> */}
                         <JoditEditor
                             ref={editorRef}
                             value={editorContent}
                             onChange={setEditorContent}
-                            
+                                                     
                         />
                         <div>
                             <div className="flex justify-end gap-3 mt-10">
