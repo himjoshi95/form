@@ -13,11 +13,12 @@ const masterSchema = new mongoose.Schema({
     link:{
         type:Boolean,
         default:true
-    }
+    },
+    trainers:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Admin'
+    }]
 },{ timestamps: true})
-
-
-
 
 export const Master = mongoose.model("Master", masterSchema);
 

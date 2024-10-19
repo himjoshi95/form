@@ -29,7 +29,7 @@ export const signup = async (req, res) => {
         }
 
         const adminAlreadyExists = await Admin.findOne({ username });
-        console.log("adminAlreadyExists", adminAlreadyExists);
+        // console.log("adminAlreadyExists", adminAlreadyExists);
 
         if (adminAlreadyExists) {
             return res.status(400).json({
@@ -115,21 +115,42 @@ export const logout = async (req, res) => {
 
 export const addMaster = async (req, res) => {
     const { name } = req.body;
-    const newMaster = await Master.create({
-        name
-    });
-
-    return res.json({
-        message: "Data inserted",
-        id: newMaster._id,
-        name: newMaster.name
-    });
-};
-
-export const allTrainings = async (req, res) => {
 
     try {
-        const trainings = await Master.find({})
+        const superAdmins = await Admin.find({role:"superadmin"});
+        const newTraining = new Master({
+            name,
+            trainers:superAdmins.map(admin =>admin._id)
+        });
+
+        await newTraining.save();
+        return res.json({
+            message:"Data Inserted",
+            newTraining
+        });      
+    } catch (error) {
+        console.log("Error in addMaster Controller",error.message);
+        res.json({
+            message:error.message
+        })        
+    }
+
+    // const newMaster = await Master.create({
+    //     name
+    // });
+
+    // return res.json({
+    //     message: "Data inserted",
+    //     id: newMaster._id,
+    //     name: newMaster.name
+    // });
+};
+
+export const allTrainings = async (req, res) => {    
+    const adminId =  req.adminId;
+    try {
+        const currentAdmin =  await Admin.findById(req.adminId).select("-password");        
+        const trainings = await Master.find({trainers: adminId})
         res.json({
             trainings
         })

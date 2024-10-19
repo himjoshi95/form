@@ -11,7 +11,7 @@ router.post('/login',login);
 router.post('/logout',logout);
 
 router.post('/addMaster', addMaster);
-router.get('/allTrainings', allTrainings);
+router.get('/allTrainings',verifyToken ,allTrainings);
 router.patch('/update-status',updateStatus);
 
 router.get('/trainingDetails',trainingDetails);

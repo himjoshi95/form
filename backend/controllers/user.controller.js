@@ -142,9 +142,15 @@ export const userDetails = async (req, res) => {
 }
 
 export const allUsers = async (req, res) => {
-
+    const adminId = req.adminId;
+    console.log(adminId)
     try {
         const existingUsers = await User.find({}).populate('trainingId');
+        // const existingUsers = await User.find().populate({
+        //     path:'trainingId',
+        //     match: {trainers:adminId}
+        // })
+        console.log(existingUsers)
         if (!existingUsers) {
             return res.json(404).json({ error: 'User not Found' });
         }

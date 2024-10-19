@@ -51,15 +51,17 @@ function HomePage() {
         logout();
     }
     return <div>
-        <nav className="sticky top-0 z-50 border-b flex justify-between items-center px-5 py-2 bg-gradient-to-r from-zinc-100 via-zinc-200 to-zinc-100">
-            <h1 className="text-2xl font-semibold text-center">Trainings</h1>
-            <div className="flex gap-2 items-center">
+        <nav className="sticky top-0 z-50 border-b flex justify-between items-center px-5 py-2 bg-emerald-700">
+            <h1 className="text-2xl font-semibold text-center text-zinc-100"><i>Trainings</i></h1>
+            <div className="flex gap-5 items-center">
+                <p className="text-lg font-semibold text-zinc-100"><i>Welcome, {admin.username} </i>!</p>
                 <div className="group relative">                   
-                    <div className="w-10 h-10 border rounded-full flex justify-center items-center bg-slate-600">
+                    <div className="w-10 h-10 border border-slate-600 rounded-full flex justify-center items-center bg-slate-600">                        
                         <p className="text-white">{admin.username.slice(0,2).toUpperCase()}</p>
                         <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
-                            <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-5 p-4'>
-                            <button onClick={handleLogout} className="border px-2 rounded-full bg-black text-white hover:bg-slate-700 py-1">logout</button>    
+                            <div className='min-w-48 h-fit bg-stone-100 rounded flex flex-col gap-5 p-4'>
+                            <p  className=" px-2 pb-1  text-gray-400 text-center border-b-2 cursor-pointer hover:text-gray-700">profile</p>    
+                            <p onClick={handleLogout} className=" px-2 pb-1 text-gray-400 text-center border-b-2 cursor-pointer hover:text-gray-700">logout</p>    
                             </div>                           
                         </div>
                     </div>                    
@@ -67,6 +69,21 @@ function HomePage() {
                 {/* <button onClick={handleLogout} className="border px-2 rounded-full bg-black text-white hover:bg-slate-700 py-1">logout</button> */}
             </div>
         </nav>
+
+        <div>
+            {
+            admin.role ==="superadmin"             
+            && 
+            <div className="border mt-10 mx-5 p-10 shadow-lg">
+                <h1 className="text-xl pb-2">Create Trainings</h1>
+                <div className="border">
+                    <form>
+                        <input type="text"/>
+                    </form>
+                </div>                
+            </div>
+            }
+        </div>
         <div className=" border mt-10 mx-5 p-10 shadow-lg">
         {/* {JSON.stringify(admin)} */}
             <h1 className="text-xl pb-5">Trainings Available</h1>
