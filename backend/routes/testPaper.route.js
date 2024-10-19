@@ -8,7 +8,7 @@ router.post("/",addTestPaper);
 router.get("/",getTestPaper);
 router.get("/single/:id",getSingleTestPaper);
 router.delete("/deleteTestPaper/:id",deleteTestPaper);
-router.delete("/deleteQuestion/:id",deleteQuestion);
+router.delete("/deleteQuestion/:testId/:sectionId/:questionId",deleteQuestion);
 
 
 export default router;

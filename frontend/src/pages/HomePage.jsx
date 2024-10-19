@@ -51,7 +51,7 @@ function HomePage() {
         logout();
     }
     return <div>
-        <nav className="border-b flex justify-between items-center px-5 py-2 bg-gradient-to-r from-zinc-100 to-zinc-200">
+        <nav className="border-b flex justify-between items-center px-5 py-2 bg-gradient-to-r from-zinc-100 via-zinc-200 to-zinc-100">
             <h1 className="text-2xl font-semibold text-center">Trainings</h1>
             <div className="flex gap-2 items-center">
                 <div className="group relative">                   

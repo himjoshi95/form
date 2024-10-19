@@ -2,6 +2,7 @@ import axios from "axios";
 import { ArrowLeftToLine, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function SingleTestPaper() {
 
@@ -9,14 +10,29 @@ function SingleTestPaper() {
     const { name, paperNo,testId } = useParams();
     const API_URL = "http://localhost:3000";
 
+    const [loading,setLoading] = useState(false);
+
     useEffect(()=>{
         axios.get(`${API_URL}/api/testPaper/single/${testId}`)
         .then(response => {
-            // console.log(response.data)
+            console.log("----------------")
+            console.log(response.data)
             setTest(response.data)
         })
         .catch(error => console.log(error))
-    },[])
+    },[loading])
+
+    const handleDelete = async(testId,sectionId,questionId) =>{
+        const submit = confirm("Are you sure you want to delete ?")
+        if(submit){
+            setLoading(prevValue =>!prevValue);
+            const response = await axios.delete(`${API_URL}/api/testPaper/deleteQuestion/${testId}/${sectionId}/${questionId}`);
+            setLoading(prevValue => !prevValue);
+            toast.success("Deleted Successfully");
+        }else{
+            console.log("Rejected the Deletion");
+        }
+    }
 
     
 
@@ -43,7 +59,7 @@ function SingleTestPaper() {
                                 <div key={index} className="py-5 border-b border-b-blue-200">
                                     {item.type === 'MCQ' ? 
                                     <div>
-                                        <div className="text-lg flex justify-between">
+                                        <div className="text-lg flex justify-between items-start">
                                             <div className="flex gap-2">
                                                 <div className="font-bold">
                                                     <span className="text-lg">Q.</span>{index+1}
@@ -52,7 +68,7 @@ function SingleTestPaper() {
                                             </div>
                                             <div className="flex gap-5">
                                                 <button className="text-blue-300 hover:text-blue-500" ><Pencil className="size-5"/></button>
-                                                <button className="text-red-300 hover:text-red-500" ><Trash2 className="size-5"/></button>
+                                                <button className="text-red-300 hover:text-red-500" onClick={()=>handleDelete(`${testId}`,`${section._id}`,`${item._id}`)} ><Trash2 className="size-5"/></button>
                                             </div>
                                         </div>
                                         <div>
@@ -81,7 +97,7 @@ function SingleTestPaper() {
                                             </div>
                                             <div className="flex gap-5">
                                                 <button className="text-blue-300 hover:text-blue-500" ><Pencil className="size-5"/></button>
-                                                <button className="text-red-300 hover:text-red-500" ><Trash2 className="size-5"/></button>
+                                                <button className="text-red-300 hover:text-red-500" ><Trash2 className="size-5" onClick={()=>handleDelete(`${testId}`,`${section._id}`,`${item._id}`)}/></button>
                                             </div>
                                         </div>
                                         <div className="pt-2">

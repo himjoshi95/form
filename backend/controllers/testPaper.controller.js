@@ -74,10 +74,30 @@ export const deleteTestPaper = async (req, res) => {
     }
 }
 
-export const deleteQuestion = async (req,res) =>{
-    const {id:QuestionId} = req.params;
+export const deleteQuestion = async(req,res) =>{
+    const {testId,sectionId,questionId} = req.params;
     try {
-        console.log(QuestionId)
+
+        await TestPaper.updateOne({
+            _id: testId,
+            'sections._id':sectionId
+        },
+        {
+            $pull:{
+                'sections.$.questions' : {_id : questionId}
+            }
+        })
+
+        await TestPaper.updateOne({
+            _id:testId,
+            'sections._id':sectionId,
+            'sections.questions': { $size: 0 }
+        },{
+            $pull:{
+                sections: {_id:sectionId}
+            }
+        })
+
         return res.json({
             message: "QuestionID"
         })
