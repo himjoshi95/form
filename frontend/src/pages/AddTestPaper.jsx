@@ -148,8 +148,8 @@ function AddTestPaper() {
         const htmlContent = editorInstance.value;
 
         // Get plain text from the editor (strips out HTML)
-        const plainText = htmlContent.replace(/<[^>]*>?/gm, '').trim();
-        handleQuestionChange(sectionIndex, questionIndex, field, plainText);
+        // const plainText = htmlContent.replace(/<[^>]*>?/gm, '').trim();
+        handleQuestionChange(sectionIndex, questionIndex, field, htmlContent);
 
         setIsEditorVisible(false);
     };
@@ -285,15 +285,15 @@ function AddTestPaper() {
                                         <div className="flex flex-row">
                                             <label className="font-bold basis-1/4">Question {questionIndex + 1}:</label>
                                             <div className="basis-3/4">
-                                                {/* <div dangerouslySetInnerHTML={{ __html: editorContent }}></div> */}
+                                                <div dangerouslySetInnerHTML={{ __html: question.mcq.question }}></div>
                                                 <input
                                                     type="text"
-                                                    value={question.mcq.question}
+                                                    value={"Click here to add/update Mcq Question"}
                                                     // ONFOCUS
                                                     readOnly
                                                     onFocus={() => handleFocus(sectionIndex, questionIndex, "mcqQuestion")}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "mcqQuestion", e.target.value)}
-                                                    className="border-2 px-2 py-1 w-full focus:outline-none rounded focus:border-blue-500"
+                                                    className="border-2 px-2 py-1 w-full focus:outline-none rounded focus:border-blue-500 text-gray-500"
                                                     placeholder="Enter MCQ question"
                                                     
                                                 />
@@ -371,14 +371,15 @@ function AddTestPaper() {
                                         <div className="flex flex-row">
                                             <label className="font-bold basis-1/4">Question {questionIndex + 1}:</label>
                                             <div className="basis-3/4">
+                                                <div dangerouslySetInnerHTML={{ __html: question.shortAnswer.question }}></div>
                                                 <input
                                                     type="text"
-                                                    value={question.shortAnswer.question}
+                                                    value={"Click to add/edit Update Question"}
                                                     // ONFOCUS
                                                     readOnly
                                                     onFocus={() => handleFocus(sectionIndex, questionIndex, "shortAnswerQuestion")}
                                                     onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "shortAnswerQuestion", e.target.value)}
-                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
+                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500 text-gray-400"
                                                     placeholder="Enter short answer question"
                                                 />
                                             </div>

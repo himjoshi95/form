@@ -42,8 +42,11 @@ function SingleTestPaper() {
                                     {item.type === 'MCQ' ? 
                                     <div>
                                         <div className="text-lg flex justify-between">
-                                            <div>
-                                                Q.{index+1} {item.mcq.question}
+                                            <div className="flex gap-2">
+                                                <div>
+                                                    <span className="text-lg">Q.</span>{index+1}
+                                                </div>
+                                                <div dangerouslySetInnerHTML={{ __html: item.mcq.question }}></div>
                                             </div>
                                             <div className="flex gap-5">
                                                 <button className="text-blue-300 hover:text-blue-500" ><Pencil className="size-5"/></button>
@@ -63,8 +66,16 @@ function SingleTestPaper() {
                                        :
                                     <div>
                                         <div className="flex justify-between">
-                                            <div>
-                                                Q{index+1} {item.shortAnswer.question} - SHORT ANSWER                      
+                                            <div className="flex gap-3">
+                                                <div>
+                                                    <span>
+                                                            <span className="text-lg">Q.</span>{index+1}
+                                                    </span>
+                                                </div>
+                                                <div dangerouslySetInnerHTML={{ __html: item.shortAnswer.question }}></div>  
+                                                <div>
+                                                    <p className="font-bold">(SHORT ANSWER)</p>
+                                                </div>                    
                                             </div>
                                             <div className="flex gap-5">
                                                 <button className="text-blue-300 hover:text-blue-500" ><Pencil className="size-5"/></button>
