@@ -28,6 +28,108 @@ function AddTestPaper() {
 
     const editorRef = useRef(null); // Ref to access editor content
 
+    const buttons = [
+        "undo",
+        "redo",
+        "|",
+        "bold",
+        "strikethrough",
+        "underline",
+        "italic",
+        "|",
+        "superscript",
+        "subscript",
+        "|",
+        "align",
+        "|",
+        "ul",
+        "ol",
+        "outdent",
+        "indent",
+        "|",
+        "font",
+        "fontsize",
+        "brush",
+        "paragraph",
+        "|",
+        "image",
+        "link",
+        "table",
+        "|",
+        "hr",
+        "eraser",
+        "copyformat",
+        "|",
+        "fullsize",
+        "selectall",
+        "print",
+        "|",
+        "source",
+        "|",
+        {
+          name: "insertMergeField",
+          tooltip: "Insert Merge Field",
+          iconURL: "images/merge.png",
+          popup: (editor, current, self, close) => {
+            function onSelected(e) {
+              let mergeField = e.target.value;
+              if (mergeField) {
+                console.log(mergeField);
+                editor.selection.insertNode(
+                  editor.create.inside.fromHTML("{{" + mergeField + "}}")
+                );
+              }
+            }
+            let divElement = editor.create.div("merge-field-popup");
+      
+            let labelElement = document.createElement("label");
+            labelElement.setAttribute("class", "merge-field-label");
+            labelElement.text = 'Merge field: ';
+            divElement.appendChild(labelElement);
+      
+            let selectElement = document.createElement("select");
+            selectElement.setAttribute("class", "merge-field-select");
+            selectElement.appendChild(createOptionGroupElement(facilityMergeFields, "Facility"));
+            selectElement.appendChild(createOptionGroupElement(inspectionMergeFields, "Inspection"));
+            selectElement.onchange = onSelected;
+            divElement.appendChild(selectElement);
+      
+            console.log(divElement);
+            return divElement;
+          }
+        },
+        {
+          name: "copyContent",
+          tooltip: "Copy HTML to Clipboard",
+          iconURL: "images/copy.png",
+          exec: function(editor) {
+            let html = editor.value;
+            copyStringToClipboard(html);
+          }
+        }
+      ];
+
+    const editorConfig = {
+        readonly: false,
+        toolbar: true,
+        spellcheck: true,
+        language: "en",
+        toolbarButtonSize: "medium",
+        toolbarAdaptive: false,
+        showCharsCounter: true,
+        showWordsCounter: true,
+        showXPathInStatusbar: false,
+        askBeforePasteHTML: true,
+        askBeforePasteFromWord: true,
+        //defaultActionOnPaste: "insert_clear_html",
+        buttons: buttons,
+        uploader: {
+          insertImageAsBase64URI: true
+        },
+        width: 800,
+        height: 400
+      };
+
     // Function to handle adding a new section
     const addNewSection = () => {
         setSectionsArray([
@@ -420,9 +522,6 @@ function AddTestPaper() {
                         >
                             Add Question <SquarePlus className="size-5" />
                         </button>
-
-
-
                     </div>
                 ))}
 
@@ -446,11 +545,12 @@ function AddTestPaper() {
             {/* Rich Text Editor Modal */}
             {isEditorVisible && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-                    <div className="bg-white p-5 rounded-lg shadow-lg">
+                    <div style={{ maxWidth: editorConfig.width, margin: "0 auto" }}>
                         {/* <ReactQuill theme="snow" value={editorContent} onChange={setEditorContent} ref={editorRef} /> */}
                         <JoditEditor
                             ref={editorRef}
                             value={editorContent}
+                            config={editorConfig}
                             onChange={setEditorContent}
                                                      
                         />

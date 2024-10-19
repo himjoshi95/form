@@ -60,7 +60,7 @@ function SingleTestPaper() {
                                                 <div key={index}><span className="font-bold">Option {index+1}:</span> {option}</div>
                                             ))}
                                         </div>
-                                        <div>
+                                        <div className="pt-2">
                                             <p><span className="font-bold">Correct Answer: {item.mcq.correctAnswer}</span></p>
                                             <p><span className="font-bold">Maximum Marks: {item?.mcq?.maxMarks || 2}</span></p>
                                         </div>
@@ -68,7 +68,7 @@ function SingleTestPaper() {
                                        :
                                     <div>
                                         <div className="flex justify-between">
-                                            <div className="flex gap-3 items-center">
+                                            <div className="flex gap-3">
                                                 <div>
                                                     <span className="font-bold">
                                                             <span className="text-lg">Q.</span>{index+1}
@@ -84,7 +84,7 @@ function SingleTestPaper() {
                                                 <button className="text-red-300 hover:text-red-500" ><Trash2 className="size-5"/></button>
                                             </div>
                                         </div>
-                                        <div>
+                                        <div className="pt-2">
                                             <p className="font-bold">Maximum Marks: {item?.shortAnswer?.maxMarks || 5}</p>
                                         </div>
                                     </div> 
