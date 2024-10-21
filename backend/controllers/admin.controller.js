@@ -125,8 +125,8 @@ export const addMaster = async (req, res) => {
 
         await newTraining.save();
         return res.json({
-            message:"Data Inserted",
-            newTraining
+            message:"Training Created Successfully",
+            // newTraining
         });      
     } catch (error) {
         console.log("Error in addMaster Controller",error.message);
