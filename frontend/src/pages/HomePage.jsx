@@ -15,6 +15,7 @@ function HomePage() {
     const [trainers, setTrainers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [trainerLoading, setTrainerLoading] = useState(false);
+    const [trainingId,setTrainingId]= useState("Select Here")
 
     const [users, setUsers] = useState([]);
 
@@ -101,12 +102,17 @@ function HomePage() {
             toast.error("Trainer username cannot be left Empty");
             return;
         }
+        if (trainingId === "Select Here"){
+            toast.error("Please Select the Training name");
+            return;
+        }
         try {
-            const submit = confirm("Are you sure you want to Add Trainer ? ");
+            const submit = confirm("Are you sure you want to Add Trainer Details ? ");
             if (submit) {
                 setTrainerLoading(prev => !prev);
                 const response = await axios.post(`${API_URL}/api/admin/addTrainer`, {
-                    username: trainerUsername
+                    username: trainerUsername,
+                    trainingId
                 });
                 console.log(response.data);
                 if (response.data.success) {
@@ -225,10 +231,17 @@ function HomePage() {
                                         </div>
 
                                         <div className="basis-2/4">
-                                            <select className="w-full border py-1 rounded px-5">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
+                                            <select
+                                                className="w-[525px] border py-1 rounded px-2 focus:outline-none focus:ring focus:ring-blue-500"
+                                                onChange={e => setTrainingId(e.target.value)}
+                                                value={trainingId}
+                                            >
+                                                <option disabled>Select Here</option>
+                                                {trainings.map((item, index) => (
+                                                    <option key={index} value={`${item._id}`}>{item.name}</option>
+                                                ))
+                                                }
+
                                             </select>
                                         </div>
 
@@ -238,7 +251,7 @@ function HomePage() {
 
                                     </div>
 
-                                    <div className="pt-5 flex justify-end">
+                                    <div className="pt-5 flex justify-end pr-1">
                                         <button
                                             className="border px-2 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
                                             onClick={addTrainer}

@@ -49,7 +49,6 @@ export const formData = async (req, res) => {
     }
 }
 
-
 export const searchMobile = async (req, res) => {
 
     const filterQuery = req.query.filter || "";

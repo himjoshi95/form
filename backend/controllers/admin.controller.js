@@ -148,7 +148,7 @@ export const addMaster = async (req, res) => {
 };
 
 export const addTrainer = async(req,res) => {
-    const {username} = req.body;
+    const {username,trainingId} = req.body;
     const adminId =  req.adminId;
     try {
         const superadmin =  await Admin.find({_id:adminId,role:"superadmin"}).select("-password");
@@ -172,9 +172,17 @@ export const addTrainer = async(req,res) => {
 
             await admin.save();
 
+            const addTrainerToMaster = await Master.updateOne({
+                _id: trainingId
+            },{
+                $push:{
+                    'trainers':admin._id
+                }
+            }) 
+            
             res.json({
                 success:true,
-                message: "Trainer Added Successfully"                
+                message: "Added Successfully"                
             });
         }else{
             return res.json({
