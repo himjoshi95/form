@@ -127,7 +127,7 @@ function HomePage() {
         <nav className="sticky top-0 z-50 border-b flex justify-between items-center px-5 py-2 bg-emerald-700">
             <h1 className="text-2xl font-semibold text-center text-zinc-100"><i>Trainings</i></h1>
             <div className="flex gap-5 items-center">
-                <p className="text-lg font-semibold text-zinc-100"><i>Welcome, {admin.username} </i>!</p>
+                <p className="text-lg font-semibold text-zinc-100"><i>Welcome Back, {admin.username} !</i></p>
                 <div className="group relative">
                     <div className="w-10 h-10 border border-slate-600 rounded-full flex justify-center items-center bg-slate-600">
                         <p className="text-white">{admin.username.slice(0, 2).toUpperCase()}</p>
@@ -149,7 +149,7 @@ function HomePage() {
                 &&
                 <div className="border mt-10 mx-5 p-10 shadow-lg">
                     <h1 className="text-xl pb-5">Create Trainings</h1>
-                    <div className="border py-5 mr-10">
+                    <div className="border border-blue-300 rounded py-5 mr-10">
                         <form>
                             {isLoading ?
                                 <div className="flex justify-center">
@@ -192,27 +192,53 @@ function HomePage() {
                 &&
                 <div className="border mt-10 mx-5 p-10 shadow-lg">
                     <h1 className="text-xl pb-5">Add Trainers</h1>
-                    <div className="border py-5 mr-10">
+                    <div className="border border-blue-400 rounded py-5 mr-10">
                         <form>
                             {trainerLoading ?
                                 <div className="flex justify-center">
                                     <LoaderCircle className="animate-spin duration-200" />
                                 </div>
                                 :
-                                <div className="flex flex-row">
-                                    <div className="basis-1/4">
-                                        <label className="pl-1 text-md font-semibold">Trainer Username</label>
+                                <div>
+                                    <div className="flex flex-row">
+                                        <div className="basis-1/4">
+                                            <label className="pl-1 text-md font-semibold">Trainer Username</label>
+                                        </div>
+                                        <div className="basis-2/4 pl-2">
+                                            <input
+                                                type="text"
+                                                className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
+                                                placeholder="Enter trainer username"
+                                                value={trainerUsername}
+                                                onChange={(e) => setTrainerUsername(e.target.value)}
+                                            ></input>
+                                        </div>
+                                        <div className="basis-1/4 mx-4">
+
+                                        </div>
                                     </div>
-                                    <div className="basis-2/4">
-                                        <input
-                                            type="text"
-                                            className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
-                                            placeholder="Enter trainer username"
-                                            value={trainerUsername}
-                                            onChange={(e) => setTrainerUsername(e.target.value)}
-                                        ></input>
+                                    <div className="flex flex-row pt-5">
+                                        <div className="basis-1/4">
+                                            <label className="pl-1 text-md font-semibold">
+                                                Training Name
+                                            </label>
+                                        </div>
+
+                                        <div className="basis-2/4">
+                                            <select className="w-full border py-1 rounded px-5">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="basis-1/4">
+
+                                        </div>
+
                                     </div>
-                                    <div className="basis-1/4 mx-4">
+
+                                    <div className="pt-5 flex justify-end">
                                         <button
                                             className="border px-2 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
                                             onClick={addTrainer}
@@ -221,6 +247,7 @@ function HomePage() {
                                         </button>
                                     </div>
                                 </div>
+
                             }
 
 
@@ -280,7 +307,7 @@ function HomePage() {
             {isLoading ?
                 <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
                 :
-                trainings.length > 0 &&
+                // trainings.length > 0 &&
                 <div>
                     <table className="w-[1100px] border">
                         <thead>
