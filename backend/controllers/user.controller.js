@@ -143,7 +143,7 @@ export const userDetails = async (req, res) => {
 
 export const allUsers = async (req, res) => {
     const adminId = req.adminId;
-    console.log(adminId)
+    // console.log(adminId) -- see this for adminId via middleware
     try {
         // const existingUsers = await User.find({}).populate('trainingId');
         const Users = await User.find().populate({
@@ -154,7 +154,7 @@ export const allUsers = async (req, res) => {
         // console.log("------------")
         // existingUsers = existingUsers.filter(user => user.trainingId);
         const existingUsers = Users.filter(user => user.trainingId !== null)
-        console.log(existingUsers)
+        // console.log(existingUsers) --- see if any issue
         if (!existingUsers) {
             return res.json(404).json({ error: 'User not Found' });
         }

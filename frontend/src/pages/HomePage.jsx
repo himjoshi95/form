@@ -9,9 +9,12 @@ import { useAuthStore } from "../store/authStore";
 
 function HomePage() {
 
-    const [trainingName,setTrainingName] = useState("");
+    const [trainingName, setTrainingName] = useState("");
+    const [trainerUsername, setTrainerUsername] = useState("");
     const [trainings, setTrainings] = useState([]);
+    const [trainers, setTrainers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [trainerLoading, setTrainerLoading] = useState(false);
 
     const [users, setUsers] = useState([]);
 
@@ -20,6 +23,22 @@ function HomePage() {
 
     const API_URL = "http://localhost:3000";
 
+    // -----GET ALL TRAINERS ---------
+    useEffect(() => {
+        try {
+            axios.get(`${API_URL}/api/admin/allTrainers`)
+                .then(response => {
+                    // console.log(response.data.allTrainers)
+                    setTrainers(response.data.allTrainers)
+                })
+                .catch(error => console.log(error.message))
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    }, [trainerLoading])
+
+    //------GET ALL TRAIN-INGS ---------
     useEffect(() => {
         setIsLoading(prev => !prev);
         try {
@@ -36,6 +55,7 @@ function HomePage() {
 
     }, [isLoading])
 
+    //--------GET ALL USERS ----------
     useEffect(() => {
         try {
             axios.get(`${API_URL}/api/user/allUsers`)
@@ -50,23 +70,59 @@ function HomePage() {
         }
     }, [])
 
+    // ------ LOGOUT -----------
     const handleLogout = () => {
         logout();
     }
 
+    // ----- ADD MORE TRAININGS ------------
     const addTrainingSubmit = async (e) => {
         e.preventDefault();
+        if (trainingName === "") {
+            toast.error("Training Name cannot be left Empty");
+            return;
+        }
         const submit = confirm("Are you sure you want to add the Training ?");
         if (submit) {
             setIsLoading(prev => !prev);
-            const response = await axios.post(`${API_URL}/api/admin/addMaster`,{name:trainingName})
-            console.log(response.data);
-            await new Promise(resolve => setTimeout(resolve,1000));
+            const response = await axios.post(`${API_URL}/api/admin/addMaster`, { name: trainingName })
+            // console.log(response.data);
+            await new Promise(resolve => setTimeout(resolve, 1000));
             setIsLoading(prev => !prev);
-            toast.success("Created") 
-            setTrainingName("");           
+            toast.success(response.data?.message)
+            setTrainingName("");
         }
     }
+
+    //--------ADD MORE TRAINER -----------
+    const addTrainer = async (e) => {
+        e.preventDefault();
+        if (trainerUsername === "") {
+            toast.error("Trainer username cannot be left Empty");
+            return;
+        }
+        try {
+            const submit = confirm("Are you sure you want to Add Trainer ? ");
+            if (submit) {
+                setTrainerLoading(prev => !prev);
+                const response = await axios.post(`${API_URL}/api/admin/addTrainer`, {
+                    username: trainerUsername
+                });
+                console.log(response.data);
+                if (response.data.success) {
+                    toast.success(response.data?.message);
+
+                } else {
+                    toast.error(response.data?.message);
+                }
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                setTrainerLoading(prev => !prev);
+                setTrainerUsername("");
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
     return <div>
         <nav className="sticky top-0 z-50 border-b flex justify-between items-center px-5 py-2 bg-emerald-700">
             <h1 className="text-2xl font-semibold text-center text-zinc-100"><i>Trainings</i></h1>
@@ -83,122 +139,187 @@ function HomePage() {
                         </div>
                     </div>
                 </div>
-                {/* <button onClick={handleLogout} className="border px-2 rounded-full bg-black text-white hover:bg-slate-700 py-1">logout</button> */}
             </div>
         </nav>
 
+        {/*--------- CREATE TRAININGS --------------*/}
         <div>
             {
                 admin.role === "superadmin"
                 &&
                 <div className="border mt-10 mx-5 p-10 shadow-lg">
-                    <h1 className="text-xl pb-2">Create Trainings</h1>
-                    <div className="border py-5">
+                    <h1 className="text-xl pb-5">Create Trainings</h1>
+                    <div className="border py-5 mr-10">
                         <form>
-                            {isLoading ? 
-                            <div className="flex justify-center">
-                                <LoaderCircle className="animate-spin duration-200"/>
-                            </div>
-                            :
-                            <div className="flex flex-row">
-                                <div className="basis-1/4 pl-1">
-                                    <label className="text-lg font-semibold">Training Name</label>
+                            {isLoading ?
+                                <div className="flex justify-center">
+                                    <LoaderCircle className="animate-spin duration-200" />
                                 </div>
-                                <div className="basis-2/4">
-                                    <input
-                                        type="text"
-                                        className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
-                                        value={trainingName}
-                                        onChange ={(e)=>setTrainingName(e.target.value)}
-                                    />
+                                :
+                                <div className="flex flex-row">
+                                    <div className="basis-1/4 pl-1">
+                                        <label className="text-md font-semibold">Training Name</label>
+                                    </div>
+                                    <div className="basis-2/4">
+                                        <input
+                                            type="text"
+                                            className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
+                                            placeholder="Enter training name"
+                                            value={trainingName}
+                                            onChange={(e) => setTrainingName(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="basis-1/4 mx-4">
+                                        <button
+                                            className="border px-2 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
+                                            onClick={addTrainingSubmit}
+                                        >
+                                            Add Training
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="basis-1/4 mx-4">
-                                    <button
-                                        className="border px-2 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
-                                        onClick={addTrainingSubmit}
-                                    >
-                                        Add Training
-                                    </button>
-                                </div>
-                            </div>
-
                             }
-                            
                         </form>
                     </div>
                 </div>
             }
         </div>
-        <div className=" border mt-10 mx-5 p-10 shadow-lg">
-            {/* {JSON.stringify(admin)} */}
-            <h1 className="text-xl pb-5">Trainings Available</h1>
+
+        {/* ADD TRAINERS */}
+        <div>
+            {
+                admin.role === "superadmin"
+                &&
+                <div className="border mt-10 mx-5 p-10 shadow-lg">
+                    <h1 className="text-xl pb-5">Add Trainers</h1>
+                    <div className="border py-5 mr-10">
+                        <form>
+                            {trainerLoading ?
+                                <div className="flex justify-center">
+                                    <LoaderCircle className="animate-spin duration-200" />
+                                </div>
+                                :
+                                <div className="flex flex-row">
+                                    <div className="basis-1/4">
+                                        <label className="pl-1 text-md font-semibold">Trainer Username</label>
+                                    </div>
+                                    <div className="basis-2/4">
+                                        <input
+                                            type="text"
+                                            className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
+                                            placeholder="Enter trainer username"
+                                            value={trainerUsername}
+                                            onChange={(e) => setTrainerUsername(e.target.value)}
+                                        ></input>
+                                    </div>
+                                    <div className="basis-1/4 mx-4">
+                                        <button
+                                            className="border px-2 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
+                                            onClick={addTrainer}
+                                        >
+                                            Add Trainer
+                                        </button>
+                                    </div>
+                                </div>
+                            }
 
 
-            {/* {
-                trainings.map((item,index) =>{
-                    <div>
-                        <Link to={`/training/${item.name}`}>{item.name}</Link>
+                        </form>
                     </div>
-                })               
-                }
-                 */}
-
-
-            {isLoading  ?  
-            <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin"/></div>
-            :
-            trainings.length > 0 && 
-            <div>
-                <table className="w-[1100px] border">
-                <thead>
-                    <tr>
-                        <th className="border text-center">Sno.</th>
-                        <th className="border text-center">Training Links</th>
-                        <th className="border text-center">Status</th>
-                        <th className="border text-center">Add Test Paper</th>
-                        <th className="border text-center">View Test Paper</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {trainings.length > 0 ? (
-                        trainings.map((item, index) => (
-                            <tr key={index} className="border">
-                                <td className="p-2 border">{index + 1}</td>
-                                <td className="p-2 border"><Link className="flex flex-row" to={`/training/${item.name}/${item._id}`}> <span className="basis-1/4">Training - {item.name}</span> <span className="basis-3/4 underline text-blue-500"> {`http://localhost:5173/training/${item.name}/${item._id}`}</span></Link></td>
-                                <td className="p-2 border"><Link to={`/training-update/${item.name}/${item._id}`} className="text-blue-500 underline" >view/edit</Link></td>
-                                <td className="p-2 border text-blue-500"><Link className="flex justify-center" to={`/add-testpaper/${item.name}/${item._id}`}><CirclePlus className="hover:bg-blue-500 rounded-full hover:text-white" /></Link></td>
-                                <td className="p-2 border"><Link className="flex justify-center" to={`/view-testpaper/${item.name}/${item._id}`}><View className="text-blue-500 cursor-pointer" /></Link></td>
-                            </tr>
-                        )
-                        )
-                    )
-                        :
-                        <tr>
-                            <td className="border"></td>
-                            <td className="text-center py-5">No Trainings</td>
-                            <td className="border"></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-
-
-            </div>          
+                </div>
             }
-
-            
-
-            {/* {
-                trainings.map((item, index) => <div className="py-2" key={index}>
-                    <Link className="flex flex-row" to={`/training/${item.name}/${item._id}`}> <span className="basis-1/4">Training - {item.name}</span> <span className="basis-3/4 underline text-blue-500">{`http://localhost:5173/training/${item.name}/${item._id}`}</span></Link>
-                </div>)
-            } */}
-
         </div>
 
+        {/*-------TRAINERS AVAILABLE --------------*/}
+        <div>
+            {
+                admin.role === "superadmin"
+                &&
+                <div className="border mt-10 mx-5 p-10 shadow-lg">
+                    <h1 className="text-xl pb-5">Trainers Available</h1>
+                    {
+                        trainerLoading ?
+                            <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
+                            :
+                            trainers.length > 0 &&
+                            <div>
+                                <table className="w-[1100px] border">
+                                    <thead>
+                                        <tr className="border text-center">
+                                            <th className="border">Sno.</th>
+                                            <th className="border">Trainer</th>
+                                            <th className="border">Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            trainers.length > 0
+                                            &&
+                                            trainers.map((item, index) => (
+                                                <tr key={index} className="border text-center">
+                                                    <td className="border py-1">{index + 1}</td>
+                                                    <td className="border py-1">{item.username}</td>
+                                                    <td className="border py-1 underline text-blue-500">
+                                                        View Details
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                    }
+                </div>
+            }
+        </div>
+
+        {/* ----TRAININGS AVAIALABLE ---------- */}
         <div className=" border mt-10 mx-5 p-10 shadow-lg">
-            {/* {JSON.stringify(users)} */}
+            <h1 className="text-xl pb-5">Trainings Available</h1>
+
+            {isLoading ?
+                <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
+                :
+                trainings.length > 0 &&
+                <div>
+                    <table className="w-[1100px] border">
+                        <thead>
+                            <tr>
+                                <th className="border text-center">Sno.</th>
+                                <th className="border text-center">Training Links</th>
+                                <th className="border text-center">Status</th>
+                                <th className="border text-center">Add Test Paper</th>
+                                <th className="border text-center">View Test Paper</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {trainings.length > 0 ? (
+                                trainings.map((item, index) => (
+                                    <tr key={index} className="border">
+                                        <td className="p-2 border">{index + 1}</td>
+                                        <td className="p-2 border"><Link className="flex flex-row" to={`/training/${item.name}/${item._id}`}> <span className="basis-1/4">Training - {item.name}</span> <span className="basis-3/4 underline text-blue-500"> {`http://localhost:5173/training/${item.name}/${item._id}`}</span></Link></td>
+                                        <td className="p-2 border"><Link to={`/training-update/${item.name}/${item._id}`} className="text-blue-500 underline" >view/edit</Link></td>
+                                        <td className="p-2 border text-blue-500"><Link className="flex justify-center" to={`/add-testpaper/${item.name}/${item._id}`}><CirclePlus className="hover:bg-blue-500 rounded-full hover:text-white" /></Link></td>
+                                        <td className="p-2 border"><Link className="flex justify-center" to={`/view-testpaper/${item.name}/${item._id}`}><View className="text-blue-500 cursor-pointer" /></Link></td>
+                                    </tr>
+                                )
+                                )
+                            )
+                                :
+                                <tr>
+                                    <td className="border"></td>
+                                    <td className="text-center py-5">No Trainings</td>
+                                    <td className="border"></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+        {/*------ ALL PARTICIPANTS ---------------------*/}
+        <div className=" border mt-10 mx-5 p-10 shadow-lg">
             <h1 className="text-xl">Participants</h1>
             <div className="pt-10">
                 <table className="w-[1100px] border">
@@ -232,19 +353,6 @@ function HomePage() {
                                 <td className="border"></td>
                             </tr>
                         }
-
-
-                        {/* <tr className="border">
-                            <td className="p-2">Witchy Woman</td>
-                            <td className="p-2">PHP</td>
-                            <td className="p-2">http://localhost:5173/training/</td>
-                        </tr>
-                        <tr className="border">
-                            <td className="p-2">Shining Star</td>
-                            <td className="p-2">Full Stack Dev</td>
-                            <td className="p-2">http://localhost:5173/training/</td>
-                        </tr> */}
-
                     </tbody>
                 </table>
             </div>

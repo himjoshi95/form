@@ -1,5 +1,5 @@
 import express from "express";
-import { addMaster, allTrainings, checkAuth, login, logout, signup, trainingDetails, updateStatus, updateTraining } from "../controllers/admin.controller.js";
+import { addMaster, addTrainer, allTrainers, allTrainings, checkAuth, login, logout, signup, trainingDetails, updateStatus, updateTraining } from "../controllers/admin.controller.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
@@ -10,7 +10,13 @@ router.post('/signup',signup);
 router.post('/login',login);
 router.post('/logout',logout);
 
-router.post('/addMaster', addMaster);
+//admin can only addMaster (add Training)
+router.post('/addMaster',verifyToken ,addMaster);
+
+//admin can only addTrainer (add New Trainers)
+router.post('/addTrainer',verifyToken,addTrainer);
+//admin can only see allTrainers
+router.get('/allTrainers',verifyToken,allTrainers);
 router.get('/allTrainings',verifyToken ,allTrainings);
 router.patch('/update-status',updateStatus);
 

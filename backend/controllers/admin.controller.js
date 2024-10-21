@@ -115,9 +115,10 @@ export const logout = async (req, res) => {
 
 export const addMaster = async (req, res) => {
     const { name } = req.body;
+    const adminId = req.adminId;
 
     try {
-        const superAdmins = await Admin.find({role:"superadmin"});
+        const superAdmins = await Admin.find({_id:adminId,role:"superadmin"});        
         const newTraining = new Master({
             name,
             trainers:superAdmins.map(admin =>admin._id)
@@ -146,7 +147,73 @@ export const addMaster = async (req, res) => {
     // });
 };
 
-export const allTrainings = async (req, res) => {    
+export const addTrainer = async(req,res) => {
+    const {username} = req.body;
+    const adminId =  req.adminId;
+    try {
+        const superadmin =  await Admin.find({_id:adminId,role:"superadmin"}).select("-password");
+
+        if(superadmin){
+            const password = process.env.PASSWORD;
+            const trainerAlreadyExists = await Admin.findOne({username});
+
+            if(trainerAlreadyExists){
+                return res.json({
+                    success:false,
+                    message: "Trainer Already Exists."
+                })
+            }
+
+            const hashedPassword = await bcryptjs.hash(password, 10);
+            const admin = new Admin({
+                username,
+                password: hashedPassword
+            });
+
+            await admin.save();
+
+            res.json({
+                success:true,
+                message: "Trainer Added Successfully"                
+            });
+        }else{
+            return res.json({
+                message: "You don't have access to this portal"
+            });
+        }        
+    } catch (error) {
+        console.log("Error in addTrainer",error.message)
+        return res.json({
+            message:error.message
+        })
+    }
+}
+
+export const allTrainers = async (req,res) =>{
+    const adminId = req.adminId;
+
+    try {
+        const superadmin =  await Admin.find({_id:adminId,role:"superadmin"}).select("-password");
+
+        if(superadmin){
+            const allTrainers =  await Admin.find({role: {$ne: "superadmin"}}).select("-password");
+            return res.json({               
+                allTrainers
+            })
+        }else{
+            return res.json({
+                message: "You have No Access To this Portal"
+            })
+        }        
+    } catch (error) {
+        console.log("Error in allTrainers controller",error.message);
+        return res.json({
+            message:error.message
+        })
+    }
+}
+
+export const allTrainings = async (req, res) => {   
     const adminId =  req.adminId;
     try {
         const currentAdmin =  await Admin.findById(req.adminId).select("-password");        
