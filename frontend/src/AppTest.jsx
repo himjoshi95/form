@@ -18,6 +18,7 @@ import AddTestPaper2 from "./pages/AddTestPaper2";
 import ViewTestPaper from "./pages/ViewTestPaper";
 import SingleTestPaper from "./pages/SingleTestPaper";
 import RichAddTestPaper from "./pages/RichAddTestPaper";
+import ViewTrainerDetails from "./pages/ViewTrainerDetails";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -83,16 +84,7 @@ function AppTest() {
                         <UpdateTrainings />
                     </ProtectedRoute>
                 }
-            />
-
-            {/* <Route
-                path='/add-testpaper/:name/:type'
-                element={
-                    <ProtectedRoute>
-                        <AddTestPaper/>
-                    </ProtectedRoute>    
-                }
-            /> */}
+            />            
 
             <Route
                 path='/add-testpaper/:name/:type'
@@ -127,6 +119,15 @@ function AppTest() {
                     <ProtectedRoute>
                         <AddTestPaper2/>
                     </ProtectedRoute>    
+                }
+            />
+
+            <Route
+                path='/view-trainer/:trainerId'
+                element={
+                    <ProtectedRoute>
+                        <ViewTrainerDetails/>
+                    </ProtectedRoute>
                 }
             />
 

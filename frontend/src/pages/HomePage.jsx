@@ -15,7 +15,7 @@ function HomePage() {
     const [trainers, setTrainers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [trainerLoading, setTrainerLoading] = useState(false);
-    const [trainingId,setTrainingId]= useState("Select Here")
+    const [trainingId,setTrainingId]= useState("Select Here");
 
     const [users, setUsers] = useState([]);
 
@@ -124,6 +124,7 @@ function HomePage() {
                 await new Promise(resolve => setTimeout(resolve, 1000));
                 setTrainerLoading(prev => !prev);
                 setTrainerUsername("");
+                setTrainingId("Select Here");
             }
         } catch (error) {
             console.log(error.message);
@@ -241,7 +242,6 @@ function HomePage() {
                                                     <option key={index} value={`${item._id}`}>{item.name}</option>
                                                 ))
                                                 }
-
                                             </select>
                                         </div>
 
@@ -281,7 +281,7 @@ function HomePage() {
                         trainerLoading ?
                             <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
                             :
-                            trainers.length > 0 &&
+                            // trainers.length > 0 &&
                             <div>
                                 <table className="w-[1100px] border">
                                     <thead>
@@ -294,16 +294,22 @@ function HomePage() {
                                     <tbody>
                                         {
                                             trainers.length > 0
-                                            &&
+                                            ?
                                             trainers.map((item, index) => (
                                                 <tr key={index} className="border text-center">
                                                     <td className="border py-1">{index + 1}</td>
                                                     <td className="border py-1">{item.username}</td>
                                                     <td className="border py-1 underline text-blue-500">
-                                                        View Details
+                                                        <Link to={`/view-trainer/${item._id}`}>view details</Link>
                                                     </td>
                                                 </tr>
                                             ))
+                                            :
+                                            <tr>
+                                                <td className="border"></td>
+                                                <td className="border text-center py-2 font-semibold">No Trainers Available</td>
+                                                <td></td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>

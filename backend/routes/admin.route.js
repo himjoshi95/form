@@ -1,5 +1,5 @@
 import express from "express";
-import { addMaster, addTrainer, allTrainers, allTrainings, checkAuth, login, logout, signup, trainingDetails, updateStatus, updateTraining } from "../controllers/admin.controller.js";
+import { addMaster, addTrainer, allTrainers, allTrainings, checkAuth, login, logout, signup, trainerDetails, trainingDetails, updateStatus, updateTraining } from "../controllers/admin.controller.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
@@ -17,6 +17,10 @@ router.post('/addMaster',verifyToken ,addMaster);
 router.post('/addTrainer',verifyToken,addTrainer);
 //admin can only see allTrainers
 router.get('/allTrainers',verifyToken,allTrainers);
+
+//admin can only view TrainerDetails
+router.get('/trainerDetails/:id',verifyToken,trainerDetails)
+
 router.get('/allTrainings',verifyToken ,allTrainings);
 router.patch('/update-status',updateStatus);
 

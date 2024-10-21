@@ -197,6 +197,38 @@ export const addTrainer = async(req,res) => {
     }
 }
 
+export const trainerDetails = async (req,res) =>{
+    const adminId = req.adminId;
+    const {id:trainerId} = req.params;
+
+    try {
+        const superadmin = await Admin.find({_id:adminId,role:"superadmin"}).select("-password");
+        if(superadmin){
+            const trainingDetails = await Master.find({trainers: trainerId})
+            .populate({
+                path: 'trainers',
+                match: {_id :trainerId},
+                select: 'username',
+            })
+            .exec();
+            
+            res.json({                
+                trainingDetails
+            })
+        }else{
+            return res.json({
+                message:"You don't have access to this portal"
+            });
+        }        
+    } catch (error) {
+        console.log("Error in trainerDetails controller",error.message);
+        return res.json({
+            message:error.message
+        });
+    }
+
+}
+
 export const allTrainers = async (req,res) =>{
     const adminId = req.adminId;
 
