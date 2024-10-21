@@ -1,5 +1,5 @@
 import express from "express";
-import { addMaster, addTrainer, allTrainers, allTrainings, checkAuth, login, logout, signup, trainerDetails, trainingDetails, updateStatus, updateTraining } from "../controllers/admin.controller.js";
+import { addMaster, addNewTraining, addTrainer, allTrainers, allTrainings, checkAuth, login, logout, signup, trainerDetails, trainingDetails, trainingDropdown, updateStatus, updateTraining } from "../controllers/admin.controller.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
@@ -19,7 +19,13 @@ router.post('/addTrainer',verifyToken,addTrainer);
 router.get('/allTrainers',verifyToken,allTrainers);
 
 //admin can only view TrainerDetails
-router.get('/trainerDetails/:id',verifyToken,trainerDetails)
+router.get('/trainerDetails/:id',verifyToken,trainerDetails);
+
+//admin gets dropdown for trainings except current
+router.get('/trainingDropdown/:id',verifyToken,trainingDropdown);
+
+//admin gets to add new trainings for the tutor
+router.patch('/addNewTraining/:id',verifyToken,addNewTraining);
 
 router.get('/allTrainings',verifyToken ,allTrainings);
 router.patch('/update-status',updateStatus);

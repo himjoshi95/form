@@ -211,7 +211,7 @@ export const trainerDetails = async (req,res) =>{
                 select: 'username',
             })
             .exec();
-            
+
             res.json({                
                 trainingDetails
             })
@@ -227,6 +227,77 @@ export const trainerDetails = async (req,res) =>{
         });
     }
 
+}
+
+export const trainingDropdown = async (req,res) =>{
+    const adminId = req.adminId;
+    const {id:trainerId} = req.params;
+
+    try {
+        const superadmin = await Admin.find({_id:adminId,role:"superadmin"}).select("-password");
+        if(superadmin){
+            const dropdown = await Master.find({
+                trainers :{
+                    $ne : trainerId
+                }
+            })
+
+            res.json({
+                dropdown
+            })
+
+        }else{
+            return res.json({
+                message: "You don't have access to this portal"
+            })
+        }
+
+        
+    } catch (error) {
+        console.log("Error in trainingDropdown controller",error.message);
+        res.json({
+            message:error.message
+        })
+        
+    }
+
+}
+
+export const addNewTraining = async (req,res) => {
+    const adminId = req.adminId;
+    const {id:trainerId} = req.params;
+    const {trainingId} = req.body;
+    try {
+        const superadmin = await Admin.find({_id:adminId,role:"superadmin"}).select("-password");
+
+        if(superadmin){
+
+            const updateMaster = await Master.updateOne({
+                _id: trainingId
+            },{
+                $push:{
+                    'trainers':trainerId
+                }
+            })
+
+            res.json({
+                success:true,
+                message: "Added Successfully"
+            })
+
+        }else{
+            res.json({
+                message:"You don't have access to this portal"
+            })
+        }
+
+        
+    } catch (error) {
+        console.log("Error in addNewTraining", error.message);
+        res.json({
+            message:error.message
+        })
+    }
 }
 
 export const allTrainers = async (req,res) =>{
