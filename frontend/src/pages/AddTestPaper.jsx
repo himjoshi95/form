@@ -36,7 +36,7 @@ function AddTestPaper() {
                 setUser(response.data.message);
             })
             .catch(error => console.log(error))
-    }, [])
+    }, []);
 
     const buttons = [
         "undo",
