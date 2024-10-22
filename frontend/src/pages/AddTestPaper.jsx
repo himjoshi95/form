@@ -32,7 +32,7 @@ function AddTestPaper() {
     useEffect(() => {
         axios.get(`${API_URL}/api/admin/check-training/${type}`)
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 setUser(response.data.message);
             })
             .catch(error => console.log(error))

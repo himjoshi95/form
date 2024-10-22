@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { CirclePlus, LoaderCircle, View } from 'lucide-react';
+import { CirclePlus, LoaderCircle, Search, View } from 'lucide-react';
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -21,13 +21,15 @@ function HomePage() {
 
     const { admin, logout } = useAuthStore();
 
+    const {filter,setFilter} = useState("");
+
 
     const API_URL = "http://localhost:3000";
 
     // -----GET ALL TRAINERS ---------
     useEffect(() => {
         try {
-            axios.get(`${API_URL}/api/admin/allTrainers`)
+            axios.get(`${API_URL}/api/admin/allTrainers?filter=${filter}`)
                 .then(response => {
                     // console.log(response.data.allTrainers)
                     setTrainers(response.data.allTrainers)
@@ -260,10 +262,7 @@ function HomePage() {
                                         </button>
                                     </div>
                                 </div>
-
                             }
-
-
                         </form>
                     </div>
                 </div>
@@ -277,6 +276,12 @@ function HomePage() {
                 &&
                 <div className="border mt-10 mx-5 p-10 shadow-lg">
                     <h1 className="text-xl pb-5">Trainers Available</h1>
+                    <div className="pb-5">
+                        <div className="w-[300px] border flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
+                            <input  type="text" className="px-2 py-1 w-full focus:outline-none" placeholder="Search here.."/>                        
+                            <Search />
+                        </div>   
+                    </div>
                     {
                         trainerLoading ?
                             <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
