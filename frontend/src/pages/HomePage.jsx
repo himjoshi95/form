@@ -15,31 +15,37 @@ function HomePage() {
     const [trainers, setTrainers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [trainerLoading, setTrainerLoading] = useState(false);
-    const [trainingId,setTrainingId]= useState("Select Here");
+    const [trainingId, setTrainingId] = useState("Select Here");
 
     const [users, setUsers] = useState([]);
 
     const { admin, logout } = useAuthStore();
 
-    const {filter,setFilter} = useState("");
+    const [filter, setFilter] = useState("");
 
 
     const API_URL = "http://localhost:3000";
 
-    // -----GET ALL TRAINERS ---------
+    // -----GET ALL TRAINERS - WITH DEBOUNCING ---------
     useEffect(() => {
         try {
-            axios.get(`${API_URL}/api/admin/allTrainers?filter=${filter}`)
-                .then(response => {
-                    // console.log(response.data.allTrainers)
-                    setTrainers(response.data.allTrainers)
-                })
-                .catch(error => console.log(error.message))
+            const timer = setTimeout(() => {
+                axios.get(`${API_URL}/api/admin/allTrainers?filter=${filter}`)
+                    .then(response => {
+                        // console.log(response.data.allTrainers)
+                        setTrainers(response.data.allTrainers)
+                    })
+                    .catch(error => console.log(error.message));
+            }, 500);
 
+            return () => {
+                clearTimeout(timer);
+            }
         } catch (error) {
             console.log(error.message);
         }
-    }, [trainerLoading])
+    }, [trainerLoading, filter]);
+
 
     //------GET ALL TRAIN-INGS ---------
     useEffect(() => {
@@ -104,7 +110,7 @@ function HomePage() {
             toast.error("Trainer username cannot be left Empty");
             return;
         }
-        if (trainingId === "Select Here"){
+        if (trainingId === "Select Here") {
             toast.error("Please Select the Training name");
             return;
         }
@@ -253,9 +259,9 @@ function HomePage() {
 
                                     </div>
 
-                                    <div className="pt-5 flex justify-end pr-1">
+                                    <div className="pt-5 flex justify-end pr-1  w-[940px]">
                                         <button
-                                            className="border px-2 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
+                                            className="border px-4 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
                                             onClick={addTrainer}
                                         >
                                             Add Trainer
@@ -277,10 +283,15 @@ function HomePage() {
                 <div className="border mt-10 mx-5 p-10 shadow-lg">
                     <h1 className="text-xl pb-5">Trainers Available</h1>
                     <div className="pb-5">
-                        <div className="w-[300px] border flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
-                            <input  type="text" className="px-2 py-1 w-full focus:outline-none" placeholder="Search here.."/>                        
-                            <Search />
-                        </div>   
+                        <div className="w-[400px] border-2 flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
+                            <input
+                                type="text"
+                                className="px-2 py-1 w-full focus:outline-none" placeholder="Search here.."
+                                value={filter}
+                                onChange={(e) => setFilter(e.target.value)}
+                            />
+                            <Search color="#808080"/>
+                        </div>                        
                     </div>
                     {
                         trainerLoading ?
@@ -299,22 +310,22 @@ function HomePage() {
                                     <tbody>
                                         {
                                             trainers.length > 0
-                                            ?
-                                            trainers.map((item, index) => (
-                                                <tr key={index} className="border text-center">
-                                                    <td className="border py-1">{index + 1}</td>
-                                                    <td className="border py-1">{item.username}</td>
-                                                    <td className="border py-1 underline text-blue-500">
-                                                        <Link to={`/view-trainer/${item._id}`}>view details</Link>
-                                                    </td>
+                                                ?
+                                                trainers.map((item, index) => (
+                                                    <tr key={index} className="border text-center">
+                                                        <td className="border py-1">{index + 1}</td>
+                                                        <td className="border py-1">{item.username}</td>
+                                                        <td className="border py-1 underline text-blue-500">
+                                                            <Link to={`/view-trainer/${item._id}`}>view details</Link>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                                :
+                                                <tr>
+                                                    <td className="border"></td>
+                                                    <td className="border text-center py-2 font-semibold">No Trainers Available</td>
+                                                    <td></td>
                                                 </tr>
-                                            ))
-                                            :
-                                            <tr>
-                                                <td className="border"></td>
-                                                <td className="border text-center py-2 font-semibold">No Trainers Available</td>
-                                                <td></td>
-                                            </tr>
                                         }
                                     </tbody>
                                 </table>

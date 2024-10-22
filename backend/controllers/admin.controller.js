@@ -302,12 +302,13 @@ export const addNewTraining = async (req,res) => {
 
 export const allTrainers = async (req,res) =>{
     const adminId = req.adminId;
+    const filterQuery = req.query.filter || "";    
 
     try {
         const superadmin =  await Admin.find({_id:adminId,role:"superadmin"}).select("-password");
 
         if(superadmin){
-            const allTrainers =  await Admin.find({role: {$ne: "superadmin"}}).select("-password");
+            const allTrainers =  await Admin.find({role: {$ne: "superadmin"},username:{"$regex":filterQuery}}).select("-password");
             return res.json({               
                 allTrainers
             })
