@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 
 
 import { useAuthStore } from "../store/authStore";
+import Navbar from "../components/Navbar";
 
 function HomePage() {
 
@@ -19,7 +20,7 @@ function HomePage() {
 
     const [users, setUsers] = useState([]);
 
-    const { admin, logout } = useAuthStore();
+    const { admin } = useAuthStore();
 
     const [filter, setFilter] = useState("");
 
@@ -79,10 +80,10 @@ function HomePage() {
         }
     }, [])
 
-    // ------ LOGOUT -----------
-    const handleLogout = () => {
-        logout();
-    }
+    // ------ LOGOUT ----------- recently commented after Navbar.jsx component is built
+    // const handleLogout = () => {
+    //     logout();
+    // }
 
     // ----- ADD MORE TRAININGS ------------
     const addTrainingSubmit = async (e) => {
@@ -138,231 +139,259 @@ function HomePage() {
             console.log(error.message);
         }
     };
-    return <div>
-        <nav className="sticky top-0 z-50 border-b flex justify-between items-center px-5 py-2 bg-emerald-700">
-            <h1 className="text-2xl font-semibold text-center text-zinc-100"><i>Trainings</i></h1>
-            <div className="flex gap-5 items-center">
-                <p className="text-lg font-semibold text-zinc-100"><i>Welcome Back, {admin.username} !</i></p>
-                <div className="group relative">
-                    <div className="w-10 h-10 border border-slate-600 rounded-full flex justify-center items-center bg-slate-600">
-                        <p className="text-white">{admin.username.slice(0, 2).toUpperCase()}</p>
-                        <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
-                            <div className='min-w-48 h-fit bg-stone-100 rounded flex flex-col gap-5 p-4'>
-                                <p className=" px-2 pb-1  text-gray-400 text-center border-b-2 cursor-pointer hover:text-gray-700">profile</p>
-                                <p onClick={handleLogout} className=" px-2 pb-1 text-gray-400 text-center border-b-2 cursor-pointer hover:text-gray-700">logout</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        {/*--------- CREATE TRAININGS --------------*/}
+    return (
         <div>
-            {
-                admin.role === "superadmin"
-                &&
-                <div className="border mt-10 mx-5 p-10 shadow-lg">
-                    <h1 className="text-xl pb-5">Create Trainings</h1>
-                    <div className="border border-blue-300 rounded py-5 mr-10">
-                        <form>
-                            {isLoading ?
-                                <div className="flex justify-center">
-                                    <LoaderCircle className="animate-spin duration-200" />
-                                </div>
-                                :
-                                <div className="flex flex-row">
-                                    <div className="basis-1/4 pl-1">
-                                        <label className="text-md font-semibold">Training Name</label>
-                                    </div>
-                                    <div className="basis-2/4">
-                                        <input
-                                            type="text"
-                                            className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
-                                            placeholder="Enter training name"
-                                            value={trainingName}
-                                            onChange={(e) => setTrainingName(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="basis-1/4 mx-4">
-                                        <button
-                                            className="border px-2 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
-                                            onClick={addTrainingSubmit}
-                                        >
-                                            Add Training
-                                        </button>
-                                    </div>
-                                </div>
-                            }
-                        </form>
-                    </div>
-                </div>
-            }
-        </div>
 
-        {/* ADD TRAINERS */}
-        <div>
-            {
-                admin.role === "superadmin"
-                &&
-                <div className="border mt-10 mx-5 p-10 shadow-lg">
-                    <h1 className="text-xl pb-5">Add Trainers</h1>
-                    <div className="border border-blue-400 rounded py-5 mr-10">
-                        <form>
-                            {trainerLoading ?
-                                <div className="flex justify-center">
-                                    <LoaderCircle className="animate-spin duration-200" />
-                                </div>
-                                :
-                                <div>
+            <Navbar />
+
+
+            {/*--------- CREATE TRAININGS --------------*/}
+            <div>
+                {
+                    admin.role === "superadmin"
+                    &&
+                    <div className="border mt-10 mx-5 p-10 shadow-lg">
+                        <h1 className="text-xl pb-5">Create Trainings</h1>
+                        <div className="border border-blue-300 rounded py-5 mr-10">
+                            <form>
+                                {isLoading ?
+                                    <div className="flex justify-center">
+                                        <LoaderCircle className="animate-spin duration-200" />
+                                    </div>
+                                    :
                                     <div className="flex flex-row">
-                                        <div className="basis-1/4">
-                                            <label className="pl-1 text-md font-semibold">Trainer Username</label>
+                                        <div className="basis-1/4 pl-1">
+                                            <label className="text-md font-semibold">Training Name</label>
                                         </div>
-                                        <div className="basis-2/4 pl-2">
+                                        <div className="basis-2/4">
                                             <input
                                                 type="text"
                                                 className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
-                                                placeholder="Enter trainer username"
-                                                value={trainerUsername}
-                                                onChange={(e) => setTrainerUsername(e.target.value)}
-                                            ></input>
+                                                placeholder="Enter training name"
+                                                value={trainingName}
+                                                onChange={(e) => setTrainingName(e.target.value)}
+                                            />
                                         </div>
                                         <div className="basis-1/4 mx-4">
-
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-row pt-5">
-                                        <div className="basis-1/4">
-                                            <label className="pl-1 text-md font-semibold">
-                                                Training Name
-                                            </label>
-                                        </div>
-
-                                        <div className="basis-2/4">
-                                            <select
-                                                className="w-[525px] border py-1 rounded px-2 focus:outline-none focus:ring focus:ring-blue-500"
-                                                onChange={e => setTrainingId(e.target.value)}
-                                                value={trainingId}
+                                            <button
+                                                className="border px-2 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
+                                                onClick={addTrainingSubmit}
                                             >
-                                                <option disabled>Select Here</option>
-                                                {trainings.map((item, index) => (
-                                                    <option key={index} value={`${item._id}`}>{item.name}</option>
-                                                ))
-                                                }
-                                            </select>
+                                                Add Training
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            {/* ADD TRAINERS */}
+            <div>
+                {
+                    admin.role === "superadmin"
+                    &&
+                    <div className="border mt-10 mx-5 p-10 shadow-lg">
+                        <h1 className="text-xl pb-5">Add Trainers</h1>
+                        <div className="border border-blue-400 rounded py-5 mr-10">
+                            <form>
+                                {trainerLoading ?
+                                    <div className="flex justify-center">
+                                        <LoaderCircle className="animate-spin duration-200" />
+                                    </div>
+                                    :
+                                    <div>
+                                        <div className="flex flex-row">
+                                            <div className="basis-1/4">
+                                                <label className="pl-1 text-md font-semibold">Trainer Username</label>
+                                            </div>
+                                            <div className="basis-2/4 pl-2">
+                                                <input
+                                                    type="text"
+                                                    className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
+                                                    placeholder="Enter trainer username"
+                                                    value={trainerUsername}
+                                                    onChange={(e) => setTrainerUsername(e.target.value)}
+                                                ></input>
+                                            </div>
+                                            <div className="basis-1/4 mx-4">
+
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-row pt-5">
+                                            <div className="basis-1/4">
+                                                <label className="pl-1 text-md font-semibold">
+                                                    Training Name
+                                                </label>
+                                            </div>
+
+                                            <div className="basis-2/4">
+                                                <select
+                                                    className="w-[525px] border py-1 rounded px-2 focus:outline-none focus:ring focus:ring-blue-500"
+                                                    onChange={e => setTrainingId(e.target.value)}
+                                                    value={trainingId}
+                                                >
+                                                    <option disabled>Select Here</option>
+                                                    {trainings.map((item, index) => (
+                                                        <option key={index} value={`${item._id}`}>{item.name}</option>
+                                                    ))
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div className="basis-1/4">
+
+                                            </div>
+
                                         </div>
 
-                                        <div className="basis-1/4">
-
+                                        <div className="pt-5 flex justify-end pr-1  w-[940px]">
+                                            <button
+                                                className="border px-4 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
+                                                onClick={addTrainer}
+                                            >
+                                                Add Trainer
+                                            </button>
                                         </div>
-
                                     </div>
-
-                                    <div className="pt-5 flex justify-end pr-1  w-[940px]">
-                                        <button
-                                            className="border px-4 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
-                                            onClick={addTrainer}
-                                        >
-                                            Add Trainer
-                                        </button>
-                                    </div>
-                                </div>
-                            }
-                        </form>
+                                }
+                            </form>
+                        </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
 
-        {/*-------TRAINERS AVAILABLE --------------*/}
-        <div>
-            {
-                admin.role === "superadmin"
-                &&
-                <div className="border mt-10 mx-5 p-10 shadow-lg">
-                    <h1 className="text-xl pb-5">Trainers Available</h1>
-                    <div className="pb-5">
-                        <div className="w-[400px] border-2 flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
-                            <input
-                                type="text"
-                                className="px-2 py-1 w-full focus:outline-none" placeholder="Search here.."
-                                value={filter}
-                                onChange={(e) => setFilter(e.target.value)}
-                            />
-                            <Search color="#808080"/>
-                        </div>                        
-                    </div>
-                    {
-                        trainerLoading ?
-                            <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
-                            :
-                            // trainers.length > 0 &&
-                            <div>
-                                <table className="w-[1100px] border">
-                                    <thead>
-                                        <tr className="border text-center">
-                                            <th className="border">Sno.</th>
-                                            <th className="border">Trainer</th>
-                                            <th className="border">Details</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            trainers.length > 0
-                                                ?
-                                                trainers.map((item, index) => (
-                                                    <tr key={index} className="border text-center">
-                                                        <td className="border py-1">{index + 1}.</td>
-                                                        <td className="border py-1">{item.username}</td>
-                                                        <td className="border py-1 underline text-blue-500">
-                                                            <Link to={`/view-trainer/${item._id}`}>view details</Link>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                                :
-                                                <tr>
-                                                    <td className="border"></td>
-                                                    <td className="border text-center py-2 font-semibold">No Trainers Available</td>
-                                                    <td></td>
-                                                </tr>
-                                        }
-                                    </tbody>
-                                </table>
+            {/*-------TRAINERS AVAILABLE --------------*/}
+            <div>
+                {
+                    admin.role === "superadmin"
+                    &&
+                    <div className="border mt-10 mx-5 p-10 shadow-lg">
+                        <h1 className="text-xl pb-5">Trainers Available</h1>
+                        <div className="pb-5">
+                            <div className="w-[400px] border-2 flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
+                                <input
+                                    type="text"
+                                    className="px-2 py-1 w-full focus:outline-none" placeholder="Search here.."
+                                    value={filter}
+                                    onChange={(e) => setFilter(e.target.value)}
+                                />
+                                <Search color="#808080" />
                             </div>
-                    }
-                </div>
-            }
-        </div>
+                        </div>
+                        {
+                            trainerLoading ?
+                                <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
+                                :
+                                // trainers.length > 0 &&
+                                <div>
+                                    <table className="w-[1100px] border">
+                                        <thead>
+                                            <tr className="border text-center">
+                                                <th className="border">Sno.</th>
+                                                <th className="border">Trainer</th>
+                                                <th className="border">Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                trainers.length > 0
+                                                    ?
+                                                    trainers.map((item, index) => (
+                                                        <tr key={index} className="border text-center">
+                                                            <td className="border py-1">{index + 1}.</td>
+                                                            <td className="border py-1">{item.username}</td>
+                                                            <td className="border py-1 underline text-blue-500">
+                                                                <Link to={`/view-trainer/${item._id}`}>view details</Link>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                    :
+                                                    <tr>
+                                                        <td className="border"></td>
+                                                        <td className="border text-center py-2 font-semibold">No Trainers Available</td>
+                                                        <td></td>
+                                                    </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                        }
+                    </div>
+                }
+            </div>
 
-        {/* ----TRAININGS AVAIALABLE ---------- */}
-        <div className=" border mt-10 mx-5 p-10 shadow-lg">
-            <h1 className="text-xl pb-5">Trainings Available</h1>
+            {/* ----TRAININGS AVAIALABLE ---------- */}
+            <div className=" border mt-10 mx-5 p-10 shadow-lg">
+                <h1 className="text-xl pb-5">Trainings Available</h1>
 
-            {isLoading ?
-                <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
-                :
-                // trainings.length > 0 &&
-                <div>
+                {isLoading ?
+                    <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
+                    :
+                    // trainings.length > 0 &&
+                    <div>
+                        <table className="w-[1100px] border">
+                            <thead>
+                                <tr>
+                                    <th className="border text-center">Sno.</th>
+                                    <th className="border text-center">Training Links</th>
+                                    <th className="border text-center">Status</th>
+                                    <th className="border text-center">Add Test Paper</th>
+                                    <th className="border text-center">View Test Paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {trainings.length > 0 ? (
+                                    trainings.map((item, index) => (
+                                        <tr key={index} className="border">
+                                            <td className="p-2 border">{index + 1}.</td>
+                                            <td className="p-2 border"><Link className="flex flex-row" to={`/training/${item.name}/${item._id}`}> <span className="basis-1/4">Training - {item.name}</span> <span className="basis-3/4 underline text-blue-500"> {`http://localhost:5173/training/${item.name}/${item._id}`}</span></Link></td>
+                                            <td className="p-2 border"><Link to={`/training-update/${item.name}/${item._id}`} className="text-blue-500 underline" >view/edit</Link></td>
+                                            <td className="p-2 border text-blue-500"><Link className="flex justify-center" to={`/add-testpaper/${item.name}/${item._id}`}><CirclePlus className="hover:bg-blue-500 rounded-full hover:text-white" /></Link></td>
+                                            <td className="p-2 border"><Link className="flex justify-center" to={`/view-testpaper/${item.name}/${item._id}`}><View className="text-blue-500 cursor-pointer" /></Link></td>
+                                        </tr>
+                                    )
+                                    )
+                                )
+                                    :
+                                    <tr>
+                                        <td className="border"></td>
+                                        <td className="text-center py-5">No Trainings</td>
+                                        <td className="border"></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+
+            {/*------ ALL PARTICIPANTS ---------------------*/}
+            <div className=" border mt-10 mx-5 p-10 shadow-lg">
+                <h1 className="text-xl">Participants</h1>
+                <div className="pt-10">
                     <table className="w-[1100px] border">
                         <thead>
                             <tr>
                                 <th className="border text-center">Sno.</th>
-                                <th className="border text-center">Training Links</th>
-                                <th className="border text-center">Status</th>
-                                <th className="border text-center">Add Test Paper</th>
-                                <th className="border text-center">View Test Paper</th>
+                                <th className="border text-center">Name</th>
+                                <th className="border text-center">Training</th>
+                                <th className="border text-center">Link</th>
+                                <th className="bordder text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {trainings.length > 0 ? (
-                                trainings.map((item, index) => (
+
+                            {users.length > 0 ? (
+                                users.map((item, index) => (
                                     <tr key={index} className="border">
                                         <td className="p-2 border">{index + 1}.</td>
-                                        <td className="p-2 border"><Link className="flex flex-row" to={`/training/${item.name}/${item._id}`}> <span className="basis-1/4">Training - {item.name}</span> <span className="basis-3/4 underline text-blue-500"> {`http://localhost:5173/training/${item.name}/${item._id}`}</span></Link></td>
-                                        <td className="p-2 border"><Link to={`/training-update/${item.name}/${item._id}`} className="text-blue-500 underline" >view/edit</Link></td>
-                                        <td className="p-2 border text-blue-500"><Link className="flex justify-center" to={`/add-testpaper/${item.name}/${item._id}`}><CirclePlus className="hover:bg-blue-500 rounded-full hover:text-white" /></Link></td>
-                                        <td className="p-2 border"><Link className="flex justify-center" to={`/view-testpaper/${item.name}/${item._id}`}><View className="text-blue-500 cursor-pointer" /></Link></td>
+                                        <td className="p-2 border">{item.title.slice(0, 1)}{item.title.slice(1).toLowerCase()}  {item.firstName} {item.lastName}</td>
+                                        <td className="p-2 border">{item?.trainingId?.name}</td>
+                                        <td className="p-2 border"><Link className="text-blue-500 underline" to={`/attendance/${item._id}`}>{`http://localhost:5173/training/${item.trainingId.name}/${item.trainingId._id}`}</Link></td>
+                                        <td className="p-2 border"><Link className="text-blue-500 underline" to={`/update-status/${item._id}`}>view/edit</Link></td>
                                     </tr>
                                 )
                                 )
@@ -370,56 +399,16 @@ function HomePage() {
                                 :
                                 <tr>
                                     <td className="border"></td>
-                                    <td className="text-center py-5">No Trainings</td>
+                                    <td className="text-center py-5">No Participants</td>
                                     <td className="border"></td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div>
-            }
-        </div>
-
-        {/*------ ALL PARTICIPANTS ---------------------*/}
-        <div className=" border mt-10 mx-5 p-10 shadow-lg">
-            <h1 className="text-xl">Participants</h1>
-            <div className="pt-10">
-                <table className="w-[1100px] border">
-                    <thead>
-                        <tr>
-                            <th className="border text-center">Sno.</th>
-                            <th className="border text-center">Name</th>
-                            <th className="border text-center">Training</th>
-                            <th className="border text-center">Link</th>
-                            <th className="bordder text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        {users.length > 0 ? (
-                            users.map((item, index) => (
-                                <tr key={index} className="border">
-                                    <td className="p-2 border">{index + 1}.</td>
-                                    <td className="p-2 border">{item.title.slice(0, 1)}{item.title.slice(1).toLowerCase()}  {item.firstName} {item.lastName}</td>
-                                    <td className="p-2 border">{item?.trainingId?.name}</td>
-                                    <td className="p-2 border"><Link className="text-blue-500 underline" to={`/attendance/${item._id}`}>{`http://localhost:5173/training/${item.trainingId.name}/${item.trainingId._id}`}</Link></td>
-                                    <td className="p-2 border"><Link className="text-blue-500 underline" to={`/update-status/${item._id}`}>view/edit</Link></td>
-                                </tr>
-                            )
-                            )
-                        )
-                            :
-                            <tr>
-                                <td className="border"></td>
-                                <td className="text-center py-5">No Participants</td>
-                                <td className="border"></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
             </div>
         </div>
-    </div>
+    )
 }
 
 
