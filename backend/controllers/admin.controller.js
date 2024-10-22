@@ -541,3 +541,28 @@ export const trainingDetails = async (req,res) =>{
         })
     }
 };
+
+export const checkTraining = async (req,res) =>{
+    const adminId = req.adminId;
+    const {id:trainingId} = req.params;
+    try {
+        const trainingUser = await Master.find({_id:trainingId,trainers:adminId});        
+        
+        if(trainingUser.length>0){
+            res.json({                
+                success:true,
+                message:"Valid User"
+            });
+        } else{
+            res.json({
+                success: false,
+                message: "Invalid User"
+            });
+        }
+    } catch (error) {
+        console.log("Error in checkTraining Controller",error.message);
+        res.json({
+            message:error.message
+        });
+    }
+}
