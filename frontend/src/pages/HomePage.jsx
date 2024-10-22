@@ -313,7 +313,7 @@ function HomePage() {
                                                 ?
                                                 trainers.map((item, index) => (
                                                     <tr key={index} className="border text-center">
-                                                        <td className="border py-1">{index + 1}</td>
+                                                        <td className="border py-1">{index + 1}.</td>
                                                         <td className="border py-1">{item.username}</td>
                                                         <td className="border py-1 underline text-blue-500">
                                                             <Link to={`/view-trainer/${item._id}`}>view details</Link>
@@ -358,7 +358,7 @@ function HomePage() {
                             {trainings.length > 0 ? (
                                 trainings.map((item, index) => (
                                     <tr key={index} className="border">
-                                        <td className="p-2 border">{index + 1}</td>
+                                        <td className="p-2 border">{index + 1}.</td>
                                         <td className="p-2 border"><Link className="flex flex-row" to={`/training/${item.name}/${item._id}`}> <span className="basis-1/4">Training - {item.name}</span> <span className="basis-3/4 underline text-blue-500"> {`http://localhost:5173/training/${item.name}/${item._id}`}</span></Link></td>
                                         <td className="p-2 border"><Link to={`/training-update/${item.name}/${item._id}`} className="text-blue-500 underline" >view/edit</Link></td>
                                         <td className="p-2 border text-blue-500"><Link className="flex justify-center" to={`/add-testpaper/${item.name}/${item._id}`}><CirclePlus className="hover:bg-blue-500 rounded-full hover:text-white" /></Link></td>
