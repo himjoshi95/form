@@ -430,21 +430,7 @@ function AddTestPaper() {
                                                                 />
                                                             </div>
                                                         ))}
-                                                    </div>
-
-                                                    {/* Correct Answer 1
-                                        <div className="mt-5 flex flex-row">
-                                            <label className="font-bold basis-1/4">Correct Answer:</label>
-                                            <div className="basis-3/4">
-                                                <input
-                                                    type="text"
-                                                    value={question.mcq.correctAnswer}
-                                                    onChange={(e) => handleQuestionChange(sectionIndex, questionIndex, "correctAnswer", e.target.value)}
-                                                    className="border-2 px-2 py-1 w-full rounded focus:outline-none focus:border-blue-500"
-                                                    placeholder="Enter correct answer"
-                                                />
-                                            </div>
-                                        </div> */}
+                                                    </div>                                                  
 
                                                     {/* Correct Answer 2 */}
                                                     <div className="mt-5 flex flex-row">
@@ -557,7 +543,7 @@ function AddTestPaper() {
                             </div>
                         </div>
                         :
-                        <div className="flex justify-center">
+                        <div className="h-80 flex justify-center items-center">
                             <p className="border border-red-500 p-2 rounded text-xl font-semibold text-gray-700">404 Page Not Found</p>
                         </div>
                 }
