@@ -13,12 +13,12 @@ import SideBar from "../components/Sidebar";
 function HomePage() {
 
     // const [trainingName, setTrainingName] = useState("");
-    const [trainerUsername, setTrainerUsername] = useState("");
+    // const [trainerUsername, setTrainerUsername] = useState("");
     const [trainings, setTrainings] = useState([]);
     const [trainers, setTrainers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [trainerLoading, setTrainerLoading] = useState(false);
-    const [trainingId, setTrainingId] = useState("Select Here");
+    // const [trainingId, setTrainingId] = useState("Select Here");
 
     const [users, setUsers] = useState([]);
 
@@ -106,41 +106,41 @@ function HomePage() {
     //     }
     // }
 
-    //--------ADD MORE TRAINER -----------
-    const addTrainer = async (e) => {
-        e.preventDefault();
-        if (trainerUsername === "") {
-            toast.error("Trainer username cannot be left Empty");
-            return;
-        }
-        if (trainingId === "Select Here") {
-            toast.error("Please Select the Training name");
-            return;
-        }
-        try {
-            const submit = confirm("Are you sure you want to Add Trainer Details ? ");
-            if (submit) {
-                setTrainerLoading(prev => !prev);
-                const response = await axios.post(`${API_URL}/api/admin/addTrainer`, {
-                    username: trainerUsername,
-                    trainingId
-                });
-                console.log(response.data);
-                if (response.data.success) {
-                    toast.success(response.data?.message);
+    //--------ADD MORE TRAINER ----------- recently commented part of AddTrainer.jsx
+    // const addTrainer = async (e) => {
+    //     e.preventDefault();
+    //     if (trainerUsername === "") {
+    //         toast.error("Trainer username cannot be left Empty");
+    //         return;
+    //     }
+    //     if (trainingId === "Select Here") {
+    //         toast.error("Please Select the Training name");
+    //         return;
+    //     }
+    //     try {
+    //         const submit = confirm("Are you sure you want to Add Trainer Details ? ");
+    //         if (submit) {
+    //             setTrainerLoading(prev => !prev);
+    //             const response = await axios.post(`${API_URL}/api/admin/addTrainer`, {
+    //                 username: trainerUsername,
+    //                 trainingId
+    //             });
+    //             console.log(response.data);
+    //             if (response.data.success) {
+    //                 toast.success(response.data?.message);
 
-                } else {
-                    toast.error(response.data?.message);
-                }
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                setTrainerLoading(prev => !prev);
-                setTrainerUsername("");
-                setTrainingId("Select Here");
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    //             } else {
+    //                 toast.error(response.data?.message);
+    //             }
+    //             await new Promise(resolve => setTimeout(resolve, 1000));
+    //             setTrainerLoading(prev => !prev);
+    //             setTrainerUsername("");
+    //             setTrainingId("Select Here");
+    //         }
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
     return (
         <div>
 
@@ -200,8 +200,8 @@ function HomePage() {
                         }
                     </div> */}
 
-                    {/* ADD TRAINERS */}
-                    <div>
+                    {/* ADD TRAINERS */} {/* AddTrainer.jsx  */}
+                    {/* <div>
                         {
                             admin.role === "superadmin"
                             &&
@@ -273,7 +273,7 @@ function HomePage() {
                                 </div>
                             </div>
                         }
-                    </div>
+                    </div> */}
 
                     {/*-------TRAINERS AVAILABLE --------------*/}
                     <div>
