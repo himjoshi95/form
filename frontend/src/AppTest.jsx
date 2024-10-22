@@ -19,6 +19,7 @@ import ViewTestPaper from "./pages/ViewTestPaper";
 import SingleTestPaper from "./pages/SingleTestPaper";
 import RichAddTestPaper from "./pages/RichAddTestPaper";
 import ViewTrainerDetails from "./pages/ViewTrainerDetails";
+import CreateTraining from "./pages/CreateTraining";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -66,6 +67,15 @@ function AppTest() {
                 element={
                     <ProtectedRoute>
                         <HomePage />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path='/create-training'
+                element={
+                    <ProtectedRoute>
+                        <CreateTraining/>
                     </ProtectedRoute>
                 }
             />

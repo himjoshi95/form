@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { CirclePlus, LoaderCircle, Search, Sidebar, View } from 'lucide-react';
+import { CirclePlus, LoaderCircle, Search, View } from 'lucide-react';
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -12,7 +12,7 @@ import SideBar from "../components/Sidebar";
 
 function HomePage() {
 
-    const [trainingName, setTrainingName] = useState("");
+    // const [trainingName, setTrainingName] = useState("");
     const [trainerUsername, setTrainerUsername] = useState("");
     const [trainings, setTrainings] = useState([]);
     const [trainers, setTrainers] = useState([]);
@@ -87,24 +87,24 @@ function HomePage() {
     //     logout();
     // }
 
-    // ----- ADD MORE TRAININGS ------------
-    const addTrainingSubmit = async (e) => {
-        e.preventDefault();
-        if (trainingName === "") {
-            toast.error("Training Name cannot be left Empty");
-            return;
-        }
-        const submit = confirm("Are you sure you want to add the Training ?");
-        if (submit) {
-            setIsLoading(prev => !prev);
-            const response = await axios.post(`${API_URL}/api/admin/addMaster`, { name: trainingName })
-            // console.log(response.data);
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            setIsLoading(prev => !prev);
-            toast.success(response.data?.message)
-            setTrainingName("");
-        }
-    }
+    // ----- ADD MORE TRAININGS ------------ recently commented part of CreateTraining.jsx
+    // const addTrainingSubmit = async (e) => {
+    //     e.preventDefault();
+    //     if (trainingName === "") {
+    //         toast.error("Training Name cannot be left Empty");
+    //         return;
+    //     }
+    //     const submit = confirm("Are you sure you want to add the Training ?");
+    //     if (submit) {
+    //         setIsLoading(prev => !prev);
+    //         const response = await axios.post(`${API_URL}/api/admin/addMaster`, { name: trainingName })
+    //         // console.log(response.data);
+    //         await new Promise(resolve => setTimeout(resolve, 1000));
+    //         setIsLoading(prev => !prev);
+    //         toast.success(response.data?.message)
+    //         setTrainingName("");
+    //     }
+    // }
 
     //--------ADD MORE TRAINER -----------
     const addTrainer = async (e) => {
@@ -144,9 +144,7 @@ function HomePage() {
     return (
         <div>
 
-            <div>
-                <Navbar />
-            </div>
+            <Navbar />           
 
             <div className="flex flex-row">
                 {/* ----START ------------ */}
@@ -157,8 +155,10 @@ function HomePage() {
                 </div>
 
                 {/*----- RIGHT SIDE -----*/}
-                <div className="basis-4/5">                    
-                    <div>
+                <div className="basis-4/5"> 
+
+                        {/* CreateTraining.jsx  */}
+                    {/* <div>
                         {
                             admin.role === "superadmin"
                             &&
@@ -198,7 +198,7 @@ function HomePage() {
                                 </div>
                             </div>
                         }
-                    </div>
+                    </div> */}
 
                     {/* ADD TRAINERS */}
                     <div>
