@@ -39,7 +39,7 @@ function Participants() {
                 </div>
                 <div className="basis-4/5">
                     <div className=" border mt-10 mx-5 p-10 shadow-lg">
-                        <h1 className="text-xl">Participants</h1>
+                        <h1 className="text-xl font-semibold">Participants</h1>
                         {
                             users.length > 0 ?
                                 <div className="pt-10">

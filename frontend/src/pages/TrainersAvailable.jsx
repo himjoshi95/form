@@ -49,7 +49,7 @@ function TrainersAvailable() {
                             admin.role === "superadmin"
                             &&
                             <div className="border mt-10 mx-5 p-10 shadow-lg">
-                                <h1 className="text-xl pb-5">Trainers Available</h1>
+                                <h1 className="text-xl font-semibold pb-5">Trainers Available</h1>
                                 <div className="pb-5">
                                     <div className="w-[400px] border-2 flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
                                         <input

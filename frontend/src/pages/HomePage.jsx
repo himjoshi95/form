@@ -155,7 +155,12 @@ function HomePage() {
                 </div>
 
                 {/*----- RIGHT SIDE -----*/}
-                <div className="basis-4/5"> 
+                <div className="basis-4/5 shrink">
+
+                    <div className="border mt-10 mx-5 p-10 shadow-lg">
+                        <h1 className="text-xl font-semibold">Dashboard</h1>
+
+                    </div>
 
                         {/* CreateTraining.jsx  */}
                     {/* <div>
@@ -419,10 +424,8 @@ function HomePage() {
                             </table>
                         </div>
                     </div>                     */}
-                </div>                
-            
+                </div>          
             </div>
-
         </div>
     )
 }

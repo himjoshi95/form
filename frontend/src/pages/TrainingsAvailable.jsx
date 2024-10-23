@@ -39,7 +39,7 @@ function TrainingsAvailable() {
                 </div>
                 <div className="basis-4/5">
                     <div className=" border mt-10 mx-5 p-10 shadow-lg">
-                        <h1 className="text-xl pb-5">Trainings Available</h1>
+                        <h1 className="text-xl font-semibold pb-5">Trainings Available</h1>
 
                         {
                         // isLoading ?

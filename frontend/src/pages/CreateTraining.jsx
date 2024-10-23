@@ -51,7 +51,7 @@ function CreateTraining() {
                             admin.role === "superadmin"
                             &&
                             <div className="border mt-10 mx-5 p-10 shadow-lg">
-                                <h1 className="text-xl pb-5">Create Trainings</h1>
+                                <h1 className="text-xl pb-5 font-semibold ">Create Trainings</h1>
                                 <div className="border border-blue-300 rounded py-5 mr-10">
                                     <form>
                                         {isLoading ?

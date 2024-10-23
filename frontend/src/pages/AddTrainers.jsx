@@ -88,7 +88,7 @@ function AddTrainers() {
                             admin.role === "superadmin"
                             &&
                             <div className="border mt-10 mx-5 p-10 shadow-lg">
-                                <h1 className="text-xl pb-5">Add Trainers</h1>
+                                <h1 className="text-xl font-semibold pb-5">Add Trainers</h1>
                                 <div className="border border-blue-400 rounded py-5 mr-10">
                                     <form>
                                         {trainerLoading ?
