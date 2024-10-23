@@ -15,26 +15,30 @@ function Participants() {
 
     const [users, setUsers] = useState([]);
     const API_URL = "http://localhost:3000";
-    const [filter, setFilter] = useState(""); 
+    const [loading, setLoading] = useState(true);
+    const [filter, setFilter] = useState("");  
 
-    useEffect(() => {
-        try {
-            const timer = setTimeout(() => {
-                axios.get(`${API_URL}/api/user/allUsers?filter=${filter}`)
-                    .then((response) => {                        
-                        setUsers(response.data.existingUsers);
-                    }).catch(error => {
-                        console.log(error)
-                    })
-            }, 500);
-
-            return ()=>{
-                clearTimeout(timer)
+    useEffect(()=>{
+        const fetchUsers = async () =>{
+            setLoading(true);
+            try {
+                const response = await axios.get(`${API_URL}/api/user/allUsers?filter=${filter}`);
+                setUsers(response.data.existingUsers);                
+            } catch (error) {
+                console.log("Error fetching Participants",error.message);                
+            }finally{
+                setLoading(false);
             }
-        } catch (error) {
-            console.log(error.message)
         }
-    }, [filter])
+
+        const timer = setTimeout(() =>{
+            fetchUsers();
+        },500);
+
+        return () => {
+            clearTimeout(timer)
+        }
+    },[filter])
 
     return (
         <div>
@@ -58,7 +62,7 @@ function Participants() {
                             </div>
                         </div>
                         {
-                            users.length > 0 ?
+                            !loading ?
                                 <div className="overflow-x-auto">
                                     <table className="w-full border text-sm md:text-base">
                                         <thead>

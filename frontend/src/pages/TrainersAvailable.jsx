@@ -11,28 +11,32 @@ import { useAuthStore } from "../store/authStore";
 function TrainersAvailable() {
 
     const [trainers, setTrainers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState("");
     const {admin} = useAuthStore();
     const API_URL = "http://localhost:3000";
-
+    
     useEffect(() => {
-        try {
-            const timer = setTimeout(() => {
-                axios.get(`${API_URL}/api/admin/allTrainers?filter=${filter}`)
-                    .then(response => {
-                        // console.log(response.data.allTrainers)
-                        setTrainers(response.data.allTrainers)
-                    })
-                    .catch(error => console.log(error.message));
-            }, 500);
-
-            return () => {
-                clearTimeout(timer);
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    }, [filter]);
+        const fetchTrainers = async () => {
+          setLoading(true); 
+          try {
+            const response = await axios.get(`${API_URL}/api/admin/allTrainers?filter=${filter}`);
+            setTrainers(response.data.allTrainers); 
+          } catch (error) {
+            console.log('Error fetching trainers:', error.message);
+          } finally {
+            setLoading(false); 
+          }
+        };    
+        
+        const timer = setTimeout(() => {
+          fetchTrainers();
+        }, 500); 
+    
+        return () => {
+          clearTimeout(timer); 
+        };
+      }, [filter]); 
     return (
         <div>
             <Navbar />
@@ -59,7 +63,7 @@ function TrainersAvailable() {
                                     </div>
                                 </div>
                                 {                                    
-                                        trainers.length > 0 ?
+                                        !loading ?
                                         <div className="overflow-x-auto">
                                             <table className="w-full border text-sm md:text-base">
                                                 <thead>

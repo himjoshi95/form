@@ -10,24 +10,30 @@ function TrainingsAvailable() {
 
     const API_URL = "http://localhost:3000";
     const [trainings, setTrainings] = useState([]);
-    const [filter, setFilter] = useState("");    
-
-    useEffect(() => {        
-        try {
-            const timer = setTimeout(() => {
-                axios.get(`${API_URL}/api/admin/allTrainings?filter=${filter}`)
-                    .then((response) => {
-                        setTrainings(response.data.trainings)
-                    })
-            }, 500);
-            
-            return () => {
-                clearTimeout(timer);
+    const [loading, setLoading] = useState(true);
+    const [filter, setFilter] = useState("");
+        
+    useEffect(()=>{
+        const fetchTrainings = async () => {
+            setLoading(true);
+            try{
+                const response = await axios.get(`${API_URL}/api/admin/allTrainings?filter=${filter}`);
+                setTrainings(response.data.trainings);
+            }catch (error){
+                console.log('Error fetching trainings:',error.message);
+            }finally{
+                setLoading(false);
             }
-        } catch (error) {
-            console.log(error.message);
-        }        
-    }, [filter])
+        };
+
+        const timer = setTimeout(() =>{
+            fetchTrainings();
+        },500);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [filter]);
 
     return (
         <div>
@@ -51,7 +57,7 @@ function TrainingsAvailable() {
                             </div>
                         </div>
                         {
-                            trainings.length > 0 ?
+                            !loading ?
                                 <div className="overflow-x-auto">
                                     <table className="w-full border text-sm md:text-base">
                                         <thead>
@@ -94,7 +100,7 @@ function TrainingsAvailable() {
                                             ) : (
                                                 <tr>
                                                     <td className="border"></td>
-                                                    <td className="text-center py-5">No Trainings</td>
+                                                    <td className="text-center py-5 font-semibold">No Trainings</td>
                                                     <td className="border"></td>
                                                 </tr>
                                             )}
