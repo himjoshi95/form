@@ -21,6 +21,7 @@ import RichAddTestPaper from "./pages/RichAddTestPaper";
 import ViewTrainerDetails from "./pages/ViewTrainerDetails";
 import CreateTraining from "./pages/CreateTraining";
 import AddTrainers from "./pages/AddTrainers";
+import TrainersAvailable from "./pages/TrainersAvailable";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -86,6 +87,15 @@ function AppTest() {
                 element={
                     <ProtectedRoute>
                         <AddTrainers/>
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path='/trainers-available'
+                element={
+                    <ProtectedRoute>
+                        <TrainersAvailable/>
                     </ProtectedRoute>
                 }
             />

@@ -15,39 +15,39 @@ function HomePage() {
     // const [trainingName, setTrainingName] = useState("");
     // const [trainerUsername, setTrainerUsername] = useState("");
     const [trainings, setTrainings] = useState([]);
-    const [trainers, setTrainers] = useState([]);
+    // const [trainers, setTrainers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [trainerLoading, setTrainerLoading] = useState(false);
+    // const [trainerLoading, setTrainerLoading] = useState(false);
     // const [trainingId, setTrainingId] = useState("Select Here");
 
     const [users, setUsers] = useState([]);
 
     const { admin } = useAuthStore();
 
-    const [filter, setFilter] = useState("");
+    // const [filter, setFilter] = useState("");
 
 
     const API_URL = "http://localhost:3000";
 
-    // -----GET ALL TRAINERS - WITH DEBOUNCING ---------
-    useEffect(() => {
-        try {
-            const timer = setTimeout(() => {
-                axios.get(`${API_URL}/api/admin/allTrainers?filter=${filter}`)
-                    .then(response => {
-                        // console.log(response.data.allTrainers)
-                        setTrainers(response.data.allTrainers)
-                    })
-                    .catch(error => console.log(error.message));
-            }, 500);
+    // -----GET ALL TRAINERS - WITH DEBOUNCING ----- Added in TrainersAvailable.jsx----
+    // useEffect(() => {
+    //     try {
+    //         const timer = setTimeout(() => {
+    //             axios.get(`${API_URL}/api/admin/allTrainers?filter=${filter}`)
+    //                 .then(response => {
+    //                     // console.log(response.data.allTrainers)
+    //                     setTrainers(response.data.allTrainers)
+    //                 })
+    //                 .catch(error => console.log(error.message));
+    //         }, 500);
 
-            return () => {
-                clearTimeout(timer);
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    }, [trainerLoading, filter]);
+    //         return () => {
+    //             clearTimeout(timer);
+    //         }
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // }, [trainerLoading, filter]);
 
 
     //------GET ALL TRAIN-INGS ---------
@@ -275,8 +275,8 @@ function HomePage() {
                         }
                     </div> */}
 
-                    {/*-------TRAINERS AVAILABLE --------------*/}
-                    <div>
+                    {/*-------TRAINERS AVAILABLE -------------Added in TrainersAvailable.jsx   -*/}
+                    {/* <div>
                         {
                             admin.role === "superadmin"
                             &&
@@ -333,7 +333,7 @@ function HomePage() {
                                 }
                             </div>
                         }
-                    </div>
+                    </div> */}
 
                     {/* ----TRAININGS AVAIALABLE ---------- */}
                     <div className=" border mt-10 mx-5 p-10 shadow-lg">
