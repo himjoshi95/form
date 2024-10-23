@@ -22,6 +22,7 @@ import ViewTrainerDetails from "./pages/ViewTrainerDetails";
 import CreateTraining from "./pages/CreateTraining";
 import AddTrainers from "./pages/AddTrainers";
 import TrainersAvailable from "./pages/TrainersAvailable";
+import TrainingsAvailable from "./pages/TrainingsAvailable";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -96,6 +97,15 @@ function AppTest() {
                 element={
                     <ProtectedRoute>
                         <TrainersAvailable/>
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path='/trainings-available'
+                element={
+                    <ProtectedRoute>
+                        <TrainingsAvailable/>
                     </ProtectedRoute>
                 }
             />

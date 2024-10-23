@@ -14,9 +14,9 @@ function HomePage() {
 
     // const [trainingName, setTrainingName] = useState("");
     // const [trainerUsername, setTrainerUsername] = useState("");
-    const [trainings, setTrainings] = useState([]);
+    // const [trainings, setTrainings] = useState([]);
     // const [trainers, setTrainers] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
     // const [trainerLoading, setTrainerLoading] = useState(false);
     // const [trainingId, setTrainingId] = useState("Select Here");
 
@@ -50,22 +50,22 @@ function HomePage() {
     // }, [trainerLoading, filter]);
 
 
-    //------GET ALL TRAIN-INGS ---------
-    useEffect(() => {
-        setIsLoading(prev => !prev);
-        try {
-            axios.get(`${API_URL}/api/admin/allTrainings`)
-                .then((response) => {
-                    // console.log(response.data.trainings)
-                    setTrainings(response.data.trainings)
-                })
+    //------GET ALL TRAIN-INGS ----added in TrainingsAvailable.jsx-----
+    // useEffect(() => {
+    //     setIsLoading(prev => !prev);
+    //     try {
+    //         axios.get(`${API_URL}/api/admin/allTrainings`)
+    //             .then((response) => {
+    //                 // console.log(response.data.trainings)
+    //                 setTrainings(response.data.trainings)
+    //             })
 
-        } catch (error) {
-            console.log(error.message);
-        }
-        setIsLoading(prev => !prev);
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    //     setIsLoading(prev => !prev);
 
-    }, [isLoading])
+    // }, [isLoading])
 
     //--------GET ALL USERS ----------
     useEffect(() => {
@@ -335,8 +335,8 @@ function HomePage() {
                         }
                     </div> */}
 
-                    {/* ----TRAININGS AVAIALABLE ---------- */}
-                    <div className=" border mt-10 mx-5 p-10 shadow-lg">
+                    {/* ----TRAININGS AVAIALABLE -----added in TrainingsAvailable.jsx----- */}
+                    {/* <div className=" border mt-10 mx-5 p-10 shadow-lg">
                         <h1 className="text-xl pb-5">Trainings Available</h1>
 
                         {isLoading ?
@@ -378,7 +378,7 @@ function HomePage() {
                                 </table>
                             </div>
                         }
-                    </div>
+                    </div> */}
 
                     {/*------ ALL PARTICIPANTS ---------------------*/}
                     <div className=" border mt-10 mx-5 p-10 shadow-lg">
