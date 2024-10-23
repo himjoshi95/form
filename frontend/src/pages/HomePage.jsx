@@ -158,7 +158,22 @@ function HomePage() {
                 <div className="flex-1 w-full md:w-4/5">
 
                     <div className="border mt-5 md:mt-10 mx-2 md:mx-5 p-2 md:p-10 shadow-lg">
-                        <h1 className="text-xl font-semibold">Dashboard</h1>
+                        <h1 className="text-xl font-semibold pb-10">Dashboard</h1>
+
+                        <div className="flex flex-col md:flex-row gap-10">
+                            <div className="border flex flex-col gap-5 w-full md:w-1/3 p-5 rounded-lg bg-gradient-to-br from-pink-500 via-pink-300 to-red-700">
+                                <p className="text-xl text-white font-semibold">Trainers Available</p>
+                                <span className="self-end text-2xl text-white font-semibold">2</span>
+                            </div>
+                            <div className="border flex flex-col gap-5 w-full md:w-1/3 p-5 rounded-lg bg-gradient-to-br from-blue-500 via-blue-300 to-blue-700">
+                                <p className="text-xl text-white font-semibold">Trainings Available</p>
+                                <span className="self-end text-2xl text-white font-semibold">5</span>
+                            </div>
+                            <div className="border flex flex-col gap-5 w-full md:w-1/3 p-5 rounded-lg bg-gradient-to-br from-emerald-500 via-yellow-300 to-emerald-700">
+                                <p className="text-xl text-white font-semibold">Participants</p>
+                                <span className="self-end text-2xl text-white font-semibold">10</span>
+                            </div>
+                        </div>
 
                     </div>
 
