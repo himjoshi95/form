@@ -77,19 +77,19 @@ function AddTrainers() {
     return (
         <div>
             <Navbar />
-            <div className="min-h-screen flex flex-row">
-                <div className="basis-1/5 bg-gray-100 p-5">
+            <div className="min-h-screen flex md:flex-row">
+                <div className="w-32 md:basis-1/5 bg-gray-100 p-5">
                     <SideBar />
                 </div>
 
-                <div className="basis-4/5">
+                <div className="flex-1 md:basis-4/5">
                     <div>
                         {
                             admin.role === "superadmin"
                             &&
-                            <div className="border mt-10 mx-5 p-10 shadow-lg">
+                            <div className="border mt-10 mx-5 p-2 md:p-10 shadow-lg">
                                 <h1 className="text-xl font-semibold pb-5">Add Trainers</h1>
-                                <div className="border border-blue-400 rounded py-5 mr-10">
+                                <div className="border border-blue-400 w-full rounded py-5 mr-10">
                                     <form>
                                         {trainerLoading ?
                                             <div className="flex justify-center">
@@ -97,11 +97,11 @@ function AddTrainers() {
                                             </div>
                                             :
                                             <div>
-                                                <div className="flex flex-row">
-                                                    <div className="basis-1/4">
+                                                <div className="flex flex-col gap-5 md:flex-row md:gap-0">
+                                                    <div className="md:basis-1/4">
                                                         <label className="pl-1 text-md font-semibold">Trainer Username</label>
                                                     </div>
-                                                    <div className="basis-2/4 pl-2">
+                                                    <div className="md:basis-2/4 px-1 md:pl-2">
                                                         <input
                                                             type="text"
                                                             className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
@@ -110,18 +110,18 @@ function AddTrainers() {
                                                             onChange={(e) => setTrainerUsername(e.target.value)}
                                                         ></input>
                                                     </div>
-                                                    <div className="basis-1/4 mx-4">
+                                                    <div className="md:basis-1/4 mx-4">
 
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-row pt-5">
-                                                    <div className="basis-1/4">
+                                                <div className="flex flex-col gap-5 md:flex-row md:gap-0 pt-5">
+                                                    <div className="md:basis-1/4">
                                                         <label className="pl-1 text-md font-semibold">
                                                             Training Name
                                                         </label>
                                                     </div>
 
-                                                    <div className="basis-2/4">
+                                                    <div className="md:basis-2/4 px-1 md:px-0">
                                                         <select
                                                             className="w-full border py-1 rounded px-2 focus:outline-none focus:ring focus:ring-blue-500"
                                                             onChange={e => setTrainingId(e.target.value)}
@@ -135,7 +135,7 @@ function AddTrainers() {
                                                         </select>
                                                     </div>
 
-                                                    <div className="basis-1/4">
+                                                    <div className="md:basis-1/4">
 
                                                     </div>
 

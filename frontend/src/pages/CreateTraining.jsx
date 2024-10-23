@@ -40,30 +40,30 @@ function CreateTraining() {
             <Navbar />
 
 
-            <div className="min-h-screen flex flex-row">
-                <div className="basis-1/5 bg-gray-100 p-5">
+            <div className="min-h-screen flex md:flex-row">
+                <div className="w-32 md:basis-1/5 bg-gray-100 p-5">
                     <SideBar />
                 </div>
 
-                <div className="basis-4/5">
+                <div className="flex-1 md:basis-4/5">
                     <div>
                         {
                             admin.role === "superadmin"
                             &&
-                            <div className="border mt-10 mx-5 p-10 shadow-lg">
+                            <div className="border mt-10 mx-5 p-2 md:p-10 shadow-lg">
                                 <h1 className="text-xl pb-5 font-semibold ">Create Trainings</h1>
-                                <div className="border border-blue-300 rounded py-5 mr-10">
+                                <div className="border border-blue-300 w-full rounded py-5 mr-10">
                                     <form>
                                         {isLoading ?
                                             <div className="flex justify-center">
                                                 <LoaderCircle className="animate-spin duration-200" />
                                             </div>
                                             :
-                                            <div className="flex flex-row">
-                                                <div className="basis-1/4 pl-1">
+                                            <div className="flex flex-col gap-5 md:flex-row md:gap-0">
+                                                <div className="md:basis-1/4 pl-1">
                                                     <label className="text-md font-semibold">Training Name</label>
                                                 </div>
-                                                <div className="basis-2/4">
+                                                <div className="md:basis-2/4 px-1 md:px-0">
                                                     <input
                                                         type="text"
                                                         className="border py-0.5 px-1 w-full rounded focus:outline-none focus:ring focus:ring-blue-400"
@@ -72,7 +72,7 @@ function CreateTraining() {
                                                         onChange={(e) => setTrainingName(e.target.value)}
                                                     />
                                                 </div>
-                                                <div className="basis-1/4 mx-4">
+                                                <div className="md:basis-1/4 mx-4">
                                                     <button
                                                         className="border px-2 py-1 bg-blue-500 text-white font-semibold hover:bg-blue-400 rounded"
                                                         onClick={addTrainingSubmit}

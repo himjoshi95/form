@@ -12,9 +12,7 @@ function TrainersAvailable() {
 
     const [trainers, setTrainers] = useState([]);
     const [filter, setFilter] = useState("");
-
     const {admin} = useAuthStore();
-
     const API_URL = "http://localhost:3000";
 
     useEffect(() => {
@@ -38,20 +36,20 @@ function TrainersAvailable() {
     return (
         <div>
             <Navbar />
-            <div className="min-h-screen flex flex-row">
-                <div className="basis-1/5 bg-gray-100 p-5">
+            <div className="min-h-screen flex md:flex-row">
+                <div className="w-32 md:basis-1/5 bg-gray-100 p-5">
                     <SideBar />
                 </div>
 
-                <div className="basis-4/5">
+                <div className="flex-1 md:basis-4/5">
                     <div>
                         {
                             admin.role === "superadmin"
                             &&
-                            <div className="border mt-10 mx-5 p-10 shadow-lg">
+                            <div className="border mt-10 mx-5 p-2 md:p-10 shadow-lg">
                                 <h1 className="text-xl font-semibold pb-5">Trainers Available</h1>
                                 <div className="pb-5">
-                                    <div className="w-[400px] border-2 flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
+                                    <div className="w-[200px] md:w-[400px] border-2 flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
                                         <input
                                             type="text"
                                             className="px-2 py-1 w-full focus:outline-none" placeholder="Search here.."
@@ -66,7 +64,7 @@ function TrainersAvailable() {
                                     //     <div className="text-2xl flex justify-center"><LoaderCircle className="animate-spin" /></div>
                                     //     :
                                         trainers.length > 0 ?
-                                        <div>
+                                        <div className="pt-5 md:pt-0">
                                             <table className="w-full border">
                                                 <thead>
                                                     <tr className="border text-center">

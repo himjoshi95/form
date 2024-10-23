@@ -2,33 +2,37 @@ import { Link } from "react-router-dom";
 
 const SideBar = () => {
     return (
-        <div>
-            <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">
-                <Link to="/dashboard">
+        <div className="text-md md:text-lg">
+            <Link to="/dashboard" className="w-full">
+                <div className="border hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 hover:ring-2 hover:ring-blue-500 duration-200">
                     Dashboard
-                </Link>
-            </div>
-            <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">
-                <Link to="/create-training">
+                </div>
+            </Link>
+            <Link to="/create-training">
+                <div className="border hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 hover:ring-2 hover:ring-blue-500 duration-200">
                     Create Trainings
-                </Link>
-            </div>
-            <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">
-                <Link to="/add-trainer">
+                </div>
+            </Link>
+            <Link to="/add-trainer">
+                <div className="border hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 hover:ring-2 hover:ring-blue-500 duration-200">
                     Add Trainers
-                </Link>
-            </div>
-            <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">
-                <Link to="/trainers-available">
+                </div>
+            </Link>
+            <Link to="/trainers-available">
+                <div className="border hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 hover:ring-2 hover:ring-blue-500 duration-200">
                     Trainers
-                </Link>
-            </div>
-            <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">
-                <Link to="/trainings-available">Trainings</Link>
-            </div>
-            <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">
-                <Link to='/participants'>Participants</Link>
-            </div>
+                </div>
+            </Link>
+            <Link to="/trainings-available">
+                <div className="border hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 hover:ring-2 hover:ring-blue-500 duration-200">
+                    Trainings
+                </div>
+            </Link>
+            <Link to='/participants'>
+                <div className="border hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 hover:ring-2 hover:ring-blue-500 duration-200">
+                    Participants
+                </div>
+            </Link>
         </div>
     )
 }

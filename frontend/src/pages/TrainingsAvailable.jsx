@@ -33,12 +33,12 @@ function TrainingsAvailable() {
     return (
         <div>
             <Navbar />
-            <div className="min-h-screen flex flex-row">
-                <div className="basis-1/5 bg-gray-100 p-5">
+            <div className="min-h-screen flex md:flex-row">
+                <div className="w-32 md:basis-1/5 bg-gray-100 p-5">
                     <SideBar />
                 </div>
-                <div className="basis-4/5">
-                    <div className=" border mt-10 mx-5 p-10 shadow-lg">
+                <div className="flex-1 md:basis-4/5">
+                    <div className=" border mt-10 mx-5 p-2 md:p-10 shadow-lg">
                         <h1 className="text-xl font-semibold pb-5">Trainings Available</h1>
 
                         {
