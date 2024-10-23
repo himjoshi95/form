@@ -33,24 +33,24 @@ function Participants() {
     return (
         <div>
             <Navbar />
-            <div className="min-h-screen flex md:flex-row">
-                <div className="w-32 md:basis-1/5 bg-gray-100 p-5">
+            <div className="min-h-screen flex flex-col md:flex-row">
+                <div className="w-full md:w-1/5 bg-gray-100 p-5">
                     <SideBar />
                 </div>
-                <div className="flex-1 md:basis-4/5">
-                    <div className="border mt-10 mx-5 p-2 md:p-10 shadow-lg">
-                        <h1 className="text-xl font-semibold">Participants</h1>
+                <div className="flex-1 w-full md:w-4/5">
+                    <div className="border mt-5 md:mt-10 mx-2 md:mx-5 p-2 md:p-10 shadow-lg">
+                        <h1 className="text-xl font-semibold pb-5">Participants</h1>
                         {
                             users.length > 0 ?
-                                <div className="pt-10">
-                                    <table className="w-full border">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full border text-sm md:text-base">
                                         <thead>
                                             <tr>
-                                                <th className="border text-center">Sno.</th>
-                                                <th className="border text-center">Name</th>
-                                                <th className="border text-center">Training</th>
-                                                <th className="border text-center">Link</th>
-                                                <th className="bordder text-center">Status</th>
+                                                <th className="border text-center p-2">Sno.</th>
+                                                <th className="border text-center p-2">Name</th>
+                                                <th className="border text-center p-2">Training</th>
+                                                <th className="border text-center p-2">Link</th>
+                                                <th className="border text-center p-2">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -61,7 +61,7 @@ function Participants() {
                                                         <td className="p-2 border">{index + 1}.</td>
                                                         <td className="p-2 border">{item.title.slice(0, 1)}{item.title.slice(1).toLowerCase()}  {item.firstName} {item.lastName}</td>
                                                         <td className="p-2 border">{item?.trainingId?.name}</td>
-                                                        <td className="p-2 border"><Link className="text-blue-500 underline" to={`/attendance/${item._id}`}>{`http://localhost:5173/training/${item.trainingId.name}/${item.trainingId._id}`}</Link></td>
+                                                        <td className="p-2 border"><Link className="text-blue-500 underline" to={`/attendance/${item._id}`}><span className="break-all">{`http://localhost:5173/training/${item.trainingId.name}/${item.trainingId._id}`}</span></Link></td>
                                                         <td className="p-2 border"><Link className="text-blue-500 underline" to={`/update-status/${item._id}`}>view/edit</Link></td>
                                                     </tr>
                                                 )

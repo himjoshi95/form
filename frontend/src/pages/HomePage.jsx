@@ -146,18 +146,18 @@ function HomePage() {
 
             <Navbar />           
 
-            <div className="min-h-screen flex md:flex-row">
+            <div className="min-h-screen flex flex-col md:flex-row">
                 {/* ----START ------------ */}
 
                 {/*----- LEFT SIDE -----*/}
-                <div className="w-32 md:basis-1/5 bg-gray-100 p-5">
+                <div className="w-full md:w-1/5 bg-gray-100 p-5">
                     <SideBar/>
                 </div>
 
                 {/*----- RIGHT SIDE -----*/}
-                <div className="flex-1 md:basis-4/5">
+                <div className="flex-1 w-full md:w-4/5">
 
-                    <div className="border mt-10 mx-5 p-2 md:p-10 shadow-lg">
+                    <div className="border mt-5 md:mt-10 mx-2 md:mx-5 p-2 md:p-10 shadow-lg">
                         <h1 className="text-xl font-semibold">Dashboard</h1>
 
                     </div>
