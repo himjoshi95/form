@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import SideBar from "../components/Sidebar";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle,Search } from "lucide-react";
+
+
 
 
 
@@ -13,22 +15,26 @@ function Participants() {
 
     const [users, setUsers] = useState([]);
     const API_URL = "http://localhost:3000";
+    const [filter, setFilter] = useState(""); 
 
     useEffect(() => {
         try {
-            setTimeout(() => {
-                axios.get(`${API_URL}/api/user/allUsers`)
-                    .then((response) => {
-                        // console.log(response.data.existingUsers)
+            const timer = setTimeout(() => {
+                axios.get(`${API_URL}/api/user/allUsers?filter=${filter}`)
+                    .then((response) => {                        
                         setUsers(response.data.existingUsers);
                     }).catch(error => {
                         console.log(error)
                     })
-            }, 500)
+            }, 500);
+
+            return ()=>{
+                clearTimeout(timer)
+            }
         } catch (error) {
             console.log(error.message)
         }
-    }, [])
+    }, [filter])
 
     return (
         <div>
@@ -40,6 +46,17 @@ function Participants() {
                 <div className="flex-1 w-full md:w-4/5">
                     <div className="border mt-5 md:mt-10 mx-2 md:mx-5 p-2 md:p-10 shadow-lg">
                         <h1 className="text-xl font-semibold pb-5">Participants</h1>
+                        <div className="pb-5">
+                            <div className="md:w-[400px] border-2 flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
+                                <input
+                                    type="text"
+                                    className="px-2 py-1 w-full focus:outline-none" placeholder="Search here.."
+                                    value={filter}
+                                    onChange={(e) => setFilter(e.target.value)}
+                                />
+                                <Search color="#808080" />
+                            </div>
+                        </div>
                         {
                             users.length > 0 ?
                                 <div className="overflow-x-auto">

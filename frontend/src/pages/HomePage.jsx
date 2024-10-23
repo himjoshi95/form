@@ -34,7 +34,6 @@ function HomePage() {
         setTimeout(() => {
             axios.get(`${API_URL}/api/admin/training-dashboard`)
                 .then(response => {
-                    console.log(response.data);
                     setDashboard(response.data);
                     setIsLoading(false);
                 }).catch(error => {

@@ -308,7 +308,7 @@ export const allTrainers = async (req,res) =>{
         const superadmin =  await Admin.find({_id:adminId,role:"superadmin"}).select("-password");
 
         if(superadmin){
-            const allTrainers =  await Admin.find({role: {$ne: "superadmin"},username:{"$regex":filterQuery}}).select("-password");
+            const allTrainers =  await Admin.find({role: {$ne: "superadmin"},username:{"$regex":filterQuery,"$options":"i"}}).select("-password");
             return res.json({               
                 allTrainers
             })
@@ -327,9 +327,9 @@ export const allTrainers = async (req,res) =>{
 
 export const allTrainings = async (req, res) => {   
     const adminId =  req.adminId;
-    try {
-        const currentAdmin =  await Admin.findById(req.adminId).select("-password");        
-        const trainings = await Master.find({trainers: adminId})
+    const filterQuery = req.query.filter || "";
+    try {               
+        const trainings = await Master.find({trainers: adminId,name:{"$regex":filterQuery,"$options":"i"}})
         res.json({
             trainings
         })

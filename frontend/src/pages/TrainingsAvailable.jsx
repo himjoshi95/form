@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { CirclePlus, LoaderCircle, View } from "lucide-react";
+import { CirclePlus, LoaderCircle, Search, View } from "lucide-react";
 
 import Navbar from "../components/Navbar";
 import SideBar from "../components/Sidebar";
@@ -10,25 +10,24 @@ function TrainingsAvailable() {
 
     const API_URL = "http://localhost:3000";
     const [trainings, setTrainings] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [filter, setFilter] = useState("");    
 
-    useEffect(() => {
-        setIsLoading(prev => !prev);
+    useEffect(() => {        
         try {
-            setTimeout(() => {
-                axios.get(`${API_URL}/api/admin/allTrainings`)
+            const timer = setTimeout(() => {
+                axios.get(`${API_URL}/api/admin/allTrainings?filter=${filter}`)
                     .then((response) => {
-                        // console.log(response.data.trainings)
                         setTrainings(response.data.trainings)
                     })
-            }, 500)
-
+            }, 500);
+            
+            return () => {
+                clearTimeout(timer);
+            }
         } catch (error) {
             console.log(error.message);
-        }
-        setIsLoading(prev => !prev);
-
-    }, [isLoading])
+        }        
+    }, [filter])
 
     return (
         <div>
@@ -40,6 +39,17 @@ function TrainingsAvailable() {
                 <div className="flex-1 w-full md:w-4/5">
                     <div className="border mt-5 md:mt-10 mx-2 md:mx-5 p-2 md:p-10 shadow-lg">
                         <h1 className="text-xl font-semibold pb-5">Trainings Available</h1>
+                        <div className="pb-5">
+                            <div className="md:w-[400px] border-2 flex items-center px-1 rounded-full overflow-hidden focus-within:border-blue-500">
+                                <input
+                                    type="text"
+                                    className="px-2 py-1 w-full focus:outline-none" placeholder="Search here.."
+                                    value={filter}
+                                    onChange={(e) => setFilter(e.target.value)}
+                                />
+                                <Search color="#808080" />
+                            </div>
+                        </div>
                         {
                             trainings.length > 0 ?
                                 <div className="overflow-x-auto">

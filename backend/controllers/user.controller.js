@@ -142,10 +142,13 @@ export const userDetails = async (req, res) => {
 
 export const allUsers = async (req, res) => {
     const adminId = req.adminId;
+    const filterQuery = req.query.filter || "";
     // console.log(adminId) -- see this for adminId via middleware
     try {
         // const existingUsers = await User.find({}).populate('trainingId');
-        const Users = await User.find().populate({
+        const Users = await User.find({firstName:{
+           "$regex":filterQuery,"$options":"i"
+        }}).populate({
                     path: 'trainingId',
                     match: { trainers: adminId }
                 })
