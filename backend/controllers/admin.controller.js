@@ -567,3 +567,32 @@ export const checkTraining = async (req,res) =>{
         });
     }
 }
+
+//Training Dashboard
+export const trainingDashboard = async (req,res) =>{
+    const adminId = req.adminId
+    try {
+        const totalTrainersCount = await Admin.find({role :{$ne:'superadmin'}}).countDocuments();
+
+        const totalTrainingsCount = await Master.find({trainers:adminId}).countDocuments();
+
+        const Participants = await User.find().populate({
+            path: 'trainingId',
+            match: {trainers: adminId}
+        }).exec();
+
+        const totalParticipants = Participants.filter(participant => participant.trainingId !== null)
+
+        return res.json({
+            totalTrainersCount,
+            totalTrainingsCount,
+            totalParticipants: totalParticipants.length
+
+        })        
+    } catch (error) {
+        console.log("Error in trainingDashboard", error.message);
+        return res.json({
+            message:error.message
+        })
+    }
+}

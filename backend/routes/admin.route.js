@@ -1,5 +1,5 @@
 import express from "express";
-import { addMaster, addNewTraining, addTrainer, allTrainers, allTrainings, checkAuth, checkTraining, login, logout, signup, trainerDetails, trainingDetails, trainingDropdown, updateStatus, updateTraining } from "../controllers/admin.controller.js";
+import { addMaster, addNewTraining, addTrainer, allTrainers, allTrainings, checkAuth, checkTraining, login, logout, signup, trainerDetails, trainingDashboard, trainingDetails, trainingDropdown, updateStatus, updateTraining } from "../controllers/admin.controller.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
@@ -36,5 +36,8 @@ router.patch('/update-training',updateTraining);
 
 //Check Training:
 router.get('/check-training/:id',verifyToken,checkTraining);
+
+//Training Dashboard
+router.get('/training-dashboard',verifyToken,trainingDashboard);
 
 export default router;

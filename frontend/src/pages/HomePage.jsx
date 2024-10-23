@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CirclePlus, LoaderCircle, Search, View } from 'lucide-react';
 import axios from "axios";
-import toast from "react-hot-toast";
-
 
 import { useAuthStore } from "../store/authStore";
 import Navbar from "../components/Navbar";
@@ -21,13 +19,29 @@ function HomePage() {
     // const [trainingId, setTrainingId] = useState("Select Here");
 
     // const [users, setUsers] = useState([]);
+    // const [filter, setFilter] = useState("");
 
     const { admin } = useAuthStore();
+    const [dashboard, setDashboard] = useState({});
+    const [isLoading,setIsLoading] = useState(false);
 
-    // const [filter, setFilter] = useState("");
 
 
     const API_URL = "http://localhost:3000";
+
+    useEffect(() => {
+        setIsLoading(true);
+        setTimeout(() => {
+            axios.get(`${API_URL}/api/admin/training-dashboard`)
+                .then(response => {
+                    console.log(response.data);
+                    setDashboard(response.data);
+                    setIsLoading(false);
+                }).catch(error => {
+                    console.log(error)
+                })
+        }, 500)
+    }, [])
 
     // -----GET ALL TRAINERS - WITH DEBOUNCING ----- Added in TrainersAvailable.jsx----
     // useEffect(() => {
@@ -144,14 +158,14 @@ function HomePage() {
     return (
         <div>
 
-            <Navbar />           
+            <Navbar />
 
             <div className="min-h-screen flex flex-col md:flex-row">
                 {/* ----START ------------ */}
 
                 {/*----- LEFT SIDE -----*/}
                 <div className="w-full md:w-1/5 bg-gray-100 p-5">
-                    <SideBar/>
+                    <SideBar />
                 </div>
 
                 {/*----- RIGHT SIDE -----*/}
@@ -161,23 +175,27 @@ function HomePage() {
                         <h1 className="text-xl font-semibold pb-10">Dashboard</h1>
 
                         <div className="flex flex-col md:flex-row gap-10">
-                            <div className="border flex flex-col gap-5 w-full md:w-1/3 p-5 rounded-lg bg-gradient-to-br from-pink-500 via-pink-300 to-red-700">
-                                <p className="text-xl text-white font-semibold">Trainers Available</p>
-                                <span className="self-end text-2xl text-white font-semibold">2</span>
-                            </div>
+                            {
+                                admin.role === "superadmin"
+                                &&
+                                <div className="border flex flex-col gap-5 w-full md:w-1/3 p-5 rounded-lg bg-gradient-to-br from-pink-500 via-pink-300 to-red-700">
+                                    <p className="text-xl text-white font-semibold">Trainers Available</p>
+                                    <span className="self-end text-2xl text-white font-semibold">{!isLoading ? dashboard.totalTrainersCount: <LoaderCircle className="animate-spin"/>}</span>
+                                </div>
+                            }
                             <div className="border flex flex-col gap-5 w-full md:w-1/3 p-5 rounded-lg bg-gradient-to-br from-blue-500 via-blue-300 to-blue-700">
                                 <p className="text-xl text-white font-semibold">Trainings Available</p>
-                                <span className="self-end text-2xl text-white font-semibold">5</span>
+                                <span className="self-end text-2xl text-white font-semibold">{!isLoading ? dashboard.totalTrainingsCount: <LoaderCircle className="animate-spin"/>}</span>
                             </div>
                             <div className="border flex flex-col gap-5 w-full md:w-1/3 p-5 rounded-lg bg-gradient-to-br from-emerald-500 via-yellow-300 to-emerald-700">
                                 <p className="text-xl text-white font-semibold">Participants</p>
-                                <span className="self-end text-2xl text-white font-semibold">10</span>
+                                <span className="self-end text-2xl text-white font-semibold">{!isLoading ? dashboard.totalParticipants: <LoaderCircle className="animate-spin"/>}</span>
                             </div>
                         </div>
 
                     </div>
 
-                        {/* CreateTraining.jsx  */}
+                    {/* CreateTraining.jsx  */}
                     {/* <div>
                         {
                             admin.role === "superadmin"
@@ -439,7 +457,7 @@ function HomePage() {
                             </table>
                         </div>
                     </div>                     */}
-                </div>          
+                </div>
             </div>
         </div>
     )
