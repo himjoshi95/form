@@ -20,7 +20,7 @@ function HomePage() {
     // const [trainerLoading, setTrainerLoading] = useState(false);
     // const [trainingId, setTrainingId] = useState("Select Here");
 
-    const [users, setUsers] = useState([]);
+    // const [users, setUsers] = useState([]);
 
     const { admin } = useAuthStore();
 
@@ -67,20 +67,20 @@ function HomePage() {
 
     // }, [isLoading])
 
-    //--------GET ALL USERS ----------
-    useEffect(() => {
-        try {
-            axios.get(`${API_URL}/api/user/allUsers`)
-                .then((response) => {
-                    // console.log(response.data.existingUsers)
-                    setUsers(response.data.existingUsers);
-                }).catch(error => {
-                    console.log(error)
-                })
-        } catch (error) {
-            console.log(error.message)
-        }
-    }, [])
+    //--------GET ALL USERS ------ added in particpants.jsx----
+    // useEffect(() => {
+    //     try {
+    //         axios.get(`${API_URL}/api/user/allUsers`)
+    //             .then((response) => {
+    //                 // console.log(response.data.existingUsers)
+    //                 setUsers(response.data.existingUsers);
+    //             }).catch(error => {
+    //                 console.log(error)
+    //             })
+    //     } catch (error) {
+    //         console.log(error.message)
+    //     }
+    // }, [])
 
     // ------ LOGOUT ----------- recently commented after Navbar.jsx component is built
     // const handleLogout = () => {
@@ -380,8 +380,8 @@ function HomePage() {
                         }
                     </div> */}
 
-                    {/*------ ALL PARTICIPANTS ---------------------*/}
-                    <div className=" border mt-10 mx-5 p-10 shadow-lg">
+                    {/*------ ALL PARTICIPANTS --------Added in Participants.jsx-------------*/}
+                    {/* <div className=" border mt-10 mx-5 p-10 shadow-lg">
                         <h1 className="text-xl">Participants</h1>
                         <div className="pt-10">
                             <table className="w-full border">
@@ -418,7 +418,7 @@ function HomePage() {
                                 </tbody>
                             </table>
                         </div>
-                    </div>                    
+                    </div>                     */}
                 </div>                
             
             </div>

@@ -23,6 +23,7 @@ import CreateTraining from "./pages/CreateTraining";
 import AddTrainers from "./pages/AddTrainers";
 import TrainersAvailable from "./pages/TrainersAvailable";
 import TrainingsAvailable from "./pages/TrainingsAvailable";
+import Participants from "./pages/Participants";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -108,6 +109,15 @@ function AppTest() {
                         <TrainingsAvailable/>
                     </ProtectedRoute>
                 }
+            />
+
+            <Route
+                path='/participants'
+                element={
+                    <ProtectedRoute>
+                        <Participants/>
+                    </ProtectedRoute>
+                }    
             />
 
 

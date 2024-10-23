@@ -20,13 +20,15 @@ const SideBar = () => {
             </div>
             <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">
                 <Link to="/trainers-available">
-                    Trainers 
+                    Trainers
                 </Link>
             </div>
             <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">
                 <Link to="/trainings-available">Trainings</Link>
             </div>
-            <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">Participants</div>
+            <div className="border text-lg hover:font-semibold p-1 mb-2 hover:cursor-pointer hover:border-blue-400 hover:text-blue-500 duration-200">
+                <Link to='/participants'>Participants</Link>
+            </div>
         </div>
     )
 }
