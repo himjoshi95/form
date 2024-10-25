@@ -86,14 +86,14 @@ function TrainingsAvailable() {
                                                             <Link to={`/training-update/${item.name}/${item._id}`} className="text-blue-500 underline">view/edit</Link>
                                                         </td>
                                                         <td className="p-2 border text-center">
-                                                            <Link to={`/add-testpaper/${item.name}/${item._id}`} className="text-blue-500">
+                                                            <Link to={`/add-testpaper/${item.name}/${item._id}`} className="text-blue-500 flex items-center justify-center">
                                                                 <CirclePlus className="hover:bg-blue-500 rounded-full hover:text-white" />
                                                             </Link>
                                                         </td>
-                                                        <td className="p-2 border text-center">
-                                                            <Link to={`/view-testpaper/${item.name}/${item._id}`} className="text-blue-500">
-                                                                <View className="text-blue-500 cursor-pointer" />
-                                                            </Link>
+                                                        <td className="p-2 border text-center">                                                            
+                                                                <Link to={`/view-testpaper/${item.name}/${item._id}`} className="text-blue-500 flex items-center justify-center">
+                                                                    <View className="text-blue-500 cursor-pointer" />
+                                                                </Link>                                                            
                                                         </td>
                                                     </tr>
                                                 ))

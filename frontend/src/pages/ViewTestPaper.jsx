@@ -66,7 +66,7 @@ function ViewTestPaper() {
                                 <Link to={`/dashboard`} className="text-blue-500 flex items-center"><ArrowLeftToLine /><span className="text-lg">DASHBOARD</span></Link>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-10 md:grid-cols-5 md:gap-5">
+                            <div className="grid grid-cols-2 gap-16 md:grid-cols-5 md:gap-5 pb-10">
                                 {tests.length > 0 ? tests.map((test, index) => (
                                     <div key={index} className="border h-44 rounded-lg  shadow-lg" >
                                         <div className="p-5 h-full">
