@@ -147,6 +147,39 @@ export const addMaster = async (req, res) => {
     // });
 };
 
+export const addSuperAdmin = async (req,res) =>{
+    const {username,password} = req.body;
+
+    try {
+        const superAdminExists = await Admin.findOne({username});
+        
+
+        if(superAdminExists){
+            res.json({
+                message: "Super admin already Exists"
+            })
+        }else{
+            const hashedPassword = await bcryptjs.hash(password, 10);
+            const admin = new Admin({
+                username,
+                password: hashedPassword
+            });
+            await admin.save();
+
+            res.json({
+                success:true,
+                message: "Added Successfully"
+            })
+
+        }        
+    } catch (error) {
+        console.log("Error in addSuperAdmin Controller",error.message);
+        res.json({
+            message: error.message
+        })
+    }
+};
+
 export const addTrainer = async(req,res) => {
     const {username,trainingId} = req.body;
     const adminId =  req.adminId;
@@ -195,7 +228,7 @@ export const addTrainer = async(req,res) => {
             message:error.message
         })
     }
-}
+};
 
 export const trainerDetails = async (req,res) =>{
     const adminId = req.adminId;
@@ -227,7 +260,7 @@ export const trainerDetails = async (req,res) =>{
         });
     }
 
-}
+};
 
 export const trainingDropdown = async (req,res) =>{
     const adminId = req.adminId;
@@ -261,7 +294,7 @@ export const trainingDropdown = async (req,res) =>{
         
     }
 
-}
+};
 
 export const addNewTraining = async (req,res) => {
     const adminId = req.adminId;
@@ -298,7 +331,7 @@ export const addNewTraining = async (req,res) => {
             message:error.message
         })
     }
-}
+};
 
 export const allTrainers = async (req,res) =>{
     const adminId = req.adminId;
@@ -323,7 +356,7 @@ export const allTrainers = async (req,res) =>{
             message:error.message
         })
     }
-}
+};
 
 export const allTrainings = async (req, res) => {   
     const adminId =  req.adminId;
@@ -566,7 +599,7 @@ export const checkTraining = async (req,res) =>{
             message:error.message
         });
     }
-}
+};
 
 //Training Dashboard
 export const trainingDashboard = async (req,res) =>{
@@ -595,4 +628,4 @@ export const trainingDashboard = async (req,res) =>{
             message:error.message
         })
     }
-}
+};
