@@ -126,7 +126,7 @@ function ViewTrainerDetails() {
 
                                                         <div className="pt-5 flex justify-end">
                                                             <button
-                                                                className="border px-4 bg-blue-500 text-white rounded-full"
+                                                                className="border px-4 py-1 bg-blue-500 text-white rounded-full"
                                                                 onClick={handleAddTraining}
                                                             >{isLoading ? <LoaderCircle className="animate-spin" /> : 'Add'}
                                                             </button>

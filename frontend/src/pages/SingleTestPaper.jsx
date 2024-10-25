@@ -3,6 +3,7 @@ import { ArrowLeftToLine, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import Navbar from "../components/Navbar";
 
 function SingleTestPaper() {
 
@@ -51,7 +52,8 @@ function SingleTestPaper() {
     
     return (
         <div>
-            <div className="flex justify-center border py-5 mt-2 shadow-lg">
+            <Navbar/>
+            <div className="flex justify-center border py-5 shadow-lg">
                 {
                     user === "Valid User"
                     &&
@@ -60,7 +62,7 @@ function SingleTestPaper() {
 
             </div>
 
-            <div className="h-fit border shadow-lg mt-5 mx-5 p-10">
+            <div className="h-fit border shadow-lg mt-5 mx-5 p-2 md:p-10">
                 {
                     user === "Valid User"
                         ?

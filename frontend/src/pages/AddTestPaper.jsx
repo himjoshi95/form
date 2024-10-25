@@ -8,6 +8,7 @@ import axios from "axios";
 // import "react-quill/dist/quill.snow.css";
 
 import JoditEditor from 'jodit-react';
+import Navbar from "../components/Navbar";
 
 function AddTestPaper() {
     const { name, type } = useParams();
@@ -330,6 +331,7 @@ function AddTestPaper() {
 
     return (
         <div>
+            <Navbar/>
             <div className="flex justify-center border py-5 shadow-lg bg-white">
                 {
                     user === "Valid User"

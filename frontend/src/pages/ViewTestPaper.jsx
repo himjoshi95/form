@@ -2,6 +2,7 @@ import axios from "axios";
 import { ArrowLeftToLine, Eye, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 
 function ViewTestPaper() {
@@ -47,7 +48,8 @@ function ViewTestPaper() {
 
     return (
         <div>
-            <div className="flex justify-center border py-5 mt-2 shadow-lg">
+            <Navbar />
+            <div className="flex justify-center border py-5 shadow-lg">
                 {
                     user === "Valid User"
                     &&
@@ -99,6 +101,7 @@ function ViewTestPaper() {
 
 
             </div>
+
         </div>
     )
 
