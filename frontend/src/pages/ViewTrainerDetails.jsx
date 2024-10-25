@@ -93,7 +93,7 @@ function ViewTrainerDetails() {
                                             <h1 className="text-xl font-semibold pb-5">Trainings</h1>
                                             {
                                                 trainingDetails.map((item, index) => (
-                                                    <div key={index} className="pl-10 flex gap-2">
+                                                    <div key={index} className="pl:0 md:pl-10 flex gap-2">
                                                         <p>{index + 1}.</p>
                                                         <p>{item.name}</p>
                                                     </div>

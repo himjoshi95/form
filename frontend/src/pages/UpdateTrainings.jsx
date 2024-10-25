@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { LoaderCircle, ArrowLeftToLine } from 'lucide-react';
+import Navbar from "../components/Navbar";
+import SideBar from "../components/Sidebar";
 
 
 
@@ -31,7 +33,7 @@ function UpdateTrainings() {
 
     useEffect(() => {
         axios.get(`${API_URL}/api/admin/check-training/${type}`)
-            .then(response => {                
+            .then(response => {
                 setUser(response.data.message);
             })
             .catch(error => console.log(error))
@@ -52,79 +54,87 @@ function UpdateTrainings() {
     }
     return (
         <div>
-            <div className="flex flex-col items-center border py-2  shadow-lg">
-                {
-                    user === "Valid User"
-                    &&
-                    <h1 className="text-md font-medium">Update Training Status</h1>
-                }
-            </div>
+            <Navbar />
+            <div className="min-h-screen flex flex-col md:flex-row">
+                <div className="w-full md:w-1/5 bg-gray-100 p-5">
+                    <SideBar />
+                </div>
+                <div className="flex-1 w-full md:w-4/5">
+                    <div className="flex flex-col items-center border py-2  shadow-lg">
+                        {
+                            user === "Valid User"
+                            &&
+                            <h1 className="text-md font-medium">Update Training Status</h1>
+                        }
+                    </div>
 
-            <div className="border shadow-lg mt-5 mx-5 p-10">
-                {
-                    user == "Valid User"
-                        ?
-                        <div>
-                            <div className=" pb-5">
-                                <Link to={`/dashboard`} className="text-blue-500 flex items-center"><ArrowLeftToLine /><span className="text-lg">DASHBOARD</span></Link>
-                            </div>
-                            {isLoading ?
-                                <div className="h-24 pb-10 grid place-items-center">
-                                    {/* <Loader className="animate-spin"/> */}
-                                    <LoaderCircle className="animate-spin text-xl" />
+                    <div className="border shadow-lg mt-5 mx-5 p-10">
+                        {
+                            user == "Valid User"
+                                ?
+                                <div>
+                                    <div className=" pb-5">
+                                        <Link to={`/dashboard`} className="text-blue-500 flex items-center"><ArrowLeftToLine /><span className="text-lg">DASHBOARD</span></Link>
+                                    </div>
+                                    {isLoading ?
+                                        <div className="h-24 pb-10 grid place-items-center">
+                                            {/* <Loader className="animate-spin"/> */}
+                                            <LoaderCircle className="animate-spin text-xl" />
+                                        </div>
+                                        :
+                                        <div>
+                                            <div className="pb-10 flex flex-col md:grid md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <span className="font-bold">Training Program:</span>   {name}
+                                                </div>
+                                                <div>
+                                                    <span className="font-bold">Current Status:</span> {status === 'Select Status' ? '-' : status}
+                                                </div>
+                                            </div>
+                                            <form>
+                                                <div className="flex flex-col md:grid md:grid-cols-3 gap-5 md:gap-4">
+                                                    <div className="flex items-center gap-2">
+                                                        <label className="font-bold">Link</label>
+                                                        <select className="w-[120px] px-5 focus:outline-none border border-blue-500 rounded-full cursor-pointer"
+                                                            value={link}
+                                                            onChange={(e) => setLink(e.target.value)}
+                                                        >
+                                                            <option disabled value="Select Here">Select Here</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <label className="font-bold">Status</label>
+                                                        <select className="w-[200px] px-5 focus:outline-none border border-blue-500 rounded-full cursor-pointer"
+                                                            value={dropdown}
+                                                            onChange={(e) => setDropdown(e.target.value)}
+                                                        >
+                                                            <option disabled value="Select Status">Select Status</option>
+                                                            <option value="Attendance">Attendance</option>
+                                                            <option value="Test Paper">Test Paper</option>
+                                                            <option value="Feedback">Feedback</option>
+                                                            <option value="Certificate">Certificate</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="">
+                                                        <button onClick={handleSubmit} className="border px-3 py-1 rounded-full bg-red-500 text-white">Submit</button>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    }
                                 </div>
                                 :
-                                <div>
-                                    <div className="pb-10 grid grid-cols-2 gap-4">
-                                        <div>
-                                            <span className="font-bold">Training Program:</span>   {name}
-                                        </div>
-                                        <div>
-                                            <span className="font-bold">Current Status:</span> {status === 'Select Status' ? '-' : status}
-                                        </div>
-                                    </div>
-                                    <form>
-                                        <div className="grid grid-cols-3 gap-4">
-                                            <div className="flex items-center gap-2">
-                                                <label className="font-bold">Link</label>
-                                                <select className="w-[120px] px-5 focus:outline-none border border-blue-500 rounded-full cursor-pointer"
-                                                    value={link}
-                                                    onChange={(e) => setLink(e.target.value)}
-                                                >
-                                                    <option disabled value="Select Here">Select Here</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <label className="font-bold">Status</label>
-                                                <select className="w-[200px] px-5 focus:outline-none border border-blue-500 rounded-full cursor-pointer"
-                                                    value={dropdown}
-                                                    onChange={(e) => setDropdown(e.target.value)}
-                                                >
-                                                    <option disabled value="Select Status">Select Status</option>
-                                                    <option value="Attendance">Attendance</option>
-                                                    <option value="Test Paper">Test Paper</option>
-                                                    <option value="Feedback">Feedback</option>
-                                                    <option value="Certificate">Certificate</option>
-                                                </select>
-                                            </div>
-                                            <div className="">
-                                                <button onClick={handleSubmit} className="border px-3 py-1 rounded-full bg-red-500 text-white">Submit</button>
-                                            </div>
-                                        </div>
-
-                                    </form>
+                                <div className="h-80 flex justify-center items-center">
+                                    <p className="border border-red-500 p-2 rounded text-xl font-semibold text-gray-700">404 Page Not Found</p>
                                 </div>
-                            }
-                        </div>
-                        :
-                        <div className="h-80 flex justify-center items-center">
-                            <p className="border border-red-500 p-2 rounded text-xl font-semibold text-gray-700">404 Page Not Found</p>
-                        </div>
-                }
+                        }
 
+                    </div>
+                </div>
             </div>
         </div>
     )
